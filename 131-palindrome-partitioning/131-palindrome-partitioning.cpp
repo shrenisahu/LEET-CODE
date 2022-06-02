@@ -13,7 +13,7 @@ public:
         
     }
     
-    void GeneratePalindorme(string s,int start,int end, vector<string>&currConfig ,  vector<vector<string>> &answer)
+    void GeneratePalindorme(string s,int start,int end, vector<string>currConfig ,  vector<vector<string>> &answer)
     {
         
         if(start>end){
