@@ -12,8 +12,7 @@ public:
         {
             for(int j=0;j<col ;j++)
             {
-                
-                Transpose[j][i]=matrix[i][j];
+               Transpose[j][i]=matrix[i][j];
             }
         }
         
