@@ -9,7 +9,7 @@ class Solution {
     vector<int> dfsOfGraph(int V, vector<int> adj[]) {
         // Code here
          vector<int>answer;
-          vector<bool>visited(V+1,false);
+          vector<bool>visited(V,false);
          
           int currNode=0;
           DFS(V,0,visited,answer,adj);
