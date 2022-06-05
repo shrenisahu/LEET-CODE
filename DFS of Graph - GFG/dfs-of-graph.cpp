@@ -7,30 +7,36 @@ class Solution {
   public:
     // Function to return a list containing the DFS traversal of the graph.
     vector<int> dfsOfGraph(int V, vector<int> adj[]) {
-        // Code here
-         vector<int>answer;
-          vector<bool>visited(V,false);
-         
-          int currNode=0;
-          DFS(V,0,visited,answer,adj);
-          return answer;
-        
+       vector<bool>visited(V,false);
+       vector<int>answer;
+       int currVertex=0;
+       BFS(currVertex,visited,adj,answer);
+       return answer;
     }
     
-    void DFS(int V,int currNode,  vector<bool>&visited,vector<int>&answer,vector<int> adj[])
+    void BFS(int currVertex,  vector<bool>&visited,vector<int> adj[], vector<int>&answer)
     {
-        if(visited[currNode]==true)
-        return ;
+        queue<int>que;
+        que.push(currVertex);
         
-        
-        visited[currNode]=true;
-        answer.push_back(currNode);
-        
-        vector<int>neighbour=adj[currNode];
-        for(auto temp:neighbour)
+        while(!que.empty())
         {
-            DFS(V,temp,visited,answer,adj);
+            int currNode=que.front();
+            que.pop();
+            
+            if(visited[currNode]==true)
+            continue;
+            
+            visited[currNode]=true;
+            answer.push_back(currNode);
+            
+            vector<int>neighbour=adj[currVertex];
+            for(auto eachNode:neighbour)
+            {
+                BFS(eachNode,visited,adj,answer);
+            }
         }
+        
         return ;
     }
 };
