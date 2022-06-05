@@ -1,43 +1,49 @@
 class Solution {
+    vector<vector<int>>dir{{1,0},{-1,0},{0,1},{0,-1}};
 public:
     int numIslands(vector<vector<char>>& grid) {
         int m=grid.size();
         int n=grid[0].size();
+        vector<vector<bool>>visited(m,vector<bool>(n,false));
         int answer=0;
-        for(int currRow=0;currRow<m;currRow++)
+        
+        for(int i=0;i<m;i++)
         {
-            for(int currCol=0;currCol <n;currCol++)
+            for(int j=0;j<n;j++)
             {
-                if(grid[currRow][currCol]=='1')
+                if(visited[i][j]==false && grid[i][j]=='1')
                 {
-                      sinkIsland(currRow,currCol,m,n,grid);
-                          answer+=1;
+                    fillIsland(i,j,m,n,grid,visited);
+                        answer++;
                 }
             }
         }
+        
         return answer;
         
         
     }
     
-    
-    void sinkIsland(int currRow,int currCol,int m,int n,vector<vector<char>>& grid)
+    void fillIsland(int currRow,int currCol,int m,int n,vector<vector<char>>& grid, vector<vector<bool>>& visited)
     {
-        if(currRow<0 || currRow >=m || currCol <0 || currCol >=n || grid[currRow][currCol]!='1'){
-            return ;
+        if(isValid(currRow,currCol,m,n,grid,visited))
+        {
+            visited[currRow][currCol]=true;
+             for(auto eachDir:dir)
+             {
+                 int nextRow=currRow+eachDir[0];
+                 int nextCol=currCol+eachDir[1];
+                 
+                 fillIsland(nextRow,nextCol,m,n,grid,visited);
+             }
+            
         }
-        
-        
-        grid[currRow][currCol]='0'; 
-        
-        sinkIsland(currRow+1,currCol,m,n,grid);
-        sinkIsland(currRow-1,currCol,m,n,grid);
-        sinkIsland(currRow,currCol-1,m,n,grid);
-        sinkIsland(currRow,currCol+1,m,n,grid);
-        
-        return;
-        
-        
-        
+        return ;
     }
+    
+    
+    bool isValid(int currRow,int currCol,int m,int n,vector<vector<char>>& grid, vector<vector<bool>>& visited)
+    {
+        return (currRow >= 0 && currRow <m && currCol >=0 && currCol <n && visited[currRow][currCol]==false && grid[currRow][currCol]=='1');
+    };
 };
