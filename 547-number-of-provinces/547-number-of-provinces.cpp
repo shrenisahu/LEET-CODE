@@ -9,7 +9,7 @@ public:
        {
            if(visited[currCity]==false)
            {
-               DFS(currCity,isConnected,visited);
+               BFS(currCity,isConnected,visited);
                answer++;
            }
                
@@ -19,24 +19,38 @@ public:
         
     }
     
-    void DFS(int currCity,vector<vector<int>>& isConnected,vector<bool>&visited )
+    void BFS(int currCity,vector<vector<int>>& isConnected,vector<bool>&visited )
     {
-        if(visited[currCity]==true)
-            return ;
         
-        visited[currCity]=true;
+        queue<int>que;
+        que.push(currCity);
         
-        vector<int>neighbour=isConnected[currCity];
         
-        for(int i=0;i<neighbour.size();i++)
+        while(!que.empty())
         {
-            if(neighbour[i]==1)
+            
+            int currVertex=que.front();
+            que.pop();
+            
+            if(visited[currVertex]==true)
+                continue ;
+            visited[currVertex]=true;
+            vector<int>neighbour=isConnected[currVertex];
+            
+            for(int i=0;i<neighbour.size();i++)
             {
-                DFS(i,isConnected,visited);
+                if(neighbour[i]==1)
+                {
+                    que.push(i);
+                }
             }
+            
+            
         }
         
         return ;
+        
+        
     }
     
 };
