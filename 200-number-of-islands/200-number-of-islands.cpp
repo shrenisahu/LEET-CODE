@@ -53,13 +53,12 @@ class Solution
               
                 if(isValid(nextRow,nextCol,m,n,grid))
                 {
-                    if(grid[nextRow][nextCol]=='1')
-                    {
+                    
 
                         grid[nextRow][nextCol]='0';
                         que.push({nextRow,nextCol});
                     
-                    }
+                    
                 }
                     
                 
@@ -70,7 +69,7 @@ class Solution
 
 bool isValid(int currRow, int currCol, int m, int n, vector<vector < char>> &grid)
 {
-   if(currRow <0 || currCol <0 || currRow >=m || currCol >=n)
+   if(currRow <0 || currCol <0 || currRow >=m || currCol >=n || grid[currRow][currCol]!='1')
        return false;
     return true;
 }
