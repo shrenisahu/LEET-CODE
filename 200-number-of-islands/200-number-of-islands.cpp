@@ -1,49 +1,77 @@
-class Solution {
-    vector<vector<int>>dir{{1,0},{-1,0},{0,1},{0,-1}};
-public:
-    int numIslands(vector<vector<char>>& grid) {
-        int m=grid.size();
-        int n=grid[0].size();
-        vector<vector<bool>>visited(m,vector<bool>(n,false));
-        int answer=0;
-        
-        for(int i=0;i<m;i++)
+class Solution
+{
+
+    vector<vector < int>> dir
+    {
+        { 1,
+            0 },
+        { -1,
+            0 },
+        { 0,
+            1 },
+        { 0,
+            -1 }
+    };
+    public:
+        int numIslands(vector<vector < char>> &grid)
         {
-            for(int j=0;j<n;j++)
+            int m = grid.size();
+            int n = grid[0].size();
+            int answer = 0;
+            for (int currRow = 0; currRow < m; currRow++)
             {
-                if(visited[i][j]==false && grid[i][j]=='1')
+                for (int currCol = 0; currCol < n; currCol++)
                 {
-                    fillIsland(i,j,m,n,grid,visited);
-                        answer++;
+                    if (grid[currRow][currCol] == '1')
+                    {
+                        sinkIsland(currRow, currCol, m, n, grid);
+                        answer += 1;
+                    }
                 }
             }
+            return answer;
         }
-        
-        return answer;
-        
-        
-    }
-    
-    void fillIsland(int currRow,int currCol,int m,int n,vector<vector<char>>& grid, vector<vector<bool>>& visited)
+
+    void sinkIsland(int currRow, int currCol, int m, int n, vector<vector < char>> &grid)
     {
-        if(isValid(currRow,currCol,m,n,grid,visited))
+        grid[currRow][currCol] = '0';
+        queue<pair<int, int>> que;
+        que.push({ currRow,currCol });
+        
+        while (!que.empty())
         {
-            visited[currRow][currCol]=true;
-             for(auto eachDir:dir)
-             {
-                 int nextRow=currRow+eachDir[0];
-                 int nextCol=currCol+eachDir[1];
-                 
-                 fillIsland(nextRow,nextCol,m,n,grid,visited);
+            int Row = que.front().first;
+            int Col = que.front().second;
+                    
+            que.pop();
+            for(int i=0;i<dir.size();i++)
+            {
+                int nextRow=Row+dir[i][0];
+                int nextCol=Col+dir[i][1];
+               
+                
+              
+                if(isValid(nextRow,nextCol,m,n,grid))
+                {
+                    if(grid[nextRow][nextCol]=='1')
+                    {
+
+                        grid[nextRow][nextCol]='0';
+                        que.push({nextRow,nextCol});
+                    
+                    }
+                }
+                    
+                
              }
-            
         }
-        return ;
     }
-    
-    
-    bool isValid(int currRow,int currCol,int m,int n,vector<vector<char>>& grid, vector<vector<bool>>& visited)
-    {
-        return (currRow >= 0 && currRow <m && currCol >=0 && currCol <n && visited[currRow][currCol]==false && grid[currRow][currCol]=='1');
-    };
+
+
+bool isValid(int currRow, int currCol, int m, int n, vector<vector < char>> &grid)
+{
+   if(currRow <0 || currCol <0 || currRow >=m || currCol >=n)
+       return false;
+    return true;
+}
 };
