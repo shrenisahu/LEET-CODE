@@ -14,7 +14,7 @@ class Solution
         // Code here
         vector<int>cost(V,-1);
        
-       priority_queue<pi, vector<pi>, greater<pi> > que;
+       priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>> > que;
         que.push({0,S});  // cost ,node
         
         while(!que.empty())
