@@ -11,7 +11,7 @@ public:
         return answer;
     }
     
-    void printPermutations(vector<int>& nums, int currIndex ,vector<int>currConfig, set<vector<int>>&stt, vector<vector<int>> &answer)
+    void printPermutations(vector<int>& nums, int currIndex ,vector<int>&currConfig, set<vector<int>>&stt, vector<vector<int>> &answer)
     {
         
         if(currIndex>=nums.size())
