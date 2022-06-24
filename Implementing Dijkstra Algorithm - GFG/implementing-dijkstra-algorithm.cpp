@@ -10,38 +10,37 @@ class Solution
     //from the source vertex S.
     vector <int> dijkstra(int V, vector<vector<int>> adj[], int S)
     {
-        typedef pair<int, int> pi;
-        // Code here
-        vector<int>cost(V,-1);
-       
-       priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>> > que;
-        que.push({0,S});  // cost ,node
+        typedef pair<int,int>pi;
+        vector<int>cost(V+1,-1);
         
+       
+        
+        priority_queue<pi,vector<pi>,greater<pi>>que;
+         que.push({0,S});
         while(!que.empty())
         {
             auto currPair=que.top();
             que.pop();
-            int currVertex=currPair.second;
             int currCost=currPair.first;
+            int currVertex=currPair.second;
             
             if(cost[currVertex]!=-1)
-            {
-                continue;
-            }
-            cost[currVertex]=currCost;
+            continue;
             
-            vector<vector<int>>neigh=adj[currVertex];
-            for(auto temp:neigh)
+            
+            cost[currVertex]=currCost;
+            vector<vector<int>>neighbours=adj[currVertex];
+            for(auto currNeigh:neighbours)
             {
-                int nextVertex=temp[0];
-                int nextCost=temp[1];
-                int newCost=nextCost+currCost;
-                que.push({newCost,nextVertex});
+               int nextVertex=currNeigh[0];
+               int nextCost=currNeigh[1];
+               que.push({nextCost+currCost,nextVertex});
             }
+            
         }
-       
+        
         return cost;
-
+        // Code here
     }
 };
 
