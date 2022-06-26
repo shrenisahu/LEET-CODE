@@ -10,8 +10,9 @@ public:
             for(int currCol=0;currCol <n ; currCol++)
             {
                 
-                if(board[currRow][currCol]==word[0] && DFS(currRow,currCol,0,m,n,board,word))
+                if(board[currRow][currCol]==word[0])
                 {
+                if(  DFS(currRow,currCol,0,m,n,board,word))
                     return true;
                 }
             }
