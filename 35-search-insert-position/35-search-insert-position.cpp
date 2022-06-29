@@ -4,11 +4,8 @@ public:
         
         int start=0;
         int end=nums.size()-1;
-        if(target<nums[start])
-            return start;
-        if(target>nums[end])
-            return end+1;
-        
+     
+        int ans=-1;
         while(start<=end)
         {
             int mid=start+(end-start)/2;
@@ -18,6 +15,7 @@ public:
             
             else if(nums[mid]>target)
             {
+                ans=mid;
                 end=mid-1;
                 
             }
@@ -26,15 +24,10 @@ public:
             
         }
         
-        if(nums[end]>target)
-        {
-            return end-1;
-        }
-        else if(nums[end]<target)
-        {
-            return end+1;
-        }
-        return 0;
+      if(ans==-1)
+          return nums.size();
+        
+        return ans;
     }
     
     
