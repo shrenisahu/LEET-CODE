@@ -10,9 +10,10 @@ class Solution {
         // code here
         vector<bool>visited(V,false);
         vector<bool>recursiveStack(V,false);
+        unordered_set<int>stt;
         for(int i=0;i<V;i++)
         {
-            if(visited[i]==false && hasCycle(i,visited,recursiveStack,adj))
+            if(visited[i]==false && hasCycle(i,visited,recursiveStack,adj,stt))
             return true;
         }
         
@@ -20,9 +21,10 @@ class Solution {
     }
     
     
-    bool hasCycle(int currVertex, vector<bool>&visited, vector<bool>&recursiveStack,vector<int> adj[])
+    bool hasCycle(int currVertex, vector<bool>&visited, vector<bool>&recursiveStack,vector<int> adj[], unordered_set<int>&stt)
     {
         visited[currVertex]=true;
+        stt.insert(currVertex);
         recursiveStack[currVertex]=true;
         
         vector<int>neigh=adj[currVertex];
@@ -30,13 +32,13 @@ class Solution {
         {
             if(visited[eachNeigh]==false)
             {
-                if(hasCycle(eachNeigh,visited, recursiveStack,adj))
+                if(hasCycle(eachNeigh,visited, recursiveStack,adj,stt))
                 return true;
             }
             
             else 
             {
-                if( recursiveStack[eachNeigh]==true)
+                if( stt.find(eachNeigh)!=stt.end())
                 return true;
                 
                
@@ -44,7 +46,7 @@ class Solution {
         }
         
         
-        
+        stt.erase(currVertex);
          recursiveStack[currVertex]=false;
          return false;
     }
