@@ -11,8 +11,8 @@ public:
        {
            int units=eachBox[1];
            int boxes=eachBox[0];
-           if(truckSize==0)
-               return ans;
+           // if(truckSize==0)
+           //     return ans;
            if(truckSize>=boxes)
            {
                ans=ans+(units*boxes);
