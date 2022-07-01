@@ -7,49 +7,52 @@ class Solution {
   public:
     // Function to detect cycle in a directed graph.
     bool isCyclic(int V, vector<int> adj[]) {
-        // code here
-        vector<bool>visited(V,false);
-        vector<bool>recursiveStack(V,false);
-        unordered_set<int>stt;
+        vector<int>visited(V,false);
+        vector<int>inDegree(V,0);
+        queue<int>que;
+        int vistedVertices=0;
         for(int i=0;i<V;i++)
         {
-            if(visited[i]==false && hasCycle(i,visited,recursiveStack,adj,stt))
-            return true;
+            vector<int>neigh=adj[i];
+            for(auto eachNeigh:neigh)
+            {
+                inDegree[eachNeigh]++;
+            }
+            
         }
         
-        return false;
-    }
-    
-    
-    bool hasCycle(int currVertex, vector<bool>&visited, vector<bool>&recursiveStack,vector<int> adj[], unordered_set<int>&stt)
-    {
+        for(int i=0;i<V;i++)
+        {
+            if(inDegree[i]==0)
+            que.push(i);
+        }
+        
+       while(!que.empty())
+       {
+        int currVertex=que.front();
+        que.pop();
+        if(visited[currVertex])
+        continue;
         visited[currVertex]=true;
-        stt.insert(currVertex);
-        recursiveStack[currVertex]=true;
+        vistedVertices+=1;
         
         vector<int>neigh=adj[currVertex];
         for(auto eachNeigh:neigh)
         {
-            if(visited[eachNeigh]==false)
-            {
-                if(hasCycle(eachNeigh,visited, recursiveStack,adj,stt))
-                return true;
-            }
+            inDegree[eachNeigh]--;
+            if(inDegree[eachNeigh]==0)
+            que.push(eachNeigh);
             
-            else 
-            {
-                if( stt.find(eachNeigh)!=stt.end())
-                return true;
-                
-               
-            }
         }
+       }
+        if(vistedVertices==V)
+        return false;
         
+        return true;
         
-        stt.erase(currVertex);
-         recursiveStack[currVertex]=false;
-         return false;
     }
+    
+   
 };
 
 // { Driver Code Starts.
