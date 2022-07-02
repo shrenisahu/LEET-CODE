@@ -13,33 +13,47 @@ class Solution {
         {
             if(visited[currVertex]==false)
             {
-               if( DFS(currVertex,-1,visited,adj))
+               if( BFS(currVertex,-1,visited,adj))
                return true;
             }
         }
         return false;
     }
     
-    bool DFS(int currVertex,int currParent,vector<bool>&visited,vector<int> adj[])
+    bool BFS(int currVertex,int currParent,vector<bool>&visited,vector<int> adj[])
     {
-        visited[currVertex]=true;
+        queue<pair<int,int>>que;
+        que.push({currVertex,-1});
         
-        vector<int>neigh=adj[currVertex];
-        
-        for(auto eachNode:neigh)
+        while(!que.empty())
         {
-            if(visited[eachNode]==false)
+            auto currPair=que.front();
+            int currNode=currPair.first;
+            int Parent=currPair.second;
+            que.pop();
+            if(visited[currNode])
+            continue;
+            
+            visited[currNode]=true;
+            vector<int>neigh=adj[currNode];
+            
+            for(auto eachNeigh:neigh)
             {
-                if(DFS(eachNode,currVertex,visited,adj))
-                return true;
+                if(visited[eachNeigh]==false)
+                {
+                    que.push({eachNeigh,currNode});
+                }
+                else 
+                {
+                    if(eachNeigh!=Parent)
+                    return true;
+                }
             }
-            else 
-            {
-                if(eachNode!=currParent)
-                return true;
-            }
+        
         }
+        
         return false;
+        
     }
     
 };
