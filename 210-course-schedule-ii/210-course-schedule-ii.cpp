@@ -1,50 +1,54 @@
 class Solution {
 public:
+    vector<int>ans;
     vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
         vector<vector<int>>graph=createGraph(numCourses,prerequisites);
-        vector<int>ans;
+         unordered_set<int>stt;
         vector<bool>visited(numCourses,false);
-        queue<int>que;
-        vector<int>inDegree(numCourses,0);
         
-       for(int i=0;i<numCourses;i++)
-       {
-           vector<int>neigh=graph[i];
-           
-           for(auto eachNeigh:neigh)
-           {
-               inDegree[eachNeigh]++;
-           }
-       }
-      
-        for(int i=0;i<numCourses;i++)
+        
+ for(int i=0;i<numCourses;i++)
         {
-            if(inDegree[i]==0)
-                que.push(i);
+            if(visited[i]==false)
+            {
+                if(DFS(i,visited,stt,graph))
+                    return vector<int>{};
+            }
         }
-       while(!que.empty())
-       {
-           int currNode=que.front();
-           que.pop();
-           if(visited[currNode])
-               continue;
-           visited[currNode]=true;
-           ans.push_back(currNode);
-           vector<int>neigh=graph[currNode];
-           for(auto eachNeigh:neigh)
-           {
-               inDegree[eachNeigh]--;
-               if(inDegree[eachNeigh]==0)
-                   que.push(eachNeigh);
-               
-           }
-           
-           
-       }
-        if(ans.size()!=numCourses)
-            return vector<int>{};
+        // sort(ans.begin(),ans.end());
         return ans;
+      
+       
+        
+       
     }
+      bool DFS(int currVertex,vector<bool>&visited,unordered_set<int>&stt,vector<vector<int>>&graph)
+    {
+        visited[currVertex]=true;
+        stt.insert(currVertex);
+        
+        vector<int>neigh=graph[currVertex];
+        
+        for(auto eachNeigh:neigh)
+        {
+            if(visited[eachNeigh]==false)
+            {
+                if(DFS(eachNeigh,visited,stt,graph))
+                    return true;
+            }
+            else {
+                if(stt.find(eachNeigh)!=stt.end())
+                    return true;
+            }
+            
+        }
+        ans.push_back(currVertex);
+        stt.erase(currVertex);
+        return false;
+        
+        
+    }
+    
       vector<vector<int>> createGraph(int numCourses, vector<vector<int>>& prerequisites)
           {
           vector<vector<int>>graph;
@@ -57,8 +61,8 @@ public:
          
           for(auto eachCourse:prerequisites)
           {
-              int a=eachCourse[0];
-              int b=eachCourse[1];
+              int a=eachCourse[1];
+              int b=eachCourse[0];
               vector<int>temp;
               temp= graph[b];
               temp.push_back(a);
