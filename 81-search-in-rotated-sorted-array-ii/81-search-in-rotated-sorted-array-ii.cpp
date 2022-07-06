@@ -15,7 +15,8 @@ public:
             {
                 start=start+1;
             }
-            
+            while(end > mid && nums[end]==nums[mid])
+                end--;
             if(nums[start] <= nums[mid] )
             {
                 if(nums[start]<=target && nums[mid] >target)
