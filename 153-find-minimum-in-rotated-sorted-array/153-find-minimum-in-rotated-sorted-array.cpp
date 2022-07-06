@@ -16,10 +16,10 @@ public:
                
                 return nums[mid+1];
             }
-           else  if(nums[mid] <nums[mid-1])
+            if(nums[mid] <nums[mid-1])
                 return nums[mid];
             
-          else   if(nums[start]<= nums[mid]){
+            if(nums[start]<= nums[mid]){
                cout<<"here";
                start=mid+1;
           }
