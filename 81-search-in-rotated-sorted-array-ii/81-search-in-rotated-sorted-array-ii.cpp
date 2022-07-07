@@ -11,13 +11,22 @@ public:
             if(nums[mid]==target)
                 return true;
             
-            while(nums[start]==nums[mid] && start<mid)
-            {
-                start=start+1;
-            }
-            while(end > mid && nums[end]==nums[mid])
+            // while(nums[start]==nums[mid] && start<mid)
+            // {
+            //     start=start+1;
+            // }
+            while(end > mid && nums[end]==nums[mid]) // small optimization
                 end--;
-            if(nums[start] <= nums[mid] )
+            
+            
+            if(nums[mid]<=nums[end])
+            {
+                 if(nums[mid]<target && nums[end ] >= target)
+                    start=mid+1;
+                
+                else end=mid-1;
+            }
+           else  if(nums[start] <= nums[mid] )
             {
                 if(nums[start]<=target && nums[mid] >target)
                 {
@@ -25,14 +34,7 @@ public:
                 }
                 else start=mid+1;
             }
-            else 
-            {
-                if(nums[mid]<target && nums[end ] >= target)
-                    start=mid+1;
-                
-                else end=mid-1;
-                
-            }
+           
         }
         
         
