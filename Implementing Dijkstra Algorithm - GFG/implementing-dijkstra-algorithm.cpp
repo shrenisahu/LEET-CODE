@@ -5,43 +5,47 @@ using namespace std;
  // } Driver Code Ends
 class Solution
 {
+    
 	public:
 	//Function to find the shortest distance of all the vertices
     //from the source vertex S.
     vector <int> dijkstra(int V, vector<vector<int>> adj[], int S)
     {
         typedef pair<int,int>pi;
-        vector<int>cost(V+1,-1);
-        
-       
-        
+        vector <int> cost(V,-1);
         priority_queue<pi,vector<pi>,greater<pi>>que;
-         que.push({0,S});
+        que.push({0,S});
+        
         while(!que.empty())
         {
             auto currPair=que.top();
             que.pop();
+            
             int currCost=currPair.first;
             int currVertex=currPair.second;
             
             if(cost[currVertex]!=-1)
-            continue;
-            
-            
-            cost[currVertex]=currCost;
-            vector<vector<int>>neighbours=adj[currVertex];
-            for(auto currNeigh:neighbours)
             {
-               int nextVertex=currNeigh[0];
-               int nextCost=currNeigh[1];
-               que.push({nextCost+currCost,nextVertex});
+                continue;
+                
             }
+            cost[currVertex]=currCost;
+            
+           
+                vector<vector<int>>Neigh=adj[currVertex];
+                for(auto eachNeigh:Neigh)
+                {
+                    int newVertex=eachNeigh[0];
+                    int newCost=eachNeigh[1];
+                    
+                    que.push({currCost+newCost,newVertex});
+                }
             
         }
-        
         return cost;
-        // Code here
     }
+    
+    
 };
 
 
