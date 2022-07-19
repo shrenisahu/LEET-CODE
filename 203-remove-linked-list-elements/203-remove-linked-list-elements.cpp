@@ -24,7 +24,8 @@ public:
             {
                 ListNode *tempNode=currNode->next;
                 prev->next=currNode->next;
-                currNode=currNode->next;
+                currNode->next=NULL;
+                currNode=tempNode;
                 
             }
             else 
