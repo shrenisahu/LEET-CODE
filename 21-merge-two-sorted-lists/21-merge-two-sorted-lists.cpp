@@ -21,14 +21,14 @@ public:
             if(p1->val < p2->val)
             {
                 ListNode *newNode=new  ListNode(p1->val);
-                result->next=p1;
+                result->next=newNode;
                 p1=p1->next;
                 result=result->next;
             }
             else 
             {
                  ListNode *newNode=new  ListNode(p2->val);
-                 result->next=p2;
+                 result->next=newNode;
                   p2=p2->next;
                 result=result->next;
             }
