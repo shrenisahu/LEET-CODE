@@ -29,7 +29,7 @@ public:
         return compareList(head,newList);
         
     }
-    bool compareList(ListNode *list1 ,ListNode *list2)
+    bool compareList(ListNode *&list1 ,ListNode *&list2)
     {
        while(list1!=NULL && list2!=NULL)
        {
@@ -41,7 +41,7 @@ public:
        }
         return true;
     }
-    ListNode *reverseList(ListNode *head)
+    ListNode *reverseList(ListNode *&head)
     {
         ListNode *dummyNode=new ListNode(-1);
         dummyNode->next=head;
