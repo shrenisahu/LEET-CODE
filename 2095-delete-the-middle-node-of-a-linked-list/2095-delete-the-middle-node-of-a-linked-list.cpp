@@ -13,7 +13,8 @@ class Solution
     public:
         ListNode* deleteMiddle(ListNode *head)
         {
-             
+             if(head->next==NULL)
+                 return NULL;
             ListNode *dummyNode=new ListNode(-1);
             dummyNode->next=head;
             ListNode *slowPtr = dummyNode;
