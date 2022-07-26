@@ -23,8 +23,9 @@ class Solution
     {
         queue<pair<int, int>> que;
 
-        que.push({ Vertex,1});
-        nums[Vertex]=1;
+        que.push({ Vertex,
+            1 });
+       	
         while (!que.empty())
         {
             auto currPair = que.front();
@@ -37,21 +38,18 @@ class Solution
             {
                 if (nums[currVertex] != currColor)
                     return false;
-                  
             }
-           else
-           {
-                nums[currVertex] = currColor;
-           }
-            vector<int> neigh = graph[currVertex];
-          
-            for (auto eachNeigh: neigh)
+            else
             {
-                if(nums[eachNeigh]==-1)
-                que.push({ eachNeigh,1 - currColor });
+                nums[currVertex] = currColor;
+
+                vector<int> neigh = graph[currVertex];
+
+                for (auto eachNeigh: neigh)
+                    que.push({ eachNeigh,
+                        1 - currColor });
             }
-          
         }
-          return true;
+        return true;
     }
 };
