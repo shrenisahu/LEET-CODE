@@ -1,5 +1,16 @@
 class Solution
 {
+    class Pair{
+        
+        public:
+        int first;
+        int second;
+        Pair(int a,int b)
+        {
+            first=a;
+            second=b;
+        }
+    };
     public:
         bool possibleBipartition(int n, vector<vector < int>> &dislikes)
         {
@@ -9,13 +20,47 @@ class Solution
             for (int i = 1; i <= n; i++) {
                 if(colors[i]!=-1)
                     continue;
-               if( !isCycleEven(i,0,colors,Graph))
+               if( !BFS(i,0,colors,Graph))
                    return false;
                 
             }
 
             return true;
         }
+    
+    bool BFS(int vertex,int color,vector<int> &colors,vector<vector< int>> &Graph)
+    {
+        queue<pair<int,int>>que;
+        que.push({vertex,color});
+        
+        while(!que.empty())
+        {
+            auto currPair=que.front();
+            que.pop();
+            int currVertex=currPair.first;
+            int currColor=currPair.second;
+            
+            if(colors[currVertex]!=-1)
+            {
+                if(colors[currVertex]!=currColor)
+                    return false;
+            }
+            else 
+            {
+                colors[currVertex]=currColor;
+                vector<int>neigh=Graph[currVertex];
+                for(auto eachNeigh:neigh)
+                {
+                    // if( colors[currVertex]==-1)
+                    que.push({eachNeigh,1-currColor});
+                    
+                }
+            }
+            
+        }
+        
+        return true;
+    }
 
     bool isCycleEven(int currVertex, int currColor, vector<int> &colors, vector<vector< int>> &Graph)
     {
