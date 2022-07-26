@@ -1,43 +1,39 @@
-class Solution {
-public:
-    bool isBipartite(vector<vector<int>>& graph) {
-        int n=graph.size();
-        vector<int>color(n,-1);
-        
-        for(int currVertex=0;currVertex<n;currVertex++)
+class Solution
+{
+    public:
+        bool isBipartite(vector<vector < int>> &graph)
         {
-            if(color[currVertex]!=-1)
-                continue;
-            
-            if(!hasEvenCycle(currVertex,0,graph,color))
+            int v = graph.size();
+
+            vector<int> colors(v, -1);
+
+            for (int i = 0; i < v; i++)
             {
-                return false;
+                if (colors[i] == -1) {
+                    if(!isCycleEven(graph,v,i,0,colors))
+                        return false;
+                }
             }
+            return true;
         }
-        
-        return true;
-    }
-    
-    
-    bool hasEvenCycle(int currVertex,int currColor,vector<vector<int>>& graph, vector<int>&color )
+
+    bool isCycleEven(vector<vector < int>> &graph, int v, int currVertex, int currColor, vector< int > &colors)
     {
-        if(color[currVertex]!=-1)
-        {
-            if(color[currVertex]==currColor)
-                return true;
-             return false;
-        }
-        
-        color[currVertex]=currColor;
-        
-        vector<int>neigh=graph[currVertex];
-         for(auto eachNeigh:neigh)
-         {
-             if(!hasEvenCycle(eachNeigh,1-currColor,graph,color))
-                 return false;
-         }
-        
-        return true;
+        if (colors[currVertex] != -1)
+
+            return (colors[currVertex] == currColor);
+
+    colors[currVertex] = currColor;
+    vector<int> neigh = graph[currVertex];
+    for (auto eachNeigh: neigh)
+    {
+       if (!isCycleEven(graph, v, eachNeigh, 1 - currColor, colors))
+        return false;
+
     }
-    
+        return true;
+
+   
+}
+
 };
