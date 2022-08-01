@@ -4,11 +4,16 @@ class Solution
     public:
         int uniquePaths(int m, int n)
         {
-            int currRow = 0;
-            int currCol = 0;
-            int count = 0;
-            vector<vector<int>>dp(m+1,vector<int>(n+1,-1));
-            int ans= DFS(0, 0, m, n,dp);
+            int totalSteps=(m-1)+(n-1);
+            
+            long  ans=1;
+            
+            int c=min(n,m)-1; // 
+            for(int i=1;i<=c;i++)
+            {
+                ans=ans*(totalSteps-i+1) / i;
+            }
+         
             
            
             return ans;
