@@ -7,48 +7,46 @@ class Solution
             int n = edges.size();
 
             vector<bool> visited(n, false);
-            vector<int> Graph[n];
-
-           	for(int i=0;i < n;i++)
-           	{
-           	    if(edges[i]!=-1)
-           	    {
-           	        Graph[i].push_back(edges[i]);
-           	    }
-           	}
 
             for (int currVertex = 0; currVertex < n; currVertex++)
             {
 
                 if (visited[currVertex] == false)
                 {
-                    unordered_map<int, int> mpp;
-                    DFS(currVertex, visited, mpp, 0, Graph);
+                    vector<int> store;
+                    DFS(currVertex, visited, store, edges);
                 }
             }
 
             return maxCycleLength;
         }
 
-    void DFS(int currVertex, vector<bool> &visited, unordered_map<int, int> &mpp, int pathLength, vector< int > edges[])
+    void DFS(int currVertex,vector<bool> &visited,vector<int>&store,vector<int> &edges)
     {
+        if (currVertex == -1) return;
+
         if (visited[currVertex])
         {
-            if (mpp.find(currVertex) != mpp.end())
+           int  count = -1;
+            for (int i = 0; i < store.size(); i++)
             {
-                int temp = pathLength - mpp[currVertex];
-                maxCycleLength = max(maxCycleLength, temp);
+                if (store[i] == currVertex)
+                {
+                    count = i;
+                    break;
+
+                }
             }
+
+            if (count == -1)
+                return;
+            int num=store.size() - count;
+            maxCycleLength = max(maxCycleLength, num);
             return;
         }
+
         visited[currVertex] = true;
-        mpp[currVertex] = pathLength;
-        pathLength++;
-
-       vector<int>neigh=edges[currVertex];
-        for(auto eachNeigh:neigh)
-            DFS(eachNeigh, visited, mpp, pathLength, edges);
-
-        return;
-    }
-};
+        store.push_back(currVertex);
+        DFS(edges[currVertex], visited, store, edges);
+        }
+    };
