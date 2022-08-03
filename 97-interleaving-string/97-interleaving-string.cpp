@@ -1,24 +1,33 @@
-class Solution {
-public:
-    bool isInterleave(string s1, string s2, string s3) {
-    
-    if(s3.length() != s1.length() + s2.length())
-        return false;
-    
-    bool table[s1.length()+1][s2.length()+1];
-    
-    for(int i=0; i<s1.length()+1; i++)
-        for(int j=0; j< s2.length()+1; j++){
-            if(i==0 && j==0)
-                table[i][j] = true;
-            else if(i == 0)
-                table[i][j] = ( table[i][j-1] && s2[j-1] == s3[i+j-1]);
-            else if(j == 0)
-                table[i][j] = ( table[i-1][j] && s1[i-1] == s3[i+j-1]);
-            else
-                table[i][j] = (table[i-1][j] && s1[i-1] == s3[i+j-1] ) || (table[i][j-1] && s2[j-1] == s3[i+j-1] );
+class Solution
+{
+    public:
+        bool isInterleave(string s1, string s2, string s3)
+        {
+            unordered_map<string ,bool>mpp;
+            return isSolve(s1, s2, s3, 0, 0, 0,mpp);
         }
+
+    bool isSolve(string s1, string s2, string s3, int p1, int p2, int p3, unordered_map<string ,bool>&mpp)
+    {
+
+        if (p1 >= s1.size() && p2 >= s2.size() && p3 >= s3.size())
+            return true;
         
-    return table[s1.length()][s2.length()];
-}
+        string key=to_string(p1)+'#'+to_string(p2)+'#'+to_string(p3);
+        if(mpp.find(key)!=mpp.end())
+            return mpp[key];
+
+        bool ans1 = false;
+        bool ans2 = false;
+        if (p1 < s1.size() && s1[p1] == s3[p3])
+        {
+            ans1 = isSolve(s1, s2, s3, p1 + 1, p2, p3 + 1,mpp);
+        }
+        if (p2 < s2.size() && s2[p2] == s3[p3])
+        {
+            ans2 = isSolve(s1, s2, s3, p1, p2 + 1, p3 + 1,mpp);
+        }
+
+        return mpp[key]=ans1 || ans2;
+    }
 };
