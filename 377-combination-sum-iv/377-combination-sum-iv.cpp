@@ -3,37 +3,23 @@ class Solution
     public:
         int combinationSum4(vector<int> &nums, int target)
         {
-
-            int n=nums.size();
-            vector<vector<int>>dp(target+1,vector<int>(n+1,-1));
-            
-            int currSum = target;
-            int currIndex = 0;
-            return findCombination(currIndex, currSum,  nums, dp);
+            int n = target;
+            vector<int> dp(n + 1, -1);
+            return PossibleCombo(target, nums, dp);
         }
 
-    int findCombination(int currIndex, int currSum,  vector<int> &nums,   vector<vector<int>>&dp)
+    int PossibleCombo(int target, vector<int> &nums, vector<int> &dp)
     {
-        if (currSum == 0)
-        {
-          
-                return 1;
-        }
-
-        if (currIndex >= nums.size())
+        if (target < 0)
             return 0;
-        if(dp[currSum][currIndex]!=-1)
-            return dp[currSum][currIndex];
-        int consider = 0;
-        int notConsider = findCombination(currIndex + 1, currSum, nums, dp);
-        if (currSum >= nums[currIndex])
-        {
-            
+        if (target == 0)
+            return 1;
+if(dp[target]!=-1)
+    return dp[target];
+        int ans = 0;
+        for (auto i: nums)
+            ans += PossibleCombo(target - i, nums, dp);
 
-            consider = findCombination(0, currSum - nums[currIndex], nums, dp);
-        }
-       
-
-        return dp[currSum][currIndex]=consider + notConsider;
+        return dp[target]=ans;
     }
 };
