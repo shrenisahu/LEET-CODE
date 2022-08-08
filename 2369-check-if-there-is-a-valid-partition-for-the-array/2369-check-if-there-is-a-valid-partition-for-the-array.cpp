@@ -9,8 +9,8 @@ class Solution
 
     bool isPartition(int start, vector<int> &nums, vector<int> &dp)
     {
-        if (start > nums.size())
-            return false;
+        // if (start > nums.size())
+        //     return false;
         if (start == nums.size())
             return true;
         if (dp[start] != -1)
