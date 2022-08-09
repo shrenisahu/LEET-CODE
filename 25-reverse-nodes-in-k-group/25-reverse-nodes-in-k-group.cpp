@@ -16,20 +16,13 @@ class Solution
             if (k == 1 || head == NULL)
                 return head;
 
-            bool check = validate(head, k);
-           	
-            if (check)
+            ListNode *check = validate(head, k);
+
+            if (check != NULL)
             {
 
-                ListNode *curr = head;
-                int currLength = 1;
+                ListNode *curr = check;
 
-                while (curr->next != NULL && currLength < k)
-                {
-                    currLength++;
-                    curr = curr->next;
-                }
-                cout << currLength << ",";
                 ListNode *tempNode = curr->next;
                 curr->next = NULL;
 
@@ -58,7 +51,7 @@ class Solution
         return prev;
     }
 
-    bool validate(ListNode *head, int k)
+    ListNode* validate(ListNode *head, int k)
     {
         ListNode *curr = head;
         int currLength = 1;
@@ -69,7 +62,7 @@ class Solution
             curr = curr->next;
         }
         if (currLength == k)
-            return true;
-        return false;
+            return curr;
+        return NULL;
     }
 };
