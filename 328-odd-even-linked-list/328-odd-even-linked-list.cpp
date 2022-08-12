@@ -13,22 +13,39 @@ class Solution
     public:
         ListNode* oddEvenList(ListNode *head)
         {
-            if (head == NULL || head->next == NULL || head->next->next == NULL)
+            if(head==NULL)
                 return head;
-            ListNode *oddHead = head;
-            ListNode *evenHead = head->next;
-            ListNode *oddPtr = oddHead;
-            ListNode *evenPtr = evenHead;
 
-            while (evenPtr != NULL && evenPtr->next != NULL)
+            int numberOfJumpsToREachEnd = 0;
+            int LoopVar = 0;
+
+            ListNode *currNode = head;
+            
+            while (currNode->next)
             {
-
-                oddPtr->next = oddPtr->next->next;
-                evenPtr->next= evenPtr->next->next;
-                oddPtr = oddPtr->next;
-                evenPtr = evenPtr->next;
+                numberOfJumpsToREachEnd++;
+                currNode = currNode->next;
+                
             }
-            oddPtr->next = evenHead;
+            if (numberOfJumpsToREachEnd % 2 == 0)
+                LoopVar = numberOfJumpsToREachEnd / 2;
+            else
+            {
+                LoopVar = (numberOfJumpsToREachEnd + 1) / 2;
+            }
+            ListNode *start=head;
+            ListNode *end=currNode;
+            ListNode *temp=start;
+            
+            for(int i=0;i<LoopVar;i++)
+            {
+                end->next=temp->next;
+                temp->next=temp->next->next;
+                end->next->next=NULL;
+                temp=temp->next;
+                end=end->next;
+            }
+         
             return head;
         }
 };
