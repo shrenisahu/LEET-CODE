@@ -40,14 +40,14 @@ class LRUCache
     int get(int key)
     {
 
-        if (mpp.find(key) != mpp.end())
+        if (mpp.find(key) != mpp.end()) // if key is present in map we will push it o MRU from LRU and return key value;
         {
             Node *currNode = mpp[key];
             deleteAtFront(currNode);
             insertAtTail(currNode);
             return currNode->val;
         }
-        else
+        else // not in map return -1;
         {
             return -1;
         }
@@ -55,21 +55,21 @@ class LRUCache
 
     void put(int key, int value)
     {
-
-        if (currSize == size)
+  
+        if (currSize == size) // if the list if full .
         {
 
-            // deleteAtFront(head->next);
-            // mpp.erase(head->next->key);
-            if (mpp.find(key) != mpp.end())
+           
+            if (mpp.find(key) != mpp.end())  // if the element that we want to put in list is present in map then we need to delete it from its pos and insert it at MRU(insert at tail)
             {
-                Node *currNode = mpp[key];
+                Node *currNode = mpp[key]; // here we are deleting it
                 deleteAtFront(currNode);
+              
                 currSize -= 1;
                 mpp.erase(key);
                
             }
-            else
+            else // if size is full and element is not in map just delete the eleemnt at head
             {
                 Node *curr=head->next;
                 deleteAtFront(curr);
@@ -77,7 +77,7 @@ class LRUCache
                  currSize -= 1;
                 
             }
-            Node *newNode = new Node(key, value);
+            Node *newNode = new Node(key, value); // after deleting we will insert at tail
             insertAtTail(newNode);
             mpp[key] = newNode;
             currSize += 1;
