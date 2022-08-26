@@ -1,53 +1,53 @@
 class Node
 {
     public:
-        int val;
-    int key;
+        int key;
+    int val;
     Node * prev;
     Node * next;
+
     Node()
     {
-        prev = NULL;
         next = NULL;
+        prev = NULL;
     }
-    Node(int key, int value)
+    Node(int key, int data)
     {
         this->key = key;
-        this->val = value;
+        this->val = data;
     }
 };
+
 class LRUCache
 {
 
-    public:
-
-        Node *head = new Node(-1, -1);
-    Node *tail = new Node(-1, -1);
-
-    int size = 0;
-    int currSize = 0;
+    Node *head = new Node();
+    Node *tail = new Node();
     unordered_map<int, Node*> mpp;
+    int currSize = 0;
+    int maxSize = 0;
 
-    LRUCache(int capacity)
-    {
-        head->next = tail;
-        tail->prev = head;
-        head->prev = tail;
-        tail->next = head;
-        size = capacity;
-    }
+    public:
+        LRUCache(int capacity)
+        {
+            head->next = tail;
+            tail->prev = head;
+            head->prev = tail;
+            tail->next = head;
+            maxSize = capacity;
+        }
 
     int get(int key)
     {
 
-        if (mpp.find(key) != mpp.end()) // if key is present in map we will push it o MRU from LRU and return key value;
+        if (mpp.find(key) != mpp.end())
         {
-            Node *currNode = mpp[key];
-            deleteAtFront(currNode);
-            insertAtTail(currNode);
-            return currNode->val;
+            Node *curr = mpp[key];
+            deleteNode(curr);
+            insertAtTail(curr);
+            return curr->val;
         }
-        else // not in map return -1;
+        else
         {
             return -1;
         }
@@ -55,66 +55,52 @@ class LRUCache
 
     void put(int key, int value)
     {
-  
-        if (currSize == size) // if the list if full .
+          if (mpp.find(key) != mpp.end())
+            {
+                Solve(key);
+            }
+        if (currSize == maxSize)
         {
 
-           
-            if (mpp.find(key) != mpp.end())  // if the element that we want to put in list is present in map then we need to delete it from its pos and insert it at MRU(insert at tail)
+            if (mpp.find(key) == mpp.end())
             {
-                Node *currNode = mpp[key]; // here we are deleting it
-                deleteAtFront(currNode);
-              
-                currSize -= 1;
-                mpp.erase(key);
-               
-            }
-            else // if size is full and element is not in map just delete the eleemnt at head
-            {
-                Node *curr=head->next;
-                deleteAtFront(curr);
-                mpp.erase(curr->key);
-                 currSize -= 1;
                 
-            }
-            Node *newNode = new Node(key, value); // after deleting we will insert at tail
-            insertAtTail(newNode);
-            mpp[key] = newNode;
-            currSize += 1;
-        }
-        else
-        {
-            if (mpp.find(key) != mpp.end())
-            {
-                Node *currNode = mpp[key];
-                deleteAtFront(currNode);
+           
+                Node *curr = head->next;
+                deleteNode(curr);
+                mpp.erase(curr->key);
                 currSize -= 1;
-                mpp.erase(key);
             }
-            Node *newNode = new Node(key, value);
-            insertAtTail(newNode);
-            mpp[key] = newNode;
-            currSize += 1;
         }
+       
+        Node *newNode = new Node(key, value);
+        insertAtTail(newNode);
+        mpp[key] = newNode;
+        currSize += 1;
     }
 
-    void insertAtTail(Node *nodeToInsert)
+    void deleteNode(Node *curr)
     {
-        nodeToInsert->next = tail;
-        nodeToInsert->prev = tail->prev;
-        nodeToInsert->prev->next = nodeToInsert;
-        tail->prev = nodeToInsert;
-       	//  tail=nodeToInsert; 
+        curr->prev->next = curr->next;
+        curr->next->prev = curr->prev;
+        curr->next = NULL;
+        curr->prev = NULL;
     }
-   	// always delete form front because note at front is least recent node having higher priority
-    void deleteAtFront(Node *nodeToDelete)
-    {
-        nodeToDelete->prev->next = nodeToDelete->next;
-        nodeToDelete->next->prev = nodeToDelete->prev;
 
-        ;
-        nodeToDelete->next = NULL;
-        nodeToDelete->prev = NULL;
+    void insertAtTail(Node *curr)
+    {
+        curr->next = tail;
+        curr->prev = tail->prev;
+        curr->prev->next = curr;
+        tail->prev = curr;
+    }
+
+    void Solve(int key)
+    {
+        Node *currNode = mpp[key];
+        deleteNode(currNode);
+        currSize -= 1;
+        mpp.erase(key);
     }
 };
 
