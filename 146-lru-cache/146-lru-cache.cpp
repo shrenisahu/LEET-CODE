@@ -24,7 +24,7 @@ class LRUCache
     Node *head = new Node();
     Node *tail = new Node();
     unordered_map<int, Node*> mpp;
-    int currSize = 0;
+    
     int maxSize = 0;
 
     public:
@@ -32,8 +32,8 @@ class LRUCache
         {
             head->next = tail;
             tail->prev = head;
-            head->prev = tail;
-            tail->next = head;
+            head->prev = NULL;
+            tail->next = NULL;
             maxSize = capacity;
         }
 
@@ -59,7 +59,7 @@ class LRUCache
             {
                 Solve(key);
             }
-        if (currSize == maxSize)
+        if (mpp.size() == maxSize)
         {
 
             if (mpp.find(key) == mpp.end())
@@ -69,14 +69,14 @@ class LRUCache
                 Node *curr = head->next;
                 deleteNode(curr);
                 mpp.erase(curr->key);
-                currSize -= 1;
+               
             }
         }
        
         Node *newNode = new Node(key, value);
         insertAtTail(newNode);
         mpp[key] = newNode;
-        currSize += 1;
+        
     }
 
     void deleteNode(Node *curr)
@@ -99,7 +99,7 @@ class LRUCache
     {
         Node *currNode = mpp[key];
         deleteNode(currNode);
-        currSize -= 1;
+       
         mpp.erase(key);
     }
 };
