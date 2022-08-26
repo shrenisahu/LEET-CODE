@@ -39,8 +39,7 @@ class LRUCache
         if (mpp.find(key) != mpp.end())
         {
             Node *curr = mpp[key];
-            int currVal=curr->val;
-           
+
             deleteNode(curr);
             insertAtTail(curr);
             return curr->val;
@@ -55,20 +54,23 @@ class LRUCache
     {
           if (mpp.find(key) != mpp.end())
             {
-                Solve(key);
+               Node *currNode = mpp[key];
+        deleteNode(currNode);
+       
+        mpp.erase(key);
             }
         if (mpp.size() == maxSize)
         {
 
-            if (mpp.find(key) == mpp.end())
-            {
+//             if (mpp.find(key) == mpp.end())
+//             {
                 
            
                 Node *curr = head->next;
                 deleteNode(curr);
                 mpp.erase(curr->key);
                
-            }
+            // }
         }
        
         Node *newNode = new Node(key, value);
@@ -93,13 +95,8 @@ class LRUCache
         tail->prev = curr;
     }
 
-    void Solve(int key)
-    {
-        Node *currNode = mpp[key];
-        deleteNode(currNode);
-       
-        mpp.erase(key);
-    }
+   
+  
 };
 
 /**
