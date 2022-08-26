@@ -6,11 +6,7 @@ class Node
     Node * prev;
     Node * next;
 
-    Node()
-    {
-        next = NULL;
-        prev = NULL;
-    }
+  
     Node(int key, int data)
     {
         this->key = key;
@@ -21,8 +17,8 @@ class Node
 class LRUCache
 {
 
-    Node *head = new Node();
-    Node *tail = new Node();
+    Node *head = new Node(-1,-1);
+    Node *tail = new Node(-1,-1);
     unordered_map<int, Node*> mpp;
     
     int maxSize = 0;
@@ -43,6 +39,8 @@ class LRUCache
         if (mpp.find(key) != mpp.end())
         {
             Node *curr = mpp[key];
+            int currVal=curr->val;
+           
             deleteNode(curr);
             insertAtTail(curr);
             return curr->val;
