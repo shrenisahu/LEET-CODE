@@ -22,10 +22,10 @@ public:
         {
             if(currNode->val == val)
             {
-                ListNode *tempNode=currNode->next;
+                // ListNode *tempNode=currNode->next;
                 prev->next=currNode->next;
-                currNode->next=NULL;
-                currNode=tempNode;
+                // currNode->next=NULL;
+                currNode=currNode->next;
                 
             }
             else 
