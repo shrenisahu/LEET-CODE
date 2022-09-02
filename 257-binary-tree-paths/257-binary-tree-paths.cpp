@@ -1,45 +1,48 @@
 /**
  *Definition for a binary tree node.
  *struct TreeNode {
- *  int val;
- *  TreeNode * left;
- *  TreeNode * right;
- *  TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *  TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *  TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ *    int val;
+ *    TreeNode * left;
+ *    TreeNode * right;
+ *    TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *    TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  *};
  */
 class Solution
 {
     public:
-        vector<string> binaryTreePaths(TreeNode *root)
-        {
-            vector<string> ans;
-            string currStr = "";
-            currStr += to_string(root->val);
-           
-            Path(root, ans, currStr);
+        vector<string> binaryTreePaths(TreeNode *root) {
+            vector<string>ans;
+            string currStr="";
+            Traverse(root,ans,currStr);
             return ans;
         }
 
-    void Path(TreeNode *root, vector<string> &ans, string currStr)
+    void Traverse(TreeNode *root, vector<string> &ans, string currStr)
     {
+
+        if (root == NULL) return;
+
         if (root->left == NULL && root->right == NULL)
         {
+            currStr += to_string(root->val);
             ans.push_back(currStr);
-            return;
+            
         }
-
-        if (root->left != NULL)
+        
+        else
         {
-
-            Path(root->left, ans, (currStr +"->"+ to_string(root->left->val) ));
+            currStr+=to_string(root->val)+"->";
         }
-        if (root->right != NULL)
+
+        if (root->left)
         {
-
-            Path(root->right, ans, (currStr +"->"+ to_string(root->right->val) ));
+            Traverse(root->left, ans, currStr);
         }
-        return;
+        if (root->right)
+        {
+            Traverse(root->right, ans, currStr);
+        }
     }
 };
