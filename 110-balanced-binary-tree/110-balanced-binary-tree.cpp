@@ -17,15 +17,7 @@ class Solution
 
             if (root == NULL) return true;
 
-            int lh = findHeight(root->left);
-            int rh = findHeight(root->right);
-
-            if (abs(lh - rh) > 1) return false;
-
-            bool leftAns = isBalanced(root->left);
-            bool rightAns = isBalanced(root->right);
-
-            return leftAns && rightAns;
+          return findHeight(root)!=-1 ?true :false;
         }
 
     int findHeight(TreeNode *root)
@@ -36,6 +28,12 @@ class Solution
         int lh = findHeight(root->left);
         int rh = findHeight(root->right);
 
+        
+        
+        if(lh==-1 || rh==-1)
+            return -1;
+        if (abs(lh - rh) > 1) return -1;
+        
         return 1 + max(lh, rh);
     }
 };
