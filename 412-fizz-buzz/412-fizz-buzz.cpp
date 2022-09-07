@@ -4,7 +4,7 @@ class Solution
         vector<string> fizzBuzz(int n)
         {
 
-            vector<string> ans;
+            vector<string> ans(n);
             for (int i = 1; i <= n; i++)
             {
                 bool flag = false;
@@ -24,7 +24,7 @@ class Solution
                 if (flag == false)
                     currStr += to_string(i);
                 
-                ans.push_back(currStr);
+                ans[i-1]=currStr;
             }
             return ans;
         }
