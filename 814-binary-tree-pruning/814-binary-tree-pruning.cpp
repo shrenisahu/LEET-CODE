@@ -12,45 +12,17 @@
 class Solution {
 public:
     TreeNode* pruneTree(TreeNode* root) {
-        if(root==NULL )
-            return root;
         
-        Solve(root);
-        if(root->val==0 && root->left==NULL && root->right==NULL)
+        if(root==NULL)
+        return NULL;
+        
+        root->left=pruneTree(root->left);
+        root->right=pruneTree(root->right);
+        
+        if(root->val == 0 && root->left==NULL && root->right==NULL)
+        {
             return NULL;
-        return root;
-        
+        }
+    return root;
     }
-    
-    void Solve(TreeNode *root)
-    {
-        
-        if(root==NULL)
-            return ;
-        
-        bool leftAns=isOnePresent(root->left);
-        bool rightAns=isOnePresent(root->right);
-        
-        if(leftAns==false)
-            root->left=NULL;
-        if(rightAns==false)
-            root->right=NULL;
-        
-        Solve(root->left);
-        Solve(root->right);
-    }
-    
-    bool isOnePresent(TreeNode *root)
-    {
-        
-        
-        if(root==NULL)
-            return false;
-        
-        if(root->val)
-            return true;
-        
-        return isOnePresent(root->left) || isOnePresent(root->right);
-        
-        
-    }};
+};
