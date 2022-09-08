@@ -29,16 +29,8 @@ class Solution
                 {
                     TreeNode *currNode = que.front();
                     que.pop();
+                    (flag == false) ? temp[n - i - 1] = currNode->val: temp[i] = currNode->val;
 
-                    if (flag == false)
-                    {
-
-                        temp[n - i - 1] = currNode->val;
-                    }
-                    else
-                    {
-                        temp[i] = currNode->val;
-                    }
                     if (currNode->left)
                         que.push(currNode->left);
                     if (currNode->right)
