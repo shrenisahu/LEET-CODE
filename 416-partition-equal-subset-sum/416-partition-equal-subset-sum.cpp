@@ -1,61 +1,44 @@
 class Solution {
 public:
-    bool fUtils(vector<int> &nums, int idx, int target, vector<vector<int>> &dp)
+    
+    
+    bool SubsetSum(vector<int>& nums,int currIndex,int targetSum,  vector<vector<int>> &mpp)
     {
-	//boundary cases
-        if(idx >= nums.size() || target < 0)
-        {
-            return false;
-        }
-		//success case
-        if(target == 0)
-        {
+        
+        
+        if(targetSum==0)
             return true;
-        }
-		//memoisation used
-        if(dp[idx][target] != -1)
-        {
-            return dp[idx][target];
-        }
         
-        //pick it
-        bool pick = false;
-        if(nums[idx] <= target)
-        {
-            pick = fUtils(nums, idx + 1, target - nums[idx], dp);
-        }
-        //ignore it
-        bool npick = fUtils(nums, idx + 1, target, dp);
+        if(currIndex>=nums.size())
+            return false;
+        if(mpp[currIndex][targetSum]!=-1)
+        return mpp[currIndex][targetSum];
+        bool consider=false;
+        if(nums[currIndex]<=targetSum)
+            consider=SubsetSum(nums,currIndex+1,targetSum-nums[currIndex],mpp);
         
-        return dp[idx][target] = pick || npick;
+        
+    bool  notConsider=SubsetSum(nums,currIndex+1,targetSum,mpp);
+        mpp[currIndex][targetSum]=consider|| notConsider;
+        
+        return  mpp[currIndex][targetSum];
+        
     }
+    
     
     bool canPartition(vector<int>& nums) {
         
-        int n = nums.size();
-        
-        if(n <= 1)
-        {
+        unordered_map<string,int>mpp;
+      int n=nums.size();
+             
+        int sum=0;
+        for(auto b:nums)
+            sum+=b;
+         vector<vector<int>> dp(n+1, vector<int>((sum/2) + 1, -1));
+        if(sum%2!=0)
             return false;
-        }
         
-        int sum = 0;
+        else return SubsetSum(nums,0,sum/2,dp);
         
-        for(int i=0;i<n;i++)
-        {
-            sum += nums[i];
-        }
-        
-        //if sum is odd it cant be formed
-        if(sum % 2 > 0)
-        {
-            return false;
-        }
-        
-        int val = sum / 2;
-        
-        vector<vector<int>> dp(n+1, vector<int>((sum/2) + 1, -1));//at a particular index and target can i reach or not
-        
-        return fUtils(nums, 0, val, dp);
     }
 };
