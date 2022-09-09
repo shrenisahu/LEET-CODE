@@ -1,35 +1,62 @@
-class Solution {
-public:
-    map<int, vector<vector<int>> >m;
-    
-    void inorder(TreeNode *root,int i,int j)
-    {
-        if(root==NULL)return;
-            
-        vector<int>a={i,root->val};
-            m[j].push_back(a);
-           inorder(root->left,i+1,j-1);
-           inorder(root->right,i+1,j+1);
-        
-    }
-    vector<vector<int>> verticalTraversal(TreeNode* root) {
-     vector<vector<int>> ans;   
-        
-        
-        inorder(root,0,0);
-        for(auto it=m.begin();it!=m.end();it++)
+/**
+ *Definition for a binary tree node.
+ *struct TreeNode {
+ *int val;
+ *TreeNode * left;
+ *TreeNode * right;
+ *TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ *};
+ */
+class Solution
+{
+   
+   
+    public:
+        vector<vector < int>> verticalTraversal(TreeNode *root)
         {
-            vector<int>a;
-            sort(it->second.begin(),it->second.end());
-            for(auto x :it->second)
+             map<int, map<int, vector< int>>> memo;
+            int currCol = 0;
+            int currLevel = 0;
+            vector<vector < int>> ans;
+            Traverse(root, 0, 0,memo);
+
+            for (auto i: memo)
             {
-               a.push_back(x[1]);
+                int col = i.first;
+                vector<int> temp;
+
+                map<int, vector < int>> cache = i.second;
+                for (auto j: cache)
+                {
+                    int currLevel = j.first;
+                    vector<int> arr = j.second;
+                    sort(arr.begin(), arr.end());
+                    for (auto k: arr)
+                    {
+                        temp.push_back(k);
+                    }
+                }
+                ans.push_back(temp);
             }
-             ans.push_back(a);
+
+            return ans;
         }
+
+    void Traverse(TreeNode *root, int currCol, int currLevel,map<int, map<int, vector< int>>> &memo)
+    {
+
+        if (root == NULL)
+            return;
+
+        map<int, vector < int>> temp = memo[currCol];
+        vector<int> arr = temp[currLevel];
+        memo[currCol][currLevel].push_back(root->val);
         
-        
-        return ans;
+        Traverse(root->left, currCol - 1, currLevel + 1,memo);
+        Traverse(root->right, currCol + 1, currLevel + 1,memo);
+
+        return;
     }
 };
-		
