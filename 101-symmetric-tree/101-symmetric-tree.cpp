@@ -22,14 +22,11 @@ public:
     {
         if(root1==NULL && root2==NULL)
             return true;
-         if(root1==NULL || root2==NULL)
+         if(root1==NULL || root2==NULL || root1->val !=root2->val)
             return false;
-        if(root1->val !=root2->val)
-             return false;
-        bool leftAns=check(root1->left,root2->right);
-        bool rightAns=check(root1->right,root2->left);
-        
-        return leftAns && rightAns;
+       
+    
+        return check(root1->left,root2->right) && check(root1->right,root2->left);
         
     }
 };
