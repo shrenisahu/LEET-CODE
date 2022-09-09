@@ -11,28 +11,28 @@
  */
 class Solution
 {
-   
-   
+
     public:
         vector<vector < int>> verticalTraversal(TreeNode *root)
         {
-             map<int, map<int, vector< int>>> memo;
+           	
+            map<int, map<int, multiset< int>>> memo;
             int currCol = 0;
             int currLevel = 0;
             vector<vector < int>> ans;
-            Traverse(root, 0, 0,memo);
+            Traverse(root, 0, 0, memo);
 
             for (auto i: memo)
             {
-                int col = i.first;
+               
                 vector<int> temp;
 
-                map<int, vector < int>> cache = i.second;
+                map<int, multiset < int>> cache = i.second;
                 for (auto j: cache)
                 {
-                    int currLevel = j.first;
-                    vector<int> arr = j.second;
-                    sort(arr.begin(), arr.end());
+                   
+                   multiset < int> arr= j.second;
+                  
                     for (auto k: arr)
                     {
                         temp.push_back(k);
@@ -44,18 +44,18 @@ class Solution
             return ans;
         }
 
-    void Traverse(TreeNode *root, int currCol, int currLevel,map<int, map<int, vector< int>>> &memo)
+    void Traverse(TreeNode *root, int currCol, int currLevel,  map<int, map< int, multiset< int>>> &memo)
     {
 
         if (root == NULL)
             return;
 
-        map<int, vector < int>> temp = memo[currCol];
-        vector<int> arr = temp[currLevel];
-        memo[currCol][currLevel].push_back(root->val);
         
-        Traverse(root->left, currCol - 1, currLevel + 1,memo);
-        Traverse(root->right, currCol + 1, currLevel + 1,memo);
+
+        memo[currCol][currLevel].insert(root->val);
+
+        Traverse(root->left, currCol - 1, currLevel + 1, memo);
+        Traverse(root->right, currCol + 1, currLevel + 1, memo);
 
         return;
     }
