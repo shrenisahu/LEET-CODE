@@ -1,10 +1,14 @@
+// scan line or  sweep line = prefix sum
+
+
+
 class Solution {
 public:
     vector<int> corpFlightBookings(vector<vector<int>>& bookings, int n) {
         
         int track[n+2];
         memset(track,0,sizeof(track));
-        vector<int>ans;
+        vector<int>ans(n);
         
         for(int i=0;i<bookings.size();i++)
         {
@@ -20,7 +24,7 @@ public:
         {
            
             track[i]=track[i]+track[i-1];
-            ans.push_back(track[i]);
+            ans[i-1]=track[i];
         }
         return ans;
     }
