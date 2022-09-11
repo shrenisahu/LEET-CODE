@@ -26,7 +26,7 @@ public:
             track[b+1]--;
         }
         
-        for(int i=minTime;i<maxTime+2;i++)
+        for(int i=minTime;i<maxTime+1;i++)
         {
             track[i]+=track[i-1];
             maxCount=max(maxCount,track[i]);
