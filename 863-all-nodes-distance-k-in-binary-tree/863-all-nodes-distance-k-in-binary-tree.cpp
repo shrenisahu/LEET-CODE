@@ -1,89 +1,70 @@
 /**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
- * };
+ *Definition for a binary tree node.
+ *struct TreeNode {
+ *int val;
+ *TreeNode * left;
+ *TreeNode * right;
+ *TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ *};
  */
-class Solution {
-public:
-    vector<int> distanceK(TreeNode* root, TreeNode* target, int k) {
-          vector<int>ans;
-        unordered_set<TreeNode*>visited;
-        
-        unordered_map<TreeNode*,TreeNode*>mpp;
-        queue<pair<TreeNode*,TreeNode*>>que;
-         queue<pair<TreeNode*,int>>que2;
-        
-        que.push({root,NULL});
-        
-        while(!que.empty())
+class Solution
+{
+    unordered_map<TreeNode*, TreeNode*> mpp;
+    public:
+        vector<int> distanceK(TreeNode *root, TreeNode *target, int k)
         {
-           
-                auto currPair=que.front();
-                TreeNode*currNode=currPair.first;
-                TreeNode*currParent=currPair.second;
+            vector<int> ans;
+            if (root == NULL)
+                return ans;
+
+            mpp[root] = new TreeNode(-1);
+            fillMapWithParents(root);
+            BFS(target,ans,k);
+            return ans;
+        }
+
+    void BFS(TreeNode *root, vector<int> &ans, int k)
+    {
+        queue<TreeNode*> que;
+        set<TreeNode*> seen;
+        que.push(root);
+        int currLevel = 0;
+        while (!que.empty())
+        {
+            int size = que.size();
+            for (int i = 0; i < size; i++)
+            {
+                TreeNode *currNode = que.front();
                 que.pop();
-                mpp[currNode]=currParent;
-                
-                if(currNode->left)
-                que.push({currNode->left,currNode});
-                
-                if(currNode->right)
-                que.push({currNode->right,currNode});    
-                
-            // }
-        }
-        
-       
-        
-        que2.push({target,k});
-        while(!que2.empty())
-        {
-           
-            
-           auto  currPair=que2.front();
-                que2.pop();
-                
-                TreeNode*currNode=currPair.first;
-                  if(visited.find(currNode)!=visited.end() )
-                  {
-                      continue;
-                  }
-                
-                visited.insert(currNode);
-                int distance=currPair.second;
-                
-                if(distance==0 )
+                if (seen.find(currNode) != seen.end())
+                    continue;
+                seen.insert(currNode);
+                if (currLevel == k)
+                    ans.push_back(currNode->val);
+                if (currNode->left)
+                    que.push(currNode->left);
+                if (currNode->right)
+                    que.push(currNode->right);
+                TreeNode *par = mpp[currNode];
+                if (par->val != -1)
                 {
-                    
-                        ans.push_back(currNode->val);
-                        continue;
-                   
+                    que.push(par);
                 }
-                
-                    if(currNode->left)
-                        que2.push({currNode->left,distance-1});
-                    
-                     if(currNode->right)
-                        que2.push({currNode->right,distance-1});
-                    
-                    if(mpp[currNode])
-                     que2.push({mpp[currNode],distance-1});
-                    
-                    
-                    
-                
-            
-            
-            
+            }
+            currLevel++;
         }
-        return ans;
-        
-        
-        
-        
+    }
+
+    void fillMapWithParents(TreeNode *root)
+    {
+        if (root == NULL)
+            return;
+
+        if (root->left)
+            mpp[root->left] = root;
+        if (root->right)
+            mpp[root->right] = root;
+        fillMapWithParents(root->left);
+        fillMapWithParents(root->right);
     }
 };
