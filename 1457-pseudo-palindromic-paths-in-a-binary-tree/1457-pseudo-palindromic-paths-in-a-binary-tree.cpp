@@ -37,7 +37,7 @@ class Solution
         return validPathCount;
     }
 
-    void Traverse(TreeNode *root,  int &validPathCount,  vector<int>&cache)
+    void Traverse(TreeNode *root,  int &validPathCount,  vector<int>cache)
     {
         if (root == NULL)
             return;
