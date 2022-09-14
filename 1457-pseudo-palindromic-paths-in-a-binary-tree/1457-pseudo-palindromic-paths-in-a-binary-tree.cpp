@@ -9,16 +9,18 @@
  *TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  *};
  */
+// 10
+// TC:O(N)
 class Solution
 {
     public:
 
-        bool isPalindrome(unordered_map<int, int> memo)
+        bool isPalindrome(vector<int>&cache)
         {
             int oddCount = 0;
-            for (auto it: memo)
+            for (auto it: cache)
             {
-                if (it.second % 2 == 1)
+                if (it % 2 == 1)
                     oddCount++;
 
                 if (oddCount == 2)
@@ -29,33 +31,32 @@ class Solution
     int pseudoPalindromicPaths(TreeNode *root)
     {
         int validPathCount = 0;
-        unordered_map<int, int> memo;
-        Traverse(root, memo, validPathCount);
+        vector<int>cache(10,0);
+       
+        Traverse(root, validPathCount,cache);
         return validPathCount;
     }
 
-    void Traverse(TreeNode *root, unordered_map<int, int> &memo, int &validPathCount)
+    void Traverse(TreeNode *root,  int &validPathCount,  vector<int>&cache)
     {
         if (root == NULL)
             return;
         if (root->left == NULL && root->right == NULL)
         {
-            memo[root->val]++;
-            if (isPalindrome(memo))
+            cache[root->val]++;
+            if (isPalindrome(cache))
                 validPathCount++;
             
-            memo[root->val]--;
-            if (memo[root->val] == 0)
-                return;
+            cache[root->val]--;
+
         }
 
-        memo[root->val]++;
-        Traverse(root->left, memo, validPathCount);
+        cache[root->val]++;
+        Traverse(root->left, validPathCount,cache);
 
-        Traverse(root->right, memo, validPathCount);
-        memo[root->val]--;
-        if (memo[root->val] == 0)
-            memo.erase(root->val);
+        Traverse(root->right, validPathCount,cache);
+        cache[root->val]--;
+      
         return;
     }
 };
