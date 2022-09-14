@@ -12,27 +12,27 @@
 class Solution
 {
     public:
-        int ans = 0;
+    
 
     int goodNodes(TreeNode *root)
     {
-
+    int ans = 0;
         if (root == NULL)
             return 0;
 
         int maxValue = INT_MIN;
-        preOrder(root, maxValue);
+        preOrder(root, maxValue,ans);
         return ans;
     }
 
-    void preOrder(TreeNode *root, int maxValue)
+    void preOrder(TreeNode *root, int maxValue, int &ans)
     {
         if (root == NULL)
             return;
         maxValue = max(maxValue, root->val);
         if (root->val >= maxValue)
             ans++;
-        preOrder(root->left, maxValue);
-        preOrder(root->right, maxValue);
+        preOrder(root->left, maxValue ,ans);
+        preOrder(root->right, maxValue ,ans);
     }
 };
