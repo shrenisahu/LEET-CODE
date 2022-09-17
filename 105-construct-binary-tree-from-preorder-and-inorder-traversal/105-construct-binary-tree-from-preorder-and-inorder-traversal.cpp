@@ -11,40 +11,35 @@
  */
 class Solution {
 public:
+    
     TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
-        
-        int end=preorder.size()-1;
-        int preIndex=0;
+        int n=preorder.size();
         unordered_map<int,int>mpp;
-        
-        for(int i=0;i<preorder.size();i++)
+        for(int i=0;i<inorder.size();i++)
         {
             mpp[inorder[i]]=i;
         }
-        
-       
-        
-        return Construct(preorder,inorder,preIndex,0,end,mpp);
-        
-        
+        return Build(0,n-1,0,n-1,preorder,inorder ,mpp);
     }
     
-    TreeNode* Construct(vector<int>& preorder, vector<int>& inorder,int &preIndex,int inStart,int inEnd,  unordered_map<int,int>&mpp)
+    
+    TreeNode * Build(int preStart,int preEnd,int inStart,int inEnd,vector<int>& preorder, vector<int>& inorder , unordered_map<int,int>&mpp)
     {
-        if(preIndex>=preorder.size() || inStart>inEnd)
-        {
+        if(preStart >preEnd || inStart >inEnd)
             return NULL;
-        }
-            
-        int currValue=preorder[preIndex];
-        TreeNode * currNode=new TreeNode (currValue);
-        // currNode=currValue;
         
-        preIndex++;
-int j=mpp[currValue];
         
-        currNode->left=Construct(preorder,inorder,preIndex,inStart,j-1,mpp);
-     currNode->right  =Construct(preorder,inorder,preIndex,j+1,inEnd ,mpp);
+        
+        int currElem=preorder[preStart];
+        int pos=mpp[currElem];
+        int elementsinLeftSizeInorder=pos-inStart;
+        
+        TreeNode *currNode=new TreeNode(currElem);
+        
+        currNode->left=Build(preStart+1,preStart+elementsinLeftSizeInorder,inStart,pos-1,preorder,inorder ,mpp);
+        currNode->right=Build(preStart+elementsinLeftSizeInorder+1,preEnd,pos+1,inEnd,preorder,inorder ,mpp);
+        
         return currNode;
+        
     }
 };
