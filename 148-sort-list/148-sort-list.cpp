@@ -1,11 +1,11 @@
 /**
  *Definition for singly-linked list.
  *struct ListNode {
- *   int val;
- *   ListNode * next;
- *   ListNode() : val(0), next(nullptr) {}
- *   ListNode(int x) : val(x), next(nullptr) {}
- *   ListNode(int x, ListNode *next) : val(x), next(next) {}
+ *int val;
+ *ListNode * next;
+ *ListNode() : val(0), next(nullptr) {}
+ *ListNode(int x) : val(x), next(nullptr) {}
+ *ListNode(int x, ListNode *next) : val(x), next(next) {}
  *};
  */
 class Solution
@@ -13,22 +13,17 @@ class Solution
     public:
         ListNode* sortList(ListNode *head)
         {
-            if(head==NULL)
-                return NULL;
-            if (head->next == NULL)
+
+            if (head == NULL || head->next == NULL)
                 return head;
 
-            ListNode *ListTow = findMiddleNode(head);
-
-            ListNode *node1 = head;
-            ListNode *node2 = ListTow->next;;
-            ListTow->next = NULL;
-            ListNode *part1 = sortList(node1);
-            ListNode *part2 = sortList(node2);
-
-            ListNode *newList = mergeList(part1, part2);
-
-            return newList;
+            ListNode *midNode = findMiddleNode(head);
+            ListNode *list1 = head;
+            ListNode *list2 = midNode->next;
+            midNode->next = NULL;
+            
+            ListNode *ans = mergeList(sortList(list1), sortList(list2));
+            return ans;
         }
 
     ListNode* findMiddleNode(ListNode *head)
