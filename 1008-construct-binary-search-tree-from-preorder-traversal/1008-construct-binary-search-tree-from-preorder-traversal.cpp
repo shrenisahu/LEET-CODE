@@ -39,7 +39,7 @@ class Solution
         int currVal = preorder[preIndex];
         TreeNode *root = new TreeNode(currVal);
         int pos = mpp[currVal];
-        preIndex++;
+        preIndex+=1;
         root->left = construct(preIndex, preorder, inOrder, start, pos - 1);
         
         root->right = construct(preIndex, preorder, inOrder, pos + 1, end);
