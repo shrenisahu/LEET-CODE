@@ -3,16 +3,15 @@ class Solution
     public:
         string reverseWords(string s)
         {
-            string res="";
-            stringstream strObj;
-            strObj << s;
-
+            string res = "";
+            stringstream strObj(s);
+          
             string ans;
 
-            while (strObj >> ans)
+            while (getline(strObj,ans,' '))
             {
-               reverse(ans.begin(),ans.end());
-                   res+=ans+" ";
+                reverse(ans.begin(), ans.end());
+                res += ans + " ";
             }
             res.pop_back();
 
