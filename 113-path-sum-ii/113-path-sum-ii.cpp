@@ -23,7 +23,7 @@ class Solution
             return ans;
         }
 
-    void Traverse(TreeNode *root, int targetSum, vector<int> &temp)
+    void Traverse(TreeNode *root, int &targetSum, vector<int> &temp)
     {
         if (root == NULL)
             return;
@@ -36,6 +36,7 @@ class Solution
             {
                 ans.push_back(temp);
             }
+            targetSum += root->val;
             return;
         }
 
@@ -49,7 +50,7 @@ class Solution
             Traverse(root->right, targetSum, temp);
             temp.pop_back();
         }
-     
+     targetSum += root->val;
         return;
     }
 };
