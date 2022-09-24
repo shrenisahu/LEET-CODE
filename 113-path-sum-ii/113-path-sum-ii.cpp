@@ -19,34 +19,34 @@ class Solution
 
             vector<int> temp;
             int currSum = 0;
-            Traverse(root, targetSum, currSum, temp);
+            Traverse(root, targetSum, temp);
             return ans;
         }
 
-    void Traverse(TreeNode *root, int targetSum, int currSum, vector<int> &temp)
+    void Traverse(TreeNode *root, int targetSum, vector<int> &temp)
     {
         if (root == NULL)
             return;
         if (root->left == NULL && root->right == NULL)
         {
-            currSum += root->val;
+            targetSum -= root->val;
             temp.push_back(root->val);
           
-            if (currSum == targetSum)
+            if (targetSum ==0)
             {
                 ans.push_back(temp);
             }
             return;
         }
 
-        currSum += root->val;
+        targetSum -= root->val;
         temp.push_back(root->val);
         if (root->left) {
-            Traverse(root->left, targetSum, currSum, temp);
+            Traverse(root->left, targetSum, temp);
             temp.pop_back();
         }
           if (root->right) {
-            Traverse(root->right, targetSum, currSum, temp);
+            Traverse(root->right, targetSum, temp);
             temp.pop_back();
         }
      
