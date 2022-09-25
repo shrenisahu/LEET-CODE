@@ -12,12 +12,13 @@ public:
             if(nums[i]==maxElem)
             {
                 subarrayCount++;
-                ans=max(ans,subarrayCount);
+                
             }
             else
             {
                 subarrayCount=0;
             }
+            ans=max(ans,subarrayCount);
         }
         return ans;
         
