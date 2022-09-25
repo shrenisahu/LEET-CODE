@@ -5,8 +5,8 @@ class Solution
         {
 
             int n = nums.size();
-            vector<int> left(n+1, 0);
-            vector<int> right(n+1, 0);
+            vector<int> left(n+1, 1);
+            vector<int> right(n+1, 1);
             vector<int> ans;
 
             for (int i = 1; i < n; i++)
@@ -32,7 +32,7 @@ class Solution
             // }
             for (int i = k; i <= n-k-1; i++)
             {
-                if (left[i-1] >= k-1 && right[i+1] >= k-1)
+                if (left[i-1] >= k && right[i+1] >= k)
                     ans.push_back(i);
             }
             return ans;
