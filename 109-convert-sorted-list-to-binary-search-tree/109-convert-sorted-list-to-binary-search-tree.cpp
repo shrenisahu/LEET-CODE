@@ -1,29 +1,30 @@
 /**
  *Definition for singly-linked list.
  *struct ListNode {
- *  int val;
- *  ListNode * next;
- *  ListNode() : val(0), next(nullptr) {}
- *  ListNode(int x) : val(x), next(nullptr) {}
- *  ListNode(int x, ListNode *next) : val(x), next(next) {}
+ *int val;
+ *ListNode * next;
+ *ListNode() : val(0), next(nullptr) {}
+ *ListNode(int x) : val(x), next(nullptr) {}
+ *ListNode(int x, ListNode *next) : val(x), next(next) {}
  *};
  */
 /**
  *Definition for a binary tree node.
  *struct TreeNode {
- *  int val;
- *  TreeNode * left;
- *  TreeNode * right;
- *  TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *  TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *  TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ *int val;
+ *TreeNode * left;
+ *TreeNode * right;
+ *TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  *};
  */
 class Solution
 {
     public:
-        TreeNode* sortedListToBST(ListNode *head) {
-            
+        TreeNode* sortedListToBST(ListNode *head)
+        {
+
             return buildtree(head);
         }
 
@@ -39,11 +40,11 @@ class Solution
             return temp;
         }
 
-        ListNode *prev = head;
+        ListNode *prev = NULL;
         ListNode *fastPtr = head;
         ListNode *slowPtr = head;
 
-        while (fastPtr->next != NULL && fastPtr->next->next)
+        while (fastPtr != NULL && fastPtr->next)
 
         {
             prev = slowPtr;
@@ -56,16 +57,10 @@ class Solution
         slowPtr->next = NULL;
         prev->next = NULL;
 
-        if (prev == slowPtr)
-        {
-            root->left = NULL;
-        }
-        else
-        {
-            root->left = buildtree(head);
-        }
+        root->left = buildtree(head);
+
         root->right = buildtree(after);
-        
+
         return root;
     }
 };
