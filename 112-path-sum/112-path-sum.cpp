@@ -14,26 +14,32 @@ class Solution
     public:
         bool hasPathSum(TreeNode *root, int targetSum)
         {
-            if (root == NULL)
-                return false;
-            return Traverse(root, targetSum, 0);
+
+            int currSum = 0;
+            return Traverse(root, targetSum, currSum);
         }
 
-    bool Traverse(TreeNode *root, int target, int currSum)
+    bool Traverse(TreeNode *root, int target, int &currSum)
     {
-       if(root==NULL)
-           return false;
-        if(root->left==NULL && root->right==NULL)
+        if (root == NULL)
         {
-            currSum+=root->val;
-            if(currSum==target)
-                return true;
+            return false;
         }
-            
-            bool leftAns=Traverse(root->left,target,currSum+root->val);
-            bool rightAns=Traverse(root->right,target,currSum+root->val);
-            
-            return leftAns||rightAns;
-        
+        currSum += root->val;
+        if (!root->left && !root->right)
+
+        {
+
+            if (currSum == target)
+                return true;
+            // else
+                
+        }
+      
+        bool leftAns = Traverse(root->left, target, currSum);
+        bool rightAns = Traverse(root->right, target, currSum);
+       	currSum -= root->val;
+
+        return leftAns || rightAns;
     }
 };
