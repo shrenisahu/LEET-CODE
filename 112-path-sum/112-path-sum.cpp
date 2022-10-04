@@ -32,13 +32,16 @@ class Solution
 
             if (currSum == target)
                 return true;
-            // else
-                
+            else
+            {
+                currSum -= root->val;
+                return false;
+            }
         }
-      
+
         bool leftAns = Traverse(root->left, target, currSum);
         bool rightAns = Traverse(root->right, target, currSum);
-       	currSum -= root->val;
+        currSum -= root->val;
 
         return leftAns || rightAns;
     }
