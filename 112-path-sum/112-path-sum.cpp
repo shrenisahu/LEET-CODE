@@ -16,21 +16,24 @@ class Solution
         {
             if (root == NULL)
                 return false;
-            return Solve(root, 0, targetSum);
+            return Traverse(root, targetSum, 0);
         }
 
-    bool Solve(TreeNode *root, int currSum, int targetSum)
+    bool Traverse(TreeNode *root, int target, int currSum)
     {
-        if (root == NULL)
-            return false;
-
-        if (root->left == NULL && root->right == NULL && currSum + root->val == targetSum)
+       if(root==NULL)
+           return false;
+        if(root->left==NULL && root->right==NULL)
         {
-
-            cout << "here";
-            return true;
+            currSum+=root->val;
+            if(currSum==target)
+                return true;
         }
-
-        return Solve(root->left, currSum + root->val, targetSum) || Solve(root->right, currSum + root->val, targetSum);
+            
+            bool leftAns=Traverse(root->left,target,currSum+root->val);
+            bool rightAns=Traverse(root->right,target,currSum+root->val);
+            
+            return leftAns||rightAns;
+        
     }
 };
