@@ -1,47 +1,38 @@
-// { Driver Code Starts
+//{ Driver Code Starts
 #include <bits/stdc++.h>
 using namespace std;
 
- // } Driver Code Ends
+// } Driver Code Ends
 class Solution {
   public:
     // Function to return a list containing the DFS traversal of the graph.
     vector<int> dfsOfGraph(int V, vector<int> adj[]) {
-       vector<bool>visited(V,false);
-       vector<int>answer;
-       int currVertex=0;
-       BFS(currVertex,visited,adj,answer);
-       return answer;
+        vector<int>ans;
+        vector<bool>visited(V,false);
+        
+        DFS(0,adj,visited,ans);
+        return ans;
     }
     
-    void BFS(int currVertex,  vector<bool>&visited,vector<int> adj[], vector<int>&answer)
+    
+    void DFS(int currVertex,vector<int> adj[],vector<bool>&visited,vector<int>&ans)
     {
-        queue<int>que;
-        que.push(currVertex);
         
-        while(!que.empty())
+        if(visited[currVertex]==true)
+        return ;
+        visited[currVertex]=true;
+        ans.push_back(currVertex);
+        vector<int>neigh=adj[currVertex];
+        
+        for(auto eachNeigh:neigh)
         {
-            int currNode=que.front();
-            que.pop();
-            
-            if(visited[currNode]==true)
-            continue;
-            
-            visited[currNode]=true;
-            answer.push_back(currNode);
-            
-            vector<int>neighbour=adj[currVertex];
-            for(auto eachNode:neighbour)
-            {
-                BFS(eachNode,visited,adj,answer);
-            }
+            DFS(eachNeigh,adj,visited,ans);
         }
-        
         return ;
     }
 };
 
-// { Driver Code Starts.
+//{ Driver Code Starts.
 int main() {
     int tc;
     cin >> tc;
@@ -67,4 +58,5 @@ int main() {
         cout << endl;
     }
     return 0;
-}  // } Driver Code Ends
+}
+// } Driver Code Ends
