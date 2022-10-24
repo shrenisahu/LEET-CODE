@@ -11,7 +11,7 @@ class Solution
 
                 if (visited[i] == false)
                 {
-                    DFS(i, V, isConnected, visited);
+                    BFS(i, V, isConnected, visited);
                     count++;
                 }
             }
@@ -19,18 +19,29 @@ class Solution
             return count;
         }
 
-    void DFS(int currVertex, int V, vector<vector < int>> &isConnected, vector< bool > &visited)
+    void BFS(int currVertex, int V, vector<vector < int>> &isConnected, vector< bool > &visited)
     {
 
-        if(visited[currVertex]==true)
-            return ;
-        visited[currVertex]=true;
+        queue<int>que;
+        que.push(currVertex);
         
-        for(int i=0;i<V;i++)
+        while(!que.empty())
         {
-            if(isConnected[currVertex][i]==1)
-                DFS(i,V,isConnected,visited);
+            int vertex=que.front();
+            que.pop();
+            
+            if(visited[vertex]==true)
+                continue;
+            visited[vertex]=true;
+            
+            for(int i=0;i<V;i++)
+            {
+                if(isConnected[vertex][i]==1)
+                {
+                    que.push(i);
+                }
+            }
         }
-        return ;
+       
     }
 };
