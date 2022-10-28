@@ -1,63 +1,67 @@
 class Solution {
 public:
-    int closedIsland(vector<vector<int>>& grid) {
-        int m=grid.size();
-        int n=grid[0].size();
-        int answer=0;
-        
-        for(int currRow=0; currRow <m;currRow++)
+    int closedIsland(vector<vector<int>>& grid1) {
+        vector<vector<int>> grid=grid1;
+        int tr=grid.size();
+        int tc=grid[0].size();
+        int count=0;
+        for(int i=0;i<tc;i++)
         {
-            if(grid[currRow][0]==0) // upper row
-            {
-                cout<<"1";
-                 DFS(currRow,0,m,n,grid);
-            }
-             
-            if(grid[currRow][n-1]==0)  //last row
-            {
-                cout<<"2";
-                DFS(currRow,n-1,m,n,grid);
-            }
-            
+            if(grid[0][i]==0)
+                DFS(0,i,tr,tc,grid);
+        }
+         for(int i=0;i<tc;i++)
+        {
+            if(grid[tr-1][i]==0)
+                DFS(tr-1,i,tr,tc,grid);
         }
         
-        for(int currCol=0;currCol <n;currCol++)
+        
+         for(int i=0;i<tr;i++)
         {
-            if(grid[0][currCol]==0)
-            
-                DFS(0,currCol,m,n,grid); // 1st col
-            
-            if(grid[m-1][currCol]==0)  // last col
-                DFS(m-1,currCol,m,n,grid);
+            if(grid[i][0]==0)
+                DFS(i,0,tr,tc,grid);
+        }
+         for(int i=0;i<tr;i++)
+        {
+            if(grid[i][tc-1]==0)
+                DFS(i,tc-1,tr,tc,grid);
         }
         
-         
-       
-        for(int currRow=0;currRow <m;currRow++)
+        
+        
+        for(int i=0;i<tr;i++)
         {
-            for(int currCol=0; currCol < n;currCol++)
+            for(int j=0;j<tc;j++)
             {
-                if(grid[currRow][currCol]==0)
+                if(grid[i][j]==0)
                 {
-                    DFS(currRow,currCol,m,n,grid);
-                    answer++;
+                    DFS(i,j,tr,tc,grid);
+                    count++;
                 }
             }
         }
         
-        return answer;
+        return count;
     }
     
-    void DFS(int currRow,int currCol,int m,int n,vector<vector<int>>& grid )
+    
+    
+    
+    void DFS(int cr,int cc,int tr,int tc,vector<vector<int>>& grid)
     {
-        if(currRow <0 || currRow >= m || currCol <0 || currCol >=n || grid[currRow][currCol]==1)
+        
+        if(cr <0 || cc <0 || cr>=tr || cc>=tc  || grid[cr][cc]==1)
             return ;
         
-        grid[currRow][currCol]=1;
-        DFS(currRow+1,currCol,m,n,grid);
-        DFS(currRow-1,currCol,m,n,grid);
-        DFS(currRow,currCol-1,m,n,grid);
-        DFS(currRow,currCol+1,m,n,grid);
+        grid[cr][cc]=1;
+        
+        
+        DFS(cr+1,cc,tr,tc,grid);
+        DFS(cr-1,cc,tr,tc,grid);
+        DFS(cr,cc+1,tr,tc,grid);
+        DFS(cr,cc-1,tr,tc,grid);
+        
         return ;
     }
 };
