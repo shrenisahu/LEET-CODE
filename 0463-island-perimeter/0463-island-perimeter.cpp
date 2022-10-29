@@ -34,25 +34,29 @@ class Solution
         int count = 0;
         if (cr < tr - 1 && grid[cr + 1][cc] == 1)
         {
-            DFS(cr + 1, cc, tr, tc, grid, ans, stt);
+
             count++;
         }
-        if ( cr > 0 && grid[cr - 1][cc] == 1)
+        if (cr > 0 && grid[cr - 1][cc] == 1)
         {
-            DFS(cr - 1, cc, tr, tc, grid, ans, stt);
+
             count++;
         }
-        if (cc < tc - 1  && grid[cr][cc + 1] == 1)
+        if (cc < tc - 1 && grid[cr][cc + 1] == 1)
         {
-            DFS(cr, cc + 1, tr, tc, grid, ans, stt);
+
             count++;
         }
-        if ( cc > 0 && grid[cr][cc - 1] == 1)
+        if (cc > 0 && grid[cr][cc - 1] == 1)
         {
-            DFS(cr, cc - 1, tr, tc, grid, ans, stt);
+
             count++;
         }
 
-        ans += (4- count);
+        DFS(cr + 1, cc, tr, tc, grid, ans, stt);
+        DFS(cr - 1, cc, tr, tc, grid, ans, stt);
+        DFS(cr, cc + 1, tr, tc, grid, ans, stt);
+        DFS(cr, cc - 1, tr, tc, grid, ans, stt);
+        ans += (4 - count);
     }
 };
