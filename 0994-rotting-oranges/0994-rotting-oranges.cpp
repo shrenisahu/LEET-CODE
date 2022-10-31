@@ -46,6 +46,7 @@ class Solution
 
             if (count[row][col] != -1)
                 continue;
+            grid[row][col]=-2;
             minTime=max(minTime,dist);
             count[row][col] = dist;
 
@@ -71,7 +72,7 @@ class Solution
         {
             for(int j=0;j<tc;j++)
             {
-                if(grid[i][j]==1 && count[i][j]==-1)
+                if(grid[i][j]==1 )
                     return -1;
             }
         }
@@ -81,7 +82,7 @@ class Solution
 
     bool isValid(int cr, int cc, int tr, int tc, vector<vector < int>> &grid, vector< vector< int>> &count)
     {
-        if (cr < 0 || cc < 0 || cr >= tr || cc >= tc || count[cr][cc] != -1 || grid[cr][cc] == 2 || grid[cr][cc] == 0)
+        if (cr < 0 || cc < 0 || cr >= tr || cc >= tc  || grid[cr][cc] != 1 )
             return false;
 
         return true;
