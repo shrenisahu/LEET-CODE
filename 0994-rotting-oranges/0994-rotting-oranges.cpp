@@ -17,6 +17,8 @@ class Solution
         int tr = grid.size();
         int tc = grid[0].size();
         int minTime = 0;
+        int freshOranges=0;
+        int newfreshOranges=0;
 
         queue<vector < int>> que;
         for (int i = 0; i < tr; i++)
@@ -25,14 +27,11 @@ class Solution
             {
                 if (grid[i][j] == 2)
                 {
-                    vector<int> temp
-                    {
-                        i,
-                        j,
-                        0
-                    };
+                    vector<int> temp{i,j,0};
                     que.push(temp);
                 }
+              else   if(grid[i][j] == 1)
+                    freshOranges++;
             }
         }
 
@@ -45,6 +44,9 @@ class Solution
             int dist = arr[2];
            if(grid[row][col]==-2)
                continue;
+            if(grid[row][col]==1)
+            newfreshOranges++;
+            
             grid[row][col] = -2;
             minTime = max(minTime, dist);
 
@@ -55,25 +57,14 @@ class Solution
                 int newCol = col + dir[i][1];
                 if (isValid(newRow, newCol, tr, tc, grid))
                 {
-                    vector<int> tempArray
-                    {
-                        newRow,
-                        newCol,
-                        dist + 1
-                    };
+                    vector<int> tempArray{newRow,newCol,dist + 1};
                     que.push(tempArray);
                 }
             }
         }
 
-        for (int i = 0; i < tr; i++)
-        {
-            for (int j = 0; j < tc; j++)
-            {
-                if (grid[i][j] == 1)
-                    return -1;
-            }
-        }
+      if(freshOranges!=newfreshOranges)
+          return -1;
 
         return minTime;
     }
