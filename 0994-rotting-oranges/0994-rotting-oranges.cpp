@@ -16,8 +16,8 @@ class Solution
     {
         int tr = grid.size();
         int tc = grid[0].size();
-        int minTime=0;
-        vector<vector < int>> count(tr, vector<int> (tc, -1));
+        int minTime = 0;
+
         queue<vector < int>> que;
         for (int i = 0; i < tr; i++)
         {
@@ -43,19 +43,17 @@ class Solution
             int row = arr[0];
             int col = arr[1];
             int dist = arr[2];
-
-            if (count[row][col] != -1)
-                continue;
-            grid[row][col]=-2;
-            minTime=max(minTime,dist);
-            count[row][col] = dist;
+           if(grid[row][col]==-2)
+               continue;
+            grid[row][col] = -2;
+            minTime = max(minTime, dist);
 
             for (int i = 0; i <= 3; i++)
             {
 
                 int newRow = row + dir[i][0];
                 int newCol = col + dir[i][1];
-                if (isValid(newRow,newCol,tr,tc,grid,count))
+                if (isValid(newRow, newCol, tr, tc, grid))
                 {
                     vector<int> tempArray
                     {
@@ -67,22 +65,22 @@ class Solution
                 }
             }
         }
-        
-        for(int i=0;i<tr;i++)
+
+        for (int i = 0; i < tr; i++)
         {
-            for(int j=0;j<tc;j++)
+            for (int j = 0; j < tc; j++)
             {
-                if(grid[i][j]==1 )
+                if (grid[i][j] == 1)
                     return -1;
             }
         }
-        
+
         return minTime;
     }
 
-    bool isValid(int cr, int cc, int tr, int tc, vector<vector < int>> &grid, vector< vector< int>> &count)
+    bool isValid(int cr, int cc, int tr, int tc, vector<vector < int>> &grid)
     {
-        if (cr < 0 || cc < 0 || cr >= tr || cc >= tc  || grid[cr][cc] != 1 )
+        if (cr < 0 || cc < 0 || cr >= tr || cc >= tc || grid[cr][cc] != 1)
             return false;
 
         return true;
