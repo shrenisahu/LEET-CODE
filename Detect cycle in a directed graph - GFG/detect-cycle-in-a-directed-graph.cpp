@@ -1,61 +1,56 @@
-// { Driver Code Starts
+//{ Driver Code Starts
 #include <bits/stdc++.h>
 using namespace std;
 
- // } Driver Code Ends
+// } Driver Code Ends
 class Solution {
-  public:
+    public:
     // Function to detect cycle in a directed graph.
     bool isCyclic(int V, vector<int> adj[]) {
-        vector<int>visited(V,false);
-        vector<int>inDegree(V,0);
-        queue<int>que;
-        int vistedVertices=0;
+        // code here
+        vector<bool>visited(V,false);
+        vector<bool>recursiveStack(V,false);
         for(int i=0;i<V;i++)
         {
-            vector<int>neigh=adj[i];
-            for(auto eachNeigh:neigh)
-            {
-                inDegree[eachNeigh]++;
-            }
-            
+            if(visited[i]==false && hasCycle(i,visited,recursiveStack,adj))
+            return true;
         }
         
-        for(int i=0;i<V;i++)
-        {
-            if(inDegree[i]==0)
-            que.push(i);
-        }
-        
-       while(!que.empty())
-       {
-        int currVertex=que.front();
-        que.pop();
-        if(visited[currVertex])
-        continue;
+        return false;
+    }
+    
+    
+    bool hasCycle(int currVertex, vector<bool>&visited, vector<bool>&recursiveStack,vector<int> adj[])
+    {
         visited[currVertex]=true;
-        vistedVertices+=1;
+        recursiveStack[currVertex]=true;
         
         vector<int>neigh=adj[currVertex];
         for(auto eachNeigh:neigh)
         {
-            inDegree[eachNeigh]--;
-            if(inDegree[eachNeigh]==0)
-            que.push(eachNeigh);
+            if(visited[eachNeigh]==false)
+            {
+                if(hasCycle(eachNeigh,visited, recursiveStack,adj))
+                return true;
+            }
             
+            else 
+            {
+                if( recursiveStack[eachNeigh]==true)
+                return true;
+                
+               
+            }
         }
-       }
-        if(vistedVertices==V)
-        return false;
         
-        return true;
         
+        
+         recursiveStack[currVertex]=false;
+         return false;
     }
-    
-   
 };
 
-// { Driver Code Starts.
+//{ Driver Code Starts.
 
 int main() {
 
@@ -79,4 +74,5 @@ int main() {
 
     return 0;
 }
-  // } Driver Code Ends
+
+// } Driver Code Ends
