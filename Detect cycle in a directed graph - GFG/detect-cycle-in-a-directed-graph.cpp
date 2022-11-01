@@ -5,49 +5,51 @@ using namespace std;
 // } Driver Code Ends
 class Solution {
     public:
-    // Function to detect cycle in a directed graph.
+     
     bool isCyclic(int V, vector<int> adj[]) {
-        // code here
-        vector<bool>visited(V,false);
-        vector<bool>recursiveStack(V,false);
-        for(int i=0;i<V;i++)
-        {
-            if(visited[i]==false && hasCycle(i,visited,recursiveStack,adj))
-            return true;
-        }
-        
-        return false;
+      vector<bool>visited(V,false);
+      vector<bool>recursiveStack(V,false);
+      for(int i=0;i<V;i++)
+      {
+          if(visited[i]==false && DFS(i,adj,visited,recursiveStack))
+               return true;
+          
+      }
+      
+      return false;
     }
     
     
-    bool hasCycle(int currVertex, vector<bool>&visited, vector<bool>&recursiveStack,vector<int> adj[])
+    
+    
+    bool DFS(int currVertex,vector<int> adj[],  vector<bool>&visited,vector<bool>&recursiveStack)
     {
+        
         visited[currVertex]=true;
         recursiveStack[currVertex]=true;
         
         vector<int>neigh=adj[currVertex];
+        
         for(auto eachNeigh:neigh)
         {
             if(visited[eachNeigh]==false)
             {
-                if(hasCycle(eachNeigh,visited, recursiveStack,adj))
-                return true;
+             if(   DFS(eachNeigh,adj,visited,recursiveStack))
+             return true;
             }
-            
-            else 
+            else
             {
-                if( recursiveStack[eachNeigh]==true)
-                return true;
-                
-               
+              if(  recursiveStack[eachNeigh]==true)
+              return true;
             }
         }
-        
-        
-        
-         recursiveStack[currVertex]=false;
-         return false;
+        recursiveStack[currVertex]=false;
+        return false;
     }
+    
+    
+
+  
 };
 
 //{ Driver Code Starts.
