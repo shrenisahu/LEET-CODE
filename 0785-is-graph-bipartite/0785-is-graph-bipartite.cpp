@@ -9,45 +9,34 @@ class Solution
             {
                 if (visited[i] != -1)
                     continue;
-                bool ans = BFS(i, graph, visited);
+                bool ans = DFS(i, graph, visited,0);
                 if (ans == false)
                     return false;
             }
             return true;
         }
 
-    bool BFS(int currVeretx, vector<vector < int>> &graph, vector< int > &visited)
-    {
+   bool DFS(int vertex,vector<vector < int>> &graph,vector<int>&visited,int currColor)
+   {
 
-        queue<pair<int, int>> que;
-        que.push({ currVeretx,
-            0 });
-        while (!que.empty())
-        {
-            auto currPair = que.front();
-            que.pop();
-            int currEdge = currPair.first;
-            int currColor = currPair.second;
-            if (visited[currEdge] != -1)
-            {
-                if (visited[currEdge] != currColor)
-                    return false;
-            }
-            else
-            {
-                visited[currEdge] = currColor;
-
-            }
-                vector<int> neigh = graph[currEdge];
-                for (auto eachEdge: neigh)
-                {
-                    if(visited[eachEdge]==-1)
-                    que.push({ eachEdge,
-                        1 - currColor });
-                }
-            
-        }
-
+       visited[vertex]=currColor;
+       
+       vector<int>neigh=graph[vertex];
+       for(auto eachEdge:neigh)
+       {
+           if(visited[eachEdge]==-1)
+           {
+              if( DFS(eachEdge,graph,visited,1-currColor)== false)
+                  return false;
+           }
+           else
+           {
+               if(visited[eachEdge]==currColor)
+                   return false;
+           }
+           
+          
+       }
         return true;
-    }
+   }
 };
