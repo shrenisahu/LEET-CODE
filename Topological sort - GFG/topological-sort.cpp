@@ -9,42 +9,44 @@ class Solution
 	//Function to return list containing vertices in Topological order. 
 	vector<int> topoSort(int V, vector<int> adj[]) 
 	{
+	    vector<int>visited(V,0);
+	    queue<int>que;
 	    vector<int>ans;
-	    stack<int>st;
-	    vector<bool>visited(V,false);
+	    vector<int>inDegree(V,0);
 	    for(int i=0;i<V;i++)
 	    {
-	        if(visited[i]==false)
-	        DFS(i,visited,V,adj,st);
+	        vector<int>neigh=adj[i];
+	        for(auto j:neigh)
+	        {
+	            inDegree[j]++;
+	        }
 	    }
-	   
-	   
-	   while(!st.empty())
-	   {
-	       ans.push_back(st.top());
-	       st.pop();
-	   }
-	   return ans;
-	}
-	
-	void DFS(int vertex,vector<bool>&visited,int V, vector<int> adj[],stack<int>&st)
-	{
 	    
-	    
-	    visited[vertex]=true;
-	    vector<int>neigh=adj[vertex];
-	    for(auto eachNeigh:neigh)
+	    for(int i=0;i<V;i++)
 	    {
+	        if(inDegree[i]==0)
+	        que.push(i);
 	        
-	        if(visited[eachNeigh]==true)
-	        continue;
-	        
-	        DFS(eachNeigh,visited,V,adj,st);
 	    }
-	    st.push(vertex);
+	    while(!que.empty())
+	    {
+	        int vertex=que.front();
+	        que.pop();
+	        vector<int>neigh=adj[vertex];
+	        ans.push_back(vertex);
+	        for(auto eachV:neigh)
+	        {
+	            inDegree[eachV]--;
+	            if(inDegree[eachV]==0)
+	            que.push(eachV);
+	        }
+	        
+	    }
+	    
+	    
+	    
+	    return ans;
 	}
-	
-	
 };
 
 //{ Driver Code Starts.
