@@ -1,57 +1,53 @@
-// { Driver Code Starts
+//{ Driver Code Starts
 #include <bits/stdc++.h>
 using namespace std;
 
- // } Driver Code Ends
+// } Driver Code Ends
 class Solution
 {
 	public:
 	//Function to return list containing vertices in Topological order. 
 	vector<int> topoSort(int V, vector<int> adj[]) 
 	{
-	    vector<bool>visited(V,false);
 	    vector<int>ans;
-	    vector<int>inDegree(V,0);
-	    queue<int>que;
-	    
+	    stack<int>st;
+	    vector<bool>visited(V,false);
 	    for(int i=0;i<V;i++)
 	    {
-	        vector<int>neigh=adj[i];
-	        for(auto eachNeigh:neigh)
-	        {
-	            inDegree[eachNeigh]++;
-	        }
+	        if(visited[i]==false)
+	        DFS(i,visited,V,adj,st);
 	    }
-	    for(int i=0;i<V;i++)
-	    {
-	        if(inDegree[i]==0)
-	        que.push(i);
-	    }
-	    
-	    while(!que.empty())
-	    {
-	        int currVertex=que.front();
-	        que.pop();
-	      
-	        
-	        visited[currVertex]=true;
-	        
-	        ans.push_back(currVertex);
-	        
-	        vector<int>neigh=adj[currVertex];
-	        for(auto eachNeigh:neigh)
-	        {
-	            inDegree[eachNeigh]--;
-	            if(  inDegree[eachNeigh]==0)
-	            que.push(eachNeigh);
-	        }
-	    }
-	
-	    return ans;
+	   
+	   
+	   while(!st.empty())
+	   {
+	       ans.push_back(st.top());
+	       st.pop();
+	   }
+	   return ans;
 	}
+	
+	void DFS(int vertex,vector<bool>&visited,int V, vector<int> adj[],stack<int>&st)
+	{
+	    
+	    
+	    visited[vertex]=true;
+	    vector<int>neigh=adj[vertex];
+	    for(auto eachNeigh:neigh)
+	    {
+	        
+	        if(visited[eachNeigh]==true)
+	        continue;
+	        
+	        DFS(eachNeigh,visited,V,adj,st);
+	    }
+	    st.push(vertex);
+	}
+	
+	
 };
 
-// { Driver Code Starts.
+//{ Driver Code Starts.
 
 /*  Function to check if elements returned by user
 *   contains the elements in topological sorted form
@@ -98,4 +94,5 @@ int main() {
     }
     
     return 0;
-}  // } Driver Code Ends
+}
+// } Driver Code Ends
