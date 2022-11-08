@@ -4,7 +4,6 @@ class Solution
         vector<int> findOrder(int V, vector<vector < int>> &adj)
         {
             vector<int> inDegree(V, 0);
-            vector<bool> visited(V, false);
 
             queue<int> que;
             vector<int> ans;
@@ -30,11 +29,9 @@ class Solution
             {
                 int vertex = que.front();
                 que.pop();
-                // if (visited[vertex] == true)
-                    // continue;
-                visited[vertex] = true;
+
                 ans.push_back(vertex);
-                visited[vertex] = true;
+
                 for (auto i: Graph[vertex])
                 {
                     inDegree[i]--;
