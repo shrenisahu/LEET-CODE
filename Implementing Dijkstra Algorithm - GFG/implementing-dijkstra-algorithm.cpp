@@ -1,55 +1,49 @@
-// { Driver Code Starts
+//{ Driver Code Starts
 #include<bits/stdc++.h>
 using namespace std;
 
- // } Driver Code Ends
+// } Driver Code Ends
 class Solution
 {
-    
 	public:
 	//Function to find the shortest distance of all the vertices
     //from the source vertex S.
     vector <int> dijkstra(int V, vector<vector<int>> adj[], int S)
     {
-        typedef pair<int,int>pi;
-        vector <int> cost(V,-1);
-        priority_queue<pi,vector<pi>,greater<pi>>que;
-        que.push({0,S});
         
+        priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>>que;
+        vector<int>visited(V,-1);
+        
+        que.push({0,S});
         while(!que.empty())
         {
             auto currPair=que.top();
             que.pop();
-            
+            int node=currPair.second;
             int currCost=currPair.first;
-            int currVertex=currPair.second;
             
-            if(cost[currVertex]!=-1)
+            if(visited[node]!=-1)
+            continue;
+        //   cout<<currCost<<" ,";
+            visited[node]=currCost;
+            
+            vector<vector<int>>neigh=adj[node];
+            for(auto eachNeigh:neigh)
             {
-                continue;
+                int newNode=eachNeigh[0];
+                int newCost=eachNeigh[1];
                 
+                que.push({newCost+currCost,newNode});
             }
-            cost[currVertex]=currCost;
-            
-           
-                vector<vector<int>>Neigh=adj[currVertex];
-                for(auto eachNeigh:Neigh)
-                {
-                    int newVertex=eachNeigh[0];
-                    int newCost=eachNeigh[1];
-                    
-                    que.push({currCost+newCost,newVertex});
-                }
-            
         }
-        return cost;
+      
+      
+        return visited;
     }
-    
-    
 };
 
 
-// { Driver Code Starts.
+//{ Driver Code Starts.
 
 
 int main()
@@ -86,4 +80,5 @@ int main()
     return 0;
 }
 
-  // } Driver Code Ends
+
+// } Driver Code Ends
