@@ -8,12 +8,11 @@ public:
     int wordLadderLength(string startWord, string targetWord, vector<string>& wordList) {
         // Code here
         
-        set<string>stt;
-        for(auto it:wordList){
-            stt.insert(it);
-        }
+        set<string>stt(wordList.begin(),wordList.end());
+       
         
         queue<pair<string,int>>que;
+        stt.erase(startWord);
         que.push({startWord,1});
         
         while(!que.empty())
@@ -22,6 +21,8 @@ public:
             que.pop();
             int len=currPair.second;
             string word=currPair.first;
+              if(word==targetWord)
+                        return len;
             
             for(int i=0;i<word.size();i++)
             {
@@ -32,8 +33,7 @@ public:
                     word[i]=k;
                     if(stt.find(word)!=stt.end())
                     {
-                        if(word==targetWord)
-                        return len+1;
+                      
                         que.push({word,len+1});
                         stt.erase(word);
                     }
