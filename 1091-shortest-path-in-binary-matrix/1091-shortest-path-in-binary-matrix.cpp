@@ -2,10 +2,10 @@ class Solution
 {
 
     private:
-        bool isValid(int cr, int cc, vector<vector < int>> &grid, int n , vector<vector<bool>> &visited)
+        bool isValid(int cr, int cc, vector<vector < int>> &grid, int n)
         {
 
-            if (cr < 0 || cc < 0 || cr >= n || cc >= n || grid[cr][cc] != 0 || visited[cr][cc]==true)
+            if (cr < 0 || cc < 0 || cr >= n || cc >= n || grid[cr][cc] != 0)
                 return false;
 
             return true;
@@ -32,14 +32,14 @@ class Solution
     int shortestPathBinaryMatrix(vector<vector < int>> &grid)
     {
         int n = grid.size();
-         vector<vector<bool>> visited(n, vector<bool> (n, false));
+
         if (grid[0][0] != 0)
             return -1;
         queue<pair<int, int>> que;
         int level = 0;
         que.push({ 0,
             0 });
-        visited[0][0]=true;
+        grid[0][0] = -1;
 
         while (!que.empty())
         {
@@ -56,23 +56,22 @@ class Solution
 
                 if (currRow == n - 1 && currCol == n - 1)
                     return level;
-              
 
                 for (auto it: dir)
                 {
                     int newRow = currRow + it[0];
                     int newCol = currCol + it[1];
 
-                    if (isValid(newRow, newCol, grid, n,visited))
+                    if (isValid(newRow, newCol, grid, n))
                     {
 
                         que.push({ newRow,
                             newCol });
-                           visited[newRow][newCol]=true;
+
+                        grid[newRow][newCol] = -1;
                     }
                 }
             }
-          
         }
 
         return -1;
