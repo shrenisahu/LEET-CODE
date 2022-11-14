@@ -65,6 +65,8 @@ class Solution
                     if (isValid(newRow, newCol, grid, n))
                     {
 
+                        if (newRow == n - 1 && newCol == n - 1)
+                            return level + 1;
                         que.push({ newRow,
                             newCol });
 
