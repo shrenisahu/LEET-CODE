@@ -1,66 +1,55 @@
-class Solution {
-public:
-    int findTheCity(int n, vector<vector<int>>& edges, int distanceThreshold) {
-        vector<vector<int>>costs(n,vector<int>(n));
-          int minReach=101;
-            int maxAns=0;
-        for(int i=0;i<n;i++)
+class Solution
+{
+    public:
+        int findTheCity(int n, vector<vector < int>> &edges, int distanceThreshold)
         {
-            for(int j=0;j<n;j++)
+
+            vector<vector < int>> matrix(n, vector<int> (n, 1e9));
+
+            for (int i = 0; i < n; i++)
             {
-                if(i==j)
-                    costs[i][j]=0;
-                else 
-                    costs[i][j]=INT_MAX;
+                matrix[i][i] = 0;
             }
-        }
-        
-        for(auto eachEdges:edges)
-        {
-            int src=eachEdges[0];
-            int dest=eachEdges[1];
-            int weight=eachEdges[2];
-          
-            
-            costs[src][dest]=weight;
-            costs[dest][src]=weight;
-        }
-        
-        for(int i=0;i<n;i++)
-        {
-            for(int src=0;src<n;src++)
+            for (auto it: edges)
             {
-                for(int dest=0;dest<n;dest++)
-                    
+                int src = it[0];
+                int dest = it[1];
+                int wt = it[2];
+
+                matrix[src][dest] = wt;
+                matrix[dest][src] = wt;
+            }
+
+            for (int k = 0; k < n; k++)
+            {
+                for (int i = 0; i < n; i++)
                 {
-                    if(costs[src][i]!=INT_MAX && costs[i][dest]!=INT_MAX)
-                    costs[src][dest]=min(costs[src][dest] , costs[src][i]+costs[i][dest]);
+                    for (int j = 0; j < n; j++)
+                    {
+                        matrix[i][j] = min(matrix[i][j], matrix[i][k] + matrix[k][j]);
+                    }
                 }
             }
-        }
-        
-        
-        for(int i=0;i<n;i++)
-        {
-           int reach=0;
-            vector<int>tempReach=costs[i];
-            for(auto k:tempReach)
+
+            int ans = INT_MAX;
+            int city = 0;
+            for (int i = 0; i < n; i++)
             {
-               if(k >0 && k<=distanceThreshold)
-                   reach++;
+                int count = 0;
+                for (int j = 0; j < n; j++)
+                {
+
+                    if (matrix[i][j] <= distanceThreshold)
+                        count++;
+                }
+
+                if (count <= ans)
+                {
+                    ans = count;
+                    city = i;
+                }
             }
-            // cout<<reach<<"   <- "<<i<<endl;
-            
-            if(reach <= minReach)
-            {
-                minReach=reach;
-                maxAns=i;
-                
-            }
-            
-            
+
+            return city;
         }
-        
-        return maxAns;
-    }
 };
