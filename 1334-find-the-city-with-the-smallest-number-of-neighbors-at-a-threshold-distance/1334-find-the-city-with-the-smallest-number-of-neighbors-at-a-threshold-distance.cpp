@@ -1,55 +1,82 @@
 class Solution
 {
     public:
-        int findTheCity(int n, vector<vector < int>> &edges, int distanceThreshold)
+        vector<vector<vector< int>>> neigh;
+    int findTheCity(int n, vector<vector < int>> &edges, int distanceThreshold)
+    {
+
+        for (int i = 0; i < n; i++)
+        {
+            vector<vector < int>> temp;
+            neigh.push_back(temp);
+        }
+
+        for (auto it: edges)
+        {
+            int src = it[0];
+            int dest = it[1];
+            int wt = it[2];
+            vector<int> arr;
+            arr.push_back(src);
+            arr.push_back(wt);
+            neigh[dest].push_back(arr);
+            neigh[src].push_back({ dest,
+                wt });
+        }
+
+        int minCount = 1e9;
+        int ans = 0;
+        for (int i = 0; i < n; i++)
+        {
+            int currCount = dijkastra(i, n, distanceThreshold);
+            if (currCount <= minCount)
+            {
+                minCount = currCount;
+                ans = i;
+            }
+        }
+
+        return ans;
+    }
+
+    int dijkastra(int src, int n, int distanceThreshold)
+    {
+        vector<int> cost(n, -1);
+
+        priority_queue<pair<int, int>, vector< pair<int, int>>, greater<pair<int, int>>> que;
+        que.push({ 0,
+            src });
+
+        while (!que.empty())
         {
 
-            vector<vector < int>> matrix(n, vector<int> (n, 1e9));
+            auto currPair = que.top();
+            que.pop();
 
-            for (int i = 0; i < n; i++)
+            int vertex = currPair.second;
+            int wt = currPair.first;
+            if (cost[vertex] != -1)
+                continue;
+            cost[vertex] = wt;
+            vector<vector < int>> tempArr = neigh[vertex];
+            for (auto it: tempArr)
             {
-                matrix[i][i] = 0;
+                int v = it[0];
+                int newWt = it[1];
+
+                que.push({ newWt + wt,
+                    v });
             }
-            for (auto it: edges)
-            {
-                int src = it[0];
-                int dest = it[1];
-                int wt = it[2];
-
-                matrix[src][dest] = wt;
-                matrix[dest][src] = wt;
-            }
-
-            for (int k = 0; k < n; k++)
-            {
-                for (int i = 0; i < n; i++)
-                {
-                    for (int j = 0; j < n; j++)
-                    {
-                        matrix[i][j] = min(matrix[i][j], matrix[i][k] + matrix[k][j]);
-                    }
-                }
-            }
-
-            int ans = INT_MAX;
-            int city = 0;
-            for (int i = 0; i < n; i++)
-            {
-                int count = 0;
-                for (int j = 0; j < n; j++)
-                {
-
-                    if (matrix[i][j] <= distanceThreshold)
-                        count++;
-                }
-
-                if (count <= ans)
-                {
-                    ans = count;
-                    city = i;
-                }
-            }
-
-            return city;
         }
+        int count = 0;
+
+        for (int i = 0; i < n; i++)
+        {
+
+            if (cost[i] <= distanceThreshold && cost[i] > 0)
+                count++;
+        }
+
+        return count;
+    }
 };
