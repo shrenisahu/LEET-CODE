@@ -35,7 +35,7 @@ public:
                int newNode=it.first;
                int newWt=it.second;
                 
-                if(dist[newNode] > dist[node]+newWt)
+                if(dist[newNode] > wt+newWt)
                 {
                     que.push({dist[node]+newWt,newNode});
                     dist[newNode] =dist[node]+newWt;
