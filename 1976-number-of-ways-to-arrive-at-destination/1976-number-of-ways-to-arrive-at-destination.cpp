@@ -37,8 +37,8 @@ public:
                 
                 if(dist[newNode] > wt+newWt)
                 {
-                    que.push({dist[node]+newWt,newNode});
-                    dist[newNode] =dist[node]+newWt;
+                    que.push({wt+newWt,newNode});
+                    dist[newNode] =wt+newWt;
                     path[newNode] =path[node]%mod;
                     
                 }
