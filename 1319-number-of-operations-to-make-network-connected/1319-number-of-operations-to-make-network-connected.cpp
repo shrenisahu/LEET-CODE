@@ -55,7 +55,7 @@ class Solution
         {
             int ans = 0;
             int disConnected = 0;
-
+            int extra=0;
             int noOfEdges = connections.size();
             DisjointSet obj(n);
 
@@ -73,6 +73,7 @@ class Solution
 
                 if (parSrc != parDest)
                     obj.union_(src, dest);
+                else  extra++;
             }
 
             for (int i = 0; i < n; i++)
@@ -80,9 +81,10 @@ class Solution
                 if (obj.parent[i] == i)
                     disConnected++;
             }
+             if(extra >=disConnected - 1)
+                 return disConnected - 1;
+            
 
-            ans = disConnected - 1;
-
-            return ans;
+            return -1;
         }
 };
