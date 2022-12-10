@@ -7,55 +7,68 @@ using namespace std;
 //User function Template for C++
 
 class Solution {
+    
+    private:
+     int find(vector<int>&parent,int a)
+     {
+         if(parent[a]==a)
+         return a;
+         
+         else parent[a]=find(parent,parent[a]);
+         
+         return parent[a];
+     }
+    void union_(int a ,int b,vector<int>&parent,vector<int>&rank)
+    {
+        int parA=find(parent,a);
+        int parB=find(parent,b);
+        
+        if(parA==parB)
+        return ;
+        
+        if(rank[parA] >rank[parB])
+        {
+            parent[parB]=parA;
+            
+        }
+        else if(rank[parA] <rank[parB])
+        {
+            parent[parA]=parB;
+        }
+        else
+        {
+            parent[parA]=parB;
+            rank[parB]+=1;
+        }
+    }
   public:
     int numProvinces(vector<vector<int>> adj, int V) {
-       vector<vector<int>>adjacencyList(V+2);
-       
-       for(int i=0;i<V;i++)
-       {
-           for(int j=0;j<V;j++)
-           {
-               if(adj[i][j]==1 && i!=j)
-               {
-                   adjacencyList[i+1].push_back(j+1);
-                    
-               }
-           }
-       }
-       int count=0;
-       vector<bool>visited(V+1,false);
-       
-     for(int i=1;i<=V;i++)
-     {
-        
-         if(visited[i]!=true)
+        vector<int>parent(V);
+        vector<int>rank(V,0);
+        for(int i=0;i<V;i++)
         {
-             DFS(i,visited,adjacencyList);
-         count++;
+            parent[i]=i;
         }
-     }
-       
-       
-      
-       
-       return count;
-    }
-    
-    void DFS(int currVertex,vector<bool>&visited, vector<vector<int>>&adjacencyList)
-    {
         
-        
-        if(visited[currVertex]==true)
-        return ;
-        
-        
-        visited[currVertex]=true;
-        vector<int>neigh=adjacencyList[currVertex];
-        for(auto eachNeigh:neigh)
+        for(int i=0;i<V;i++)
         {
-            DFS(eachNeigh,visited,adjacencyList);
+            for(int j=0;j<V;j++)
+            {
+                if(adj[i][j]==1)
+                {
+                    union_(i,j,parent,rank);
+                }
+            }
         }
-        return ;
+        int count=0;
+        
+        for(int i=0;i<V;i++)
+        {
+            if(parent[i]==i)
+            count++;
+        }
+        return count;
+        
     }
 };
 
