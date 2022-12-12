@@ -56,14 +56,14 @@ class Solution
             DisjointSet obj(n);
 
             vector<vector < string>> ans;
-            map<string, int> mpp; // for storing the emails with their index
-            map<int, vector < string>> mpp2;
+            unordered_map<string, int> mpp;	// for storing the emails with their index
+            unordered_map<int, vector < string>> mpp2;
             for (int i = 0; i < accounts.size(); i++)
             {
                 for (int k = 1; k < accounts[i].size(); k++)
                 {
                     string currEmail = accounts[i][k];
-                    if (mpp.find(currEmail) != mpp.end())   // if emails are repeated ,perform uniuon of the prev index and curr index
+                    if (mpp.find(currEmail) != mpp.end())	// if emails are repeated ,perform uniuon of the prev index and curr index
                     {
 
                         obj.union_(i, mpp[currEmail]);
@@ -73,7 +73,7 @@ class Solution
                 }
             }
 
-            for (auto it: mpp)  // now traverse the old map and store email collectively with their parnet indexes
+            for (auto it: mpp)	// now traverse the old map and store email collectively with their parnet indexes
             {
                 string mail = it.first;
                 int index = it.second;
@@ -82,10 +82,10 @@ class Solution
                 mpp2[parentIndex].push_back(mail);
             }
 
-            for (auto it: mpp2) // start storing them in ans
+            for (auto it: mpp2)	// start storing them in ans
             {
                 int index = it.first;
-                // sort(it.second.begin(), it.second.end());
+                sort(it.second.begin(), it.second.end());
                 vector<string> temp;
                 temp.push_back(accounts[index][0]);
                 for (auto j: it.second)
