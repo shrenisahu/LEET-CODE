@@ -56,50 +56,44 @@ class Solution
             DisjointSet obj(n);
 
             vector<vector < string>> ans;
-            map<string, int> mpp;
+            map<string, int> mpp; // for storing the emails with their index
             map<int, vector < string>> mpp2;
             for (int i = 0; i < accounts.size(); i++)
             {
                 for (int k = 1; k < accounts[i].size(); k++)
                 {
                     string currEmail = accounts[i][k];
-                    if (mpp.find(currEmail) != mpp.end())
+                    if (mpp.find(currEmail) != mpp.end())   // if emails are repeated ,perform uniuon of the prev index and curr index
                     {
 
-                        obj.union_(i,mpp[currEmail]);
-
+                        obj.union_(i, mpp[currEmail]);
                     }
                     else
                         mpp[currEmail] = i;
                 }
             }
 
-            for (auto it: mpp)
+            for (auto it: mpp)  // now traverse the old map and store email collectively with their parnet indexes
             {
                 string mail = it.first;
                 int index = it.second;
 
                 int parentIndex = obj.find(index);
                 mpp2[parentIndex].push_back(mail);
-                
             }
-            
-            for(auto it:mpp2)
+
+            for (auto it: mpp2) // start storing them in ans
             {
-                int index=it.first;
-               
-                // vector<string>arr=it.second;
-                sort(it.second.begin(),it.second.end());
-                vector<string>temp;
+                int index = it.first;
+                // sort(it.second.begin(), it.second.end());
+                vector<string> temp;
                 temp.push_back(accounts[index][0]);
-                for(auto j:it.second)
+                for (auto j: it.second)
                 {
                     temp.push_back(j);
                 }
-                 ans.push_back(temp);
-                  
+                ans.push_back(temp);
             }
-            
 
             return ans;
         }
