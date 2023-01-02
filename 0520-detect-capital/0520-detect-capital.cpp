@@ -1,49 +1,29 @@
-class Solution
-{
-    public:
-        bool detectCapitalUse(string word)
+class Solution {
+public:
+    bool detectCapitalUse(string word) {
+        int smallCount=0;
+        int capitalCount=0;
+        
+        for(auto i:word)
         {
-            int n = word.size();
-
-            bool capitalOne = false;
-            bool capitalTwo = false;
-            bool smallOne = false;
-            bool smallTwo = false;
-            int pos = -1000;
-
-            for (int i = 0; i < n; i++)
+            int a=i;
+            if(a<=90 && a>=65)
             {
-                int a = word[i];
-                if (a >= 91)
-                {
-                    if (smallOne == true)
-
-                        smallTwo = true;
-
-                    else
-                        smallOne = true;
-                }
-                else if (a >= 65 && a<=90)
-                {
-                    if (capitalOne == true)
-
-                        capitalTwo = true;
-
-                    else
-                    {
-                        capitalOne = true;
-                        pos = i;
-                    }
-                }
+                capitalCount+=1;
             }
-
-          
-            if (capitalTwo == true && smallOne == true)
-                return false;
-            if(capitalOne==true && (smallOne==true || smallTwo==true) && pos!=0)
-                return false;
-             
-
-            return true;
+            else  if(a>90 )
+            {
+                smallCount+=1;
+            }
         }
+        int b=word[0];
+      // cout<<smallCount<<","<<capitalCount<<" ,"<<b<<endl;
+            if(smallCount>0 && capitalCount>1 )
+            return false;
+          if(smallCount>0 && capitalCount==1  && b >90 )
+            return false;
+        
+        return true;
+        
+    }
 };
