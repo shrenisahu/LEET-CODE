@@ -10,19 +10,15 @@ class Solution
             for (int i = 0; i < len; i++)	// 1000 *
             {
 
-                int lastWordValue = 96;
-                for (int j = 0; j < n; j++)	// 100
+                for (int j = 1; j < n; j++)	// 100
                 {
-                    string currStr = strs[j];
-                    char currLetter = currStr[i];
-                    int currWordValue = currLetter;
-                    if (lastWordValue > currWordValue)
+
+                    if (strs[j - 1][i] > strs[j][i])
                     {
 
                         count++;
                         break;
                     }
-                    lastWordValue = currWordValue;
                 }
             }
 
