@@ -11,7 +11,7 @@ class Solution
                 int x = eachPair[0];
                 int y = eachPair[1];
                 int dist = ((x *x) + (y *y));
-                cout << dist << " ," << x << " ," << y << endl;
+               
                 heap.push({ dist,
                     {
                         x,
