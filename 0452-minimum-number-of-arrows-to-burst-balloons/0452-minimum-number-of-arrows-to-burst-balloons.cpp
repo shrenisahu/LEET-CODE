@@ -6,8 +6,10 @@ class Solution
             typedef pair<int, int> pi;
             sort(points.begin(), points.end());
             priority_queue<pi> heap;
-            heap.push({ points[0][0],
-                points[0][1] });
+            int lastCount;
+            int ans = 1;
+
+            lastCount = points[0][1];
 
             for (int i = 1; i < points.size(); i++)
             {
@@ -15,21 +17,17 @@ class Solution
                 int x = it[0];
                 int y = it[1];
 
-                auto currPair = heap.top();
-                int x1 = currPair.first;
-                int y1 = currPair.second;
-                if (x > y1)
-                    heap.push({ x,
-                        y });
+                if (x > lastCount)
+                {
+                    ans++;
+                    lastCount = y;
+                }
                 else
                 {
-                    heap.pop();
-                    int newCord=min(y,y1);
-                    heap.push({ x,
-                        newCord});
+                    lastCount = min(lastCount, y);
                 }
             }
 
-            return heap.size();
+            return ans;
         }
 };
