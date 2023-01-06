@@ -5,11 +5,10 @@ class Solution
         {
             typedef pair<int, int> pi;
             sort(points.begin(), points.end());
-            priority_queue<pi> heap;
-            int lastCount;
+
             int ans = 1;
 
-            lastCount = points[0][1];
+            int lastCount = points[0][1];
 
             for (int i = 1; i < points.size(); i++)
             {
@@ -22,10 +21,7 @@ class Solution
                     ans++;
                     lastCount = y;
                 }
-                else
-                {
-                    lastCount = min(lastCount, y);
-                }
+                lastCount=min(lastCount,y);
             }
 
             return ans;
