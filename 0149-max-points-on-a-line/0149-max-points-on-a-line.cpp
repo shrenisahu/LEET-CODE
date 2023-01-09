@@ -1,52 +1,53 @@
-class Solution {
-public:
-    
-    // According to constraint we are allowed with maximum time complexity of O(n^3)
-    // 1 <= points.length <= 300
-    ///////   All the points are unique.
-    int maxPoints(vector<vector<int>>& points) {
-        
-        if(points.size()<=2) return points.size(); // only two points are always on the same line, beacuse using 2 points
-                                                    // line is made
-        int res = 0;
-        for(int i = 0; i < points.size(); i++)
+class Solution
+{
+    public:
+        int maxPoints(vector<vector < int>> &points)
         {
-            unordered_map<double, int> mp;
-            int duplicate = 0;
-            double slope = 0.0;
-            for(int j = 0; j < points.size(); j++)
-            {
-                int x1 = points[i][0];
-                int x2 = points[j][0];
-                int y1 = points[i][1];
-                int y2 = points[j][1];    
-                
-                // slope = dy/dx.
-                int dy = y2 - y1;
-                int dx = x2 - x1;
-                if(dy == 0 && dx == 0){  // same overlapping point --> consider 2 same point as single point
-                    duplicate++; 
-                    continue;
-                }
-                
-                if(dx != 0)
-                    slope = dy*1.0/dx; // store in double
-                else // dx==0 means slope is infinity
-                    slope = INT_MAX;
-                
-                mp[slope]++;
-            }
 
-            if(mp.size() == 0)
-                res = duplicate;
-            else
+            int n = points.size();
+
+            if (n <= 2)
+                return n;
+            int res = 0;
+            for (int i = 0; i < n - 1; i++)
             {
-                for(auto slope : mp){
-                    
-                    res = max(res, slope.second + duplicate);
+                int duplicates = 1;
+                float slope = 0.0;
+                unordered_map<float, int> mpp;
+                for (int j = i + 1; j < n; j++)
+                {
+                    int x1 = points[i][0];
+                    int y1 = points[i][1];
+                    int x2 = points[j][0];
+                    int y2 = points[j][1];
+                    int dx = x1 - x2;
+                    int dy = y1 - y2;
+
+                    if (x1 == x2 && y1 == y2)
+                    {
+                        duplicates++;
+                    }
+                    else if (dx == 0)
+                    {
+                        slope = INT_MAX;
+                        mpp[slope]++;
+                    }
+                    else
+                    {
+                        slope = (float) dy / (float) dx;
+                        mpp[slope]++;
+                    }
                 }
+
+                int locMax = 0;
+                for (auto it: mpp)
+                {
+                    int freq = it.second;
+                    locMax = max(locMax, freq);
+                }
+                locMax += duplicates;
+                res = max(res, locMax);
             }
+            return res;
         }
-        return res;
-    }
 };
