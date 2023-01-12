@@ -6,9 +6,9 @@ class Solution
             vector<vector < int>> graph = createGraph(n, edges);
 
             int ans = DFS(0, -1, graph, hasApple);
-            if(ans==0)
+            if (ans == 0)
                 return 0;
-            ans-=1;
+            ans -= 1;
             return ans * 2;
         }
 
@@ -24,17 +24,13 @@ class Solution
             if (eachNeigh == currPar)
                 continue;
             currScore += DFS(eachNeigh, currVertex, graph, hasApple);
-            
-           
         }
-         // cout<<currVertex<<" ->"<<currScore<<endl;
+       	// cout<<currVertex<<" ->"<<currScore<<endl;
 
         if (currScore == 0 && hasApple[currVertex] == false)
             return 0;
 
-        if (currScore == 0 && hasApple[currVertex] == true)
-            return 1;
-
+        
 
         return currScore + 1;
     }
