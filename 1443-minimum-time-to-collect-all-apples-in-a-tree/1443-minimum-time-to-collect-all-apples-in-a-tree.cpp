@@ -1,24 +1,63 @@
-class Solution {
-public:
-    vector<vector<int>> adjList;
-    int dfs(vector<bool>& hasApple,int node,int d,int prev)
+class Solution
+{
+    public:
+        int minTime(int n, vector<vector < int>> &edges, vector< bool > &hasApple)
+        {
+            vector<vector < int>> graph = createGraph(n, edges);
+
+            int ans = DFS(0, -1, graph, hasApple);
+            if(ans==0)
+                return 0;
+            ans-=1;
+            return ans * 2;
+        }
+
+    int DFS(int currVertex, int currPar, vector<vector < int>> &graph, vector< bool > &hasApple)
     {
-        int result=0,temp;
-        for(int &i:adjList[node])
-	    if(i!=prev)
-	    {
-	        temp=dfs(hasApple,i,d+1,node);
-	        if(temp)			//If child has apples it'll return a non zero result which is the distance traveled upto that node.
-		    result+=temp-d;
-	    }
-        return result||hasApple[node]?result+d:0;  //If nothing is added to result and current node doesnt have apple return 0 else return distances of children + current distance from root.
-        
+
+        int currScore = 0;
+
+        vector<int> neigh = graph[currVertex];
+
+        for (auto eachNeigh: neigh)
+        {
+            if (eachNeigh == currPar)
+                continue;
+            currScore += DFS(eachNeigh, currVertex, graph, hasApple);
+            
+           
+        }
+         // cout<<currVertex<<" ->"<<currScore<<endl;
+
+        if (currScore == 0 && hasApple[currVertex] == false)
+            return 0;
+
+        if (currScore == 0 && hasApple[currVertex] == true)
+            return 1;
+
+
+        return currScore + 1;
     }
-    int minTime(int n, vector<vector<int>>& edges, vector<bool>& hasApple) 
+
+    vector<vector < int>> createGraph(int n, vector<vector < int>> &edges)
     {
-        adjList.resize(n);
-        for(vector<int> &e:edges)
-            adjList[e[0]].push_back(e[1]),adjList[e[1]].push_back(e[0]);
-        return dfs(hasApple,0,0,-1)*2;     //Result is doubled the distance travelled as per our observation.
+
+        vector<vector < int>> graph;
+        for (int i = 0; i < n; i++)
+        {
+            vector<int> temp;
+            graph.push_back(temp);
+        }
+
+        for (auto it: edges)
+        {
+            int a = it[0];
+            int b = it[1];
+
+            graph[a].push_back(b);
+            graph[b].push_back(a);
+        }
+
+        return graph;
     }
 };
