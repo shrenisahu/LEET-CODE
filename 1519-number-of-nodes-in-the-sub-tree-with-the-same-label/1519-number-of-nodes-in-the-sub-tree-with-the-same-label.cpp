@@ -3,10 +3,10 @@ class Solution
     public:
 
         vector<vector < int>> graph;
-    vector<int> ans;
+   
     vector<int> countSubTrees(int n, vector<vector < int>> &edges, string labels)
     {
-        ans.resize(n, 0);
+        vector<int>ans(n, 0);
         graph.resize(n);
 
         for (auto it: edges)
@@ -16,20 +16,20 @@ class Solution
             graph[a].push_back(b);
             graph[b].push_back(a);
         }
-        vector<int> temp = DFS(0, -1, labels);
+        vector<int> temp = DFS(0, -1, labels,ans);
         return ans;
     }
 
-    vector<int> DFS(int currVertex, int currPar, string &labels)
+    vector<int> DFS(int currVertex, int currPar, string &labels, vector<int>&ans)
     {
 
         vector<int> neigh = graph[currVertex];
         vector<int> freq(26, 0);
-        for (auto it: neigh)
+        for (auto &it: neigh)
         {
             if (it == currPar)
                 continue;
-            vector<int> temp = DFS(it, currVertex, labels);
+            vector<int> temp = DFS(it, currVertex, labels,ans);
             for (int i = 0; i < 26; i++)
             {
                 freq[i] += temp[i];
