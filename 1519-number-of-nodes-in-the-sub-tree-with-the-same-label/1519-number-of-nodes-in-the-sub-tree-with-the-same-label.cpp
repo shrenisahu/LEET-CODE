@@ -1,23 +1,14 @@
 class Solution
 {
     public:
-        unordered_map<char, int> freqMap;
-    unordered_map<int, char> mpp;	// index to char
-    vector<vector < int>> graph;
+
+        vector<vector < int>> graph;
     vector<int> ans;
     vector<int> countSubTrees(int n, vector<vector < int>> &edges, string labels)
     {
         ans.resize(n, 0);
-        for (int i = 0; i < n; i++)
-        {
-            mpp[i] = labels[i];
-        }
+        graph.resize(n);
 
-        for (int i = 0; i < n; i++)
-        {
-            vector<int> temp;
-            graph.push_back(temp);
-        }
         for (auto it: edges)
         {
             int a = it[0];
@@ -25,11 +16,11 @@ class Solution
             graph[a].push_back(b);
             graph[b].push_back(a);
         }
-        vector<int> temp = DFS(0, -1);
+        vector<int> temp = DFS(0, -1, labels);
         return ans;
     }
 
-    vector<int> DFS(int currVertex, int currPar)
+    vector<int> DFS(int currVertex, int currPar, string &labels)
     {
 
         vector<int> neigh = graph[currVertex];
@@ -38,14 +29,14 @@ class Solution
         {
             if (it == currPar)
                 continue;
-            vector<int> temp = DFS(it, currVertex);
+            vector<int> temp = DFS(it, currVertex, labels);
             for (int i = 0; i < 26; i++)
             {
                 freq[i] += temp[i];
             }
         }
 
-        char currChar = mpp[currVertex];
+        char currChar = labels[currVertex];
         freq[currChar - 'a']++;
         ans[currVertex] = freq[currChar - 'a'];
 
