@@ -1,7 +1,7 @@
 class Solution
 {
     public:
-        vector<string> ans;
+        
     bool isValid(string s, int start, int end)
     {
         string h = s.substr(start, end - start + 1);
@@ -19,35 +19,21 @@ class Solution
         return false;
     }
 
-    bool isLengthValid(string s)
-    {
-        stringstream X(s);
-        string T;
-        int dotCount = 0;
-
-        while (getline(X, T, '.'))
-        {
-
-            dotCount++;
-        }
-        if (dotCount == 4)
-            return true;
-
-        return false;
-    }
+   
     vector<string> restoreIpAddresses(string s)
     {
 
         int n = s.length();
+        vector<string>ans;
         if (n > 12)
             return ans;
         int currDotCount = 0;
-        Traverse(s, 0, "", currDotCount);
+        Traverse(s, 0, "", currDotCount,ans);
 
         return ans;
     }
 
-    void Traverse(string s, int currIdx, string currStr, int currDotCount)
+    void Traverse(string s, int currIdx, string currStr, int &currDotCount,vector<string>&ans)
     {
         if (currIdx == s.size())
         {
@@ -57,6 +43,7 @@ class Solution
 
                 currStr.pop_back();
                 ans.push_back(currStr);
+                
             }
             return;
         }
@@ -67,7 +54,9 @@ class Solution
             string newStr = s.substr(currIdx, i - currIdx + 1);
             if (isValid(s, currIdx, i))
             {
-                Traverse(s, i + 1, currStr + newStr + '.', currDotCount + 1);
+                currDotCount++;
+                Traverse(s, i + 1, currStr + newStr + '.', currDotCount ,ans);
+                currDotCount--;
             }
         }
         return;
