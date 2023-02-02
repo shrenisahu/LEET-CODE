@@ -7,29 +7,24 @@ class Solution
 
             int m = a.size();
             int n = b.size();
-            int i = 0, j = 0;
+            int i = 0;
 
-            while (i < m && j < n)
+            while (i < m && i < n)
             {
-                char first = a[i];
-                char second = b[j];
 
-                if (a[i] == b[j])
+                if (a[i] == b[i])
                 {
                     i++;
-                    j++;
+
                     continue;
                 }
 
-                if (mpp[a[i]] > mpp[b[j]])
+                if (mpp[a[i]] > mpp[b[i]])
                     return false;
                 else return true;
-
-
             }
 
-
-            if (i < m )
+            if (i < m)	// this emans the first string some more letters than the second string.which means that 
                 return false;
 
             return true;
