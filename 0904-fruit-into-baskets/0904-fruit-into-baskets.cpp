@@ -17,18 +17,14 @@ class Solution
                 mpp[fruits[j]]++;
                 currCount += 1;
 
-                if (mpp.size() >= 3)
+                while (mpp.size() > 2)
                 {
+                    mpp[fruits[i]]--;
+                    currCount--;
+                    if (mpp[fruits[i]] == 0)
+                        mpp.erase(fruits[i]);
 
-                    while (mpp.size() != 2)
-                    {
-                        mpp[fruits[i]]--;
-                        currCount--;
-                        if (mpp[fruits[i]] == 0)
-                            mpp.erase(fruits[i]);
-
-                        i++;
-                    }
+                    i++;
                 }
 
                 maxCount = max(maxCount, currCount);
