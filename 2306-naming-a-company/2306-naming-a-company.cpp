@@ -18,16 +18,17 @@ class Solution
             for (int i = 0; i < 25; i++)
 
             {
-                 
+
                 for (int j = i + 1; j < 26; j++)
                 {
                     int count = 0;
 
                     for (auto &eachSetWord: suffixes[i])
                     {
-                        if (suffixes[j].count(eachSetWord))
+                        if (suffixes[j].find(eachSetWord) != suffixes[j].end())
+
                         {
-                           
+
                             count++;
                         }
                     }
