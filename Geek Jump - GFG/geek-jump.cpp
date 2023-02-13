@@ -16,43 +16,28 @@ class Solution {
       
       if(dp[i]!=-1)
       return dp[i];
-       int twoStep=10000;
-    
-          int temp1=abs(height[i]-height[i+1] );
-          int  oneStep=temp1+Solve(i+1,height,n,dp);
-      if(i+2<=n-1)
+      
+      int twoStep=10000;
+      int ans=INT_MAX;
+       for(int j=1;j<=2;j++)
+       {
+            if(i+j<=n-1)
          {
-              int  temp2=abs(height[i]-height[i+2] );
-            twoStep=temp2+Solve(i+2,height,n,dp);
+            int  temp2=abs(height[i]-height[i+j] );
+            twoStep=temp2+Solve(i+j,height,n,dp);
+            ans=min(ans,twoStep);
          }
        
-       
-       return  dp[i]= min(oneStep,twoStep);
+       }
+       return dp[i]= ans;
       
   }
   
     int minimumEnergy(vector<int>& height, int n) {
         
-       int dp_1=0;
-        int dp_2=0;
-       
-        for(int i=n-2;i>=0;i--)
-        {
-            int twoStep=10000;
-            int oneStep=dp_1 + abs(height[i]-height[i+1]) ;
-            
-            
-            if(i<n-2)
-            {
-                twoStep=abs(height[i]-height[i+2])+dp_2;
-            }
-            
-            int curr=min(oneStep,twoStep);
-            dp_2=dp_1;
-            dp_1=curr;
-           
-        }
-         return dp_1;
+       vector<int>dp(n+1,-1);
+       int ans=Solve(0,height,n,dp);
+       return ans;
     }
 };
 
