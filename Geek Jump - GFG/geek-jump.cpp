@@ -8,32 +8,32 @@ class Solution {
   public:
   
   
-  int Solve(int i,vector<int>& height,vector<int>&dp)
+ 
+  int Solve(int i,vector<int>& height, int n,vector<int>&dp)
   {
-      
-      
-      if(i==0)
-      return dp[0]= 0;
+      if(i==n-1)
+      return  dp[i]=0;
       
       if(dp[i]!=-1)
       return dp[i];
        int twoStep=10000;
-       int temp1=abs(height[i]-height[i-1] );
-       int  oneStep=Solve(i-1,height,dp)+temp1;
-      if(i>1)
+    
+          int temp1=abs(height[i]-height[i+1] );
+          int  oneStep=temp1+Solve(i+1,height,n,dp);
+      if(i+2<=n-1)
          {
-              int  temp2=abs(height[i]-height[i-2] );
-            twoStep=Solve(i-2,height,dp)+temp2;
+              int  temp2=abs(height[i]-height[i+2] );
+            twoStep=temp2+Solve(i+2,height,n,dp);
          }
        
        
-       return dp[i]= min(oneStep,twoStep);
+       return  dp[i]= min(oneStep,twoStep);
       
   }
   
     int minimumEnergy(vector<int>& height, int n) {
         vector<int>dp(n+1,-1);
-         int ans=Solve(n-1,height,dp);
+         int ans=Solve(0,height,n,dp);
          return ans;
     }
 };
