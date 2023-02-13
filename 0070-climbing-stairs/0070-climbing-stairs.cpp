@@ -5,7 +5,7 @@ class Solution
         int countWays(int steps, vector<int> &dp)
         {
             if (steps <=1)
-                return 1;
+                return dp[steps]=1;
             if (dp[steps] != -1)
                 return dp[steps];
 
