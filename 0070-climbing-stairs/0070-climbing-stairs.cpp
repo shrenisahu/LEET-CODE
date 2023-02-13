@@ -2,21 +2,31 @@ class Solution
 {
     public:
 
-        int climbStairs(int n)
+        int countWays(int steps, vector<int> &dp)
         {
+            if (steps <=1)
+                return dp[steps]=1;
+            if (dp[steps] != -1)
+                return dp[steps];
 
+            int oneStep = countWays(steps - 1, dp);
+
+            int twoSteps = countWays(steps - 2, dp);
             
-            int prev2 = 1;
-            int prev1 = 1;
-
-            for (int i = 2; i <= n; i++)
+            int ans=0;
+            for(int i=1;i<=2;i++)
             {
-
-                int curr = prev2+prev1;
-                prev2=prev1;
-                prev1=curr;
+                int temp=countWays(steps - i, dp);
+                ans+=temp;
             }
 
-            return prev1;
+            return dp[steps] = ans;
         }
+    int climbStairs(int n)
+    {
+        vector<int> dp(n + 1, -1);
+        int answer = countWays(n, dp);
+
+        return answer;
+    }
 };
