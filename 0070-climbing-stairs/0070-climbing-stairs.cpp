@@ -4,16 +4,14 @@ class Solution
 
         int countWays(int steps, vector<int> &dp)
         {
-            if (steps == 0)
+            if (steps <=1)
                 return 1;
             if (dp[steps] != -1)
                 return dp[steps];
 
-            int twoSteps = 0;
-            int oneStep = countWays(steps - 1,dp);
+            int oneStep = countWays(steps - 1, dp);
 
-            if (steps > 1)
-                twoSteps = countWays(steps - 2,dp);
+            int twoSteps = countWays(steps - 2, dp);
 
             return dp[steps] = oneStep + twoSteps;
         }
