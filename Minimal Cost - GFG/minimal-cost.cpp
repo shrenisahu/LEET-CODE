@@ -29,8 +29,37 @@ class Solution {
        return dp[i]= ans;
       
   }
+  int Tabulation(vector<int>& height, int n,int k)
+  {
+       vector<int>dp(n+1);
+       dp[n-1]=0;
+       for(int i=n-2;i>=0;i--)
+       {
+           int ans=10000;
+           for(int j=1;j<=k;j++)
+           {
+               int oneStep=10000;
+               if(i+j<n)
+           
+         {
+                oneStep=abs(height[i]-height[i+j] )+dp[i+j];
+           
+         }
+         ans=min(ans,oneStep);
+           
+           }
+           dp[i]=ans;
+       }
+       
+       return dp[0];
+  }
+  
+  
+  
+  
     int minimizeCost(vector<int>& height, int n, int k) {
      vector<int>dp(n+1,-1);
+    //  int ans=Tabulation(height,n,k);
      int ans=Solve(0,height,n,dp,k);
      return ans;
     }
