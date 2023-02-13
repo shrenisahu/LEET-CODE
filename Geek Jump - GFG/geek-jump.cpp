@@ -32,24 +32,27 @@ class Solution {
   }
   
     int minimumEnergy(vector<int>& height, int n) {
-        vector<int>dp(n+1);
+        
+       int dp_1=0;
+        int dp_2=0;
        
-       dp[n-1]=0;
         for(int i=n-2;i>=0;i--)
         {
             int twoStep=10000;
-            int oneStep=dp[i+1] + abs(height[i]-height[i+1]) ;
+            int oneStep=dp_1 + abs(height[i]-height[i+1]) ;
             
             
             if(i<n-2)
             {
-                twoStep=abs(height[i]-height[i+2])+dp[i+2];
+                twoStep=abs(height[i]-height[i+2])+dp_2;
             }
             
-            dp[i]=min(oneStep,twoStep);
+            int curr=min(oneStep,twoStep);
+            dp_2=dp_1;
+            dp_1=curr;
            
         }
-         return dp[0];
+         return dp_1;
     }
 };
 
