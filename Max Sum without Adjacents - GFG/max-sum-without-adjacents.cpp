@@ -44,7 +44,27 @@ public:
 	    
 	}
 	
-	
+	int spaceOptimization(int j,int *arr,int n)
+	{
+	    vector<int>dp(n+2,0);
+	    int dp_n1=0; // dp[n+1]
+	    int dp_n=0;  // dp[n]
+	  
+	    
+	    for(int i=n-1;i>=0;i--)
+	    {
+	        int take=dp_n1+arr[i];
+	        int notTake=dp_n;
+	        
+	      int curr=max(take,notTake);
+	      dp_n1=dp_n;
+	      dp_n=curr;
+	    }
+	    
+	    return dp_n;
+	   
+	   
+	}
 	
 	
 	
@@ -52,26 +72,31 @@ public:
 	int Tabulation(int j,int *arr,int n)
 	{
 	    vector<int>dp(n+2,0);
+	    int dp_n1=0; // dp[n+1]
+	    int dp_n=0;  // dp[n]
 	    dp[n+1]=0;
 	    dp[n]=0;
 	  
 	    
 	    for(int i=n-1;i>=0;i--)
 	    {
-	        int take=dp[i+2]+arr[i];
-	        int notTake=dp[i+1];
+	        int take=dp_n1+arr[i];
+	        int notTake=dp_n;
 	        
-	        dp[i]=max(take,notTake);
+	      int curr=max(take,notTake);
+	      dp_n1=dp_n;
+	      dp_n=curr;
 	    }
 	    
-	    return dp[0];
+	    return dp_n;
 	   
 	   
 	}
 	int findMaxSum(int *arr, int n) {
 	    vector<int>dp(n+1,-1);
 	   // int ans=Solve(0,arr,n,dp);
-	   int ans=Tabulation(n-1,arr,n);
+	   //int ans=Tabulation(n-1,arr,n);
+	   int ans=spaceOptimization(n-1,arr,n);
 	    return ans;
 	}
 };
