@@ -25,11 +25,30 @@ class Solution
        
 
     }
+    
+    
+    int Tabulation(int idx,int arr[],int n)
+    {
+        
+        vector<int>dp(n+2,0);
+        dp[n]=0;
+        dp[n+1]=0;
+        for(int i=n-1;i>=0;i--)
+        {
+            int take=dp[i+2]+arr[i];
+            
+            int notTake=dp[i+1];
+            
+            dp[i]=max(take,notTake);
+        }
+        return dp[0];
+    }
     //Function to find the maximum money the thief can get.
     int FindMaxSum(int arr[], int n)
     {  
         vector<int>dp(n+1,-1);
-        int ans=memo(0,arr,n,dp);
+        // int ans=memo(0,arr,n,dp);
+          int ans=Tabulation(0,arr,n);
       
         return ans;
     }
