@@ -6,10 +6,10 @@ using namespace std;
 class Solution {
   public:
   
-  int Solve(int idx,int j,vector<vector<int>>& points, vector<vector<int>>&dp)
+  int Memoization(int idx,int j,vector<vector<int>>& points, vector<vector<int>>&dp)
    {
        if(idx>=points.size())
-       return 0;
+       return  dp[idx][j]=0;
       if(dp[idx][j]!=-1)
       return dp[idx][j];
     
@@ -20,7 +20,7 @@ class Solution {
         if(k==j)
         continue;
         
-        int temp=points[idx][k]+Solve(idx+1,k,points,dp);
+        int temp=points[idx][k]+Memoization(idx+1,k,points,dp);
         ans=max(ans,temp);
         
     }
@@ -28,14 +28,49 @@ class Solution {
     return dp[idx][j]= ans;
    }
   
+  int Tabulation(vector<vector<int>>& arr, int n)
+  {
+        vector<vector<int>>dp(n+5,vector<int>(8,0));
+      
+       
+      for(int idx=n-1;idx>=0;idx--)
+      { 
+          for(int task=0;task<=3;task++)
+          {
+              
+              
+              for(int last=0;last<=2;last++)
+              
+              
+              {
+                  if(last!=task)
+                  
+                 {
+                      int temp=arr[idx][last]+dp[idx+1][last];
+                      dp[idx][task]=max(dp[idx][task],temp);
+                      
+             
+                 }
+              }
+          }
+           
+      }
+        
+        return dp[0][3];
+        
+  }
+  
   
   
   
   
     int maximumPoints(vector<vector<int>>& points, int n) {
         vector<vector<int>>dp(n+1,vector<int>(4,-1));
-           
-      int ans=Solve(0,3,points,dp);
+       
+    //   int ans=Memoization(0,3,points,dp);
+      int ans=Tabulation(points,n);
+      
+     
       return ans;
        
     }
