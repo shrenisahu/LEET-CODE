@@ -22,28 +22,32 @@ class Solution
     {
         int m = grid.size();
         int n = grid[0].size();
-        vector<vector < int>> dp(m + 1, vector<int> (n + 1, 1000));
+        vector<int> dp(n + 1, 1000);
+        
 
-       	// dp[m - 1][n - 1] = grid[m - 1][n - 1];
         for (int i = m - 1; i >= 0; i--)
         {
+            int rightVar = 10000;
             for (int j = n - 1; j >= 0; j--)
             {
-
                 if (i == m - 1 && j == n - 1)
-                    dp[i][j] = grid[i][j];
-
+                {
+                   
+                    dp[j] = grid[i][j];
+                    rightVar=grid[i][j];
+                }
                 else
                 {
-                    int down = grid[i][j] + dp[i + 1][j];
-                    int right = grid[i][j] + dp[i][j + 1];
+                    int down = grid[i][j] + dp[j];
+                    int right = grid[i][j] + rightVar;
 
-                    dp[i][j] = min(down, right);
+                    dp[j] = min(down, right);
+                    rightVar = dp[j];
                 }
             }
         }
 
-        return dp[0][0];
+        return dp[0];
     }
 
     int minPathSum(vector<vector < int>> &grid)
