@@ -23,29 +23,40 @@ class Solution
     {
         int m = grid.size();
         int n = grid[0].size();
-        vector<vector < long long >> dp(m + 1, vector<long long> (n + 1, 0));
-        if (grid[m - 1][n - 1] == 0)
-            dp[m - 1][n - 1] = 1;
+       
+        
+        vector < long long >dp(n+1,0);
+        int right=0;
+        
 
         for (int i = m - 1; i >= 0; i--)
         {
+            int right=0;
             for (int j = n - 1; j >= 0; j--)
             {
                 if (grid[i][j] == 0)
                 {
                     if (i == m - 1 && j == n - 1)
-                        dp[i][j] = 1;
-                    else
                     {
-                          int ans = ((dp[i + 1][j] ) + (dp[i][j + 1] )) ;
-                        dp[i][j]=ans*1LL;
-                    
+                        
+                          right = 1;
                     }
+                    
+                          int ans = right+dp[j] ;
+                        dp[j]=ans*1LL;
+                    right=ans;
+                    
+                    
+                }
+                else {
+                    right=0;
+                    dp[j]=0;
                 }
             }
+            
         }
 
-        return dp[0][0];
+        return dp[0];
     }
 
     int uniquePathsWithObstacles(vector<vector < int>> &grid)
