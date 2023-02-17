@@ -30,7 +30,7 @@ class Solution {
   
   int Tabulation(vector<vector<int>>& arr, int n)
   {
-        vector<vector<int>>dp(n+5,vector<int>(8,0));
+        vector<vector<int>>dp(n+1,vector<int>(4,0));
       
        
       for(int idx=n-1;idx>=0;idx--)
@@ -48,15 +48,59 @@ class Solution {
                  {
                       int temp=arr[idx][last]+dp[idx+1][last];
                       dp[idx][task]=max(dp[idx][task],temp);
+                     
                       
              
                  }
+                 
               }
+              
           }
+      
            
       }
-        
+      
+     
         return dp[0][3];
+        
+  }
+  
+   int spaceOptimization(vector<vector<int>>& arr, int n)
+  {
+        // vector<vector<int>>dp(n+1,vector<int>(4,0));
+      
+       vector<int>dp(4,0);
+      for(int idx=n-1;idx>=0;idx--)
+      { 
+           vector<int>temp(4);
+          for(int task=0;task<=3;task++)
+          {
+              
+             
+              for(int last=0;last<=2;last++)
+              
+              
+              {
+                  if(last!=task)
+                  
+                 {
+                      int temp1=arr[idx][last]+dp[last];
+                      temp[task]=max(temp[task],temp1);
+                     
+                      
+             
+                 }
+                 
+              }
+             
+              
+          }
+       dp=temp;
+           
+      }
+      
+     
+        return dp[3];
         
   }
   
@@ -68,8 +112,8 @@ class Solution {
         vector<vector<int>>dp(n+1,vector<int>(4,-1));
        
     //   int ans=Memoization(0,3,points,dp);
-      int ans=Tabulation(points,n);
-      
+    //   int ans=Tabulation(points,n);
+      int ans=spaceOptimization(points,n);
      
       return ans;
        
