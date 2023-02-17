@@ -45,11 +45,37 @@ class Solution
 
         return dp[0][0];
     }
+
+    int spaceOptimization(int m, int n)
+    {
+
+        vector<int> dp_Down(n + 1, 0);
+
+        for (int cr = m - 1; cr >= 0; cr--)
+        {
+            int right = 0;
+            for (int cc = n - 1; cc >= 0; cc--)
+
+            {
+
+                if (cr == m - 1 && cc == n - 1)
+                    right = 1;
+
+                int ans = dp_Down[cc] + right;
+                right=ans;
+                
+                dp_Down[cc] = ans;
+            }
+        }
+
+        return dp_Down[0];
+    }
     int uniquePaths(int m, int n)
     {
         vector<vector < int>> dp(m + 1, vector<int> (n + 1, -1));
        	// int ans=memoization(0,0,m,n,dp);
-        int ans = tabulation(m, n);
+       	// int ans = tabulation(m, n);
+        int ans = spaceOptimization(m, n);
         return ans;
     }
 };
