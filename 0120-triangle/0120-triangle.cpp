@@ -24,18 +24,41 @@ class Solution
         {
             for (int j = m - 1; j >= 0; j--)
             {
-                if(j>i)
+                if (j > i)
                     continue;
-                
-                int down=triangle[i][j]+dp[i+1][j];
-                int downRight=triangle[i][j]+dp[i+1][j+1];
-                dp[i][j]=min(down,downRight);
-                
-            
+
+                int down = triangle[i][j] + dp[i + 1][j];
+                int downRight = triangle[i][j] + dp[i + 1][j + 1];
+                dp[i][j] = min(down, downRight);
             }
         }
-        
+
         return dp[0][0];
+    }
+
+    int spaceOptimization(vector<vector < int>> &triangle)
+    {
+        int m = triangle.size();
+        
+        vector<int>dp (m + 1, 0);
+        for (int i = m - 1; i >= 0; i--)
+        {
+            int right=0;
+            vector<int>temp(m + 1, 0);
+            for (int j = m - 1; j >= 0; j--)
+            {
+                if (j > i)
+                    continue;
+
+                int down = triangle[i][j] + dp[j];
+                int downRight = triangle[i][j] + dp[j + 1];
+                temp[j] = min(down, downRight);
+                right=temp[j];
+            }
+            dp=temp;
+        }
+
+        return dp[0];
     }
 
     int minimumTotal(vector<vector < int>> &triangle)
@@ -44,7 +67,7 @@ class Solution
         int m = triangle.size();
         vector<vector < int>> dp(m + 1, vector<int> (m + 1, -1));
        	// int ans = memoization(0, 0, m, triangle, dp);
-        int ans = tabulation(triangle);
+        int ans = spaceOptimization(triangle);
 
         return ans;
     }
