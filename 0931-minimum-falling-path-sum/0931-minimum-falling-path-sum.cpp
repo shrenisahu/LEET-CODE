@@ -30,29 +30,30 @@ class Solution
     int tabulation(vector<vector < int>> &matrix)
     {
         int n = matrix.size();
-        vector<vector < int>> dp(n + 1, vector<int> (n + 1, 0));
 
+        vector<int> dp(n + 1, 0);
         for (int j = n - 1; j >= 0; j--)
         {
-
+            vector<int> temp(n + 1, 0);
             for (int k = n - 1; k >= 0; k--)
             {
                 int ld = 100000, rd = 100000, d = 100000;
                 if (k - 1 >= 0)
-                    ld = dp[j + 1][k - 1];
-                d = dp[j + 1][k];
+                    ld = dp[k - 1];
+                d = dp[k];
                 if (k + 1 < n)
-                    rd = dp[j + 1][k + 1];
+                    rd = dp[k + 1];
 
-                dp[j][k] = matrix[j][k] + min({ ld,
+                temp[k] = matrix[j][k] + min({ ld,
                     rd,
                     d });
             }
+            dp = temp;
         }
         int minAns = INT_MAX;
         for (int i = 0; i < n; i++)
         {
-            minAns = min(minAns, dp[0][i]);
+            minAns = min(minAns, dp[i]);
         }
 
         return minAns;
