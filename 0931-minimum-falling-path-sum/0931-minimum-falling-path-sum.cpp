@@ -19,12 +19,11 @@ class Solution
             {
                 if (cc + i >= 0 && cc + i < tr)
                 {
-                    int num = matrix[cr][cc]+memoization(cr + 1, cc + i, tr, matrix, dp);
+                    int num = matrix[cr][cc] + memoization(cr + 1, cc + i, tr, matrix, dp);
                     ans = min(ans, num);
                 }
             }
 
-           
             return dp[cr][cc] = ans;
         }
 
