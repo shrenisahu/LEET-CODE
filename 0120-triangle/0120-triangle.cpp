@@ -15,12 +15,36 @@ class Solution
 
             return dp[cr][cc] = min(down, downRight);
         }
+
+    int tabulation(vector<vector < int>> &triangle)
+    {
+        int m = triangle.size();
+        vector<vector < int>> dp(m + 1, vector<int> (m + 1, 0));
+        for (int i = m - 1; i >= 0; i--)
+        {
+            for (int j = m - 1; j >= 0; j--)
+            {
+                if(j>i)
+                    continue;
+                
+                int down=triangle[i][j]+dp[i+1][j];
+                int downRight=triangle[i][j]+dp[i+1][j+1];
+                dp[i][j]=min(down,downRight);
+                
+            
+            }
+        }
+        
+        return dp[0][0];
+    }
+
     int minimumTotal(vector<vector < int>> &triangle)
     {
 
         int m = triangle.size();
         vector<vector < int>> dp(m + 1, vector<int> (m + 1, -1));
-        int ans = memoization(0, 0, m, triangle, dp);
+       	// int ans = memoization(0, 0, m, triangle, dp);
+        int ans = tabulation(triangle);
 
         return ans;
     }
