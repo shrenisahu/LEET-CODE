@@ -116,35 +116,34 @@ return 0;
                 for(int c1=0;c1<tc;c1++)
                 {
                     for(int c2=0;c2<tc;c2++)
-                    {
-                         int maxi = -10000;
+                    {  
+                        int maxi = -10000;
         for (auto i: pos)
         {
 
             for (auto j: pos)
             {
-                int ans;
-                if (c1 == c2)
-                ans=grid[r][c1];
-                else  
-                ans=grid[r][c1] + grid[r][c2];
-                
-                if(c1+i <0 || c1+i>=tc || c2+j <0 || c2+j>=tc)
- ans+=-10000;
+                if(c1+i >=0 && c1+i<tc && c2+j >=0 && c2+j<tc)
 
-               else{
-                    
-ans+= dp[r + 1][ c1 + i][ c2 + j] ;
-                   
-                
-               
+
+               {
+                    if (c1 == c2)
+                {
+                    int temp = grid[r][c1] + dp[r+1][c1+i][c2+j];
+                    maxi = max(maxi, temp);
+                }
+                else
+                {
+                    int temp = grid[r][c1] + grid[r][c2] + dp[r+1][c1+i][c2+j];
+                    maxi = max(maxi, temp);
+                }
                }
-             
-               maxi=max(maxi,ans);
             }
         }
+                       
+       
 
-        dp[r][c1][c2]= maxi;
+       dp[r][c1][c2]=maxi;
                         
                     }
                 }
