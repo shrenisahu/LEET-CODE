@@ -11,18 +11,19 @@ class Solution {
 
     int Solve(int r, int c1, int c2, int n, vector<vector < int>> &grid, vector<vector<vector<int>>>&dp)
     {
-        if (c1 < 0 || c2 < 0 || c1 >= n || c2 >= n)
-            return -100000;
+        // if (c1 < 0 || c2 < 0 || c1 >= n || c2 >= n)
+        //     return -100000;
+if(r==grid.size())
+return 0;
+        // if (r == grid.size()-1)
+        // {
 
-        if (r == grid.size()-1)
-        {
+        //     if (c1 == c2)
+        //         return grid[r][c1];
 
-            if (c1 == c2)
-                return grid[r][c1];
-
-            else
-                return grid[r][c1] + grid[r][c2];
-        }
+        //     else
+        //         return grid[r][c1] + grid[r][c2];
+        // }
         if(dp[r][c1][c2]!=-1)
         return dp[r][c1][c2];
 
@@ -32,8 +33,11 @@ class Solution {
 
             for (auto j: pos)
             {
+                if(c1+i >=0 && c1+i<n && c2+j >=0 && c2+j<n)
 
-                if (c1 == c2)
+
+               {
+                    if (c1 == c2)
                 {
                     int temp = grid[r][c1] + Solve(r + 1, c1 + i, c2 + j, n,grid,dp);
                     maxi = max(maxi, temp);
@@ -43,6 +47,7 @@ class Solution {
                     int temp = grid[r][c1] + grid[r][c2] + Solve(r + 1, c1 + i, c2 + j, n,grid,dp);
                     maxi = max(maxi, temp);
                 }
+               }
             }
         }
 
