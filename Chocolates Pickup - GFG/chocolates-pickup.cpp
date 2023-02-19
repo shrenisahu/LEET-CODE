@@ -113,9 +113,9 @@ return 0;
             
             for(int r=tr-1;r>=0;r--)
             {
-                for(int c1=0;c1<tc;c1++)
+                for(int c1=tc-1;c1>=0;c1--)
                 {
-                    for(int c2=0;c2<tc;c2++)
+                    for(int c2=tc-1;c2>=0;c2--)
                     {  
                         int maxi = -10000;
         for (auto i: pos)
