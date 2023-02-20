@@ -9,61 +9,39 @@ using namespace std;
 
 class Solution{   
 public:
-bool Solve(int idx,int target,vector<int>&arr, vector<vector<int>>dp)
+
+bool Tabulate(int n, int sum, vector<int> &arr)
 {
+     vector<vector<int>>dp(n+1,vector<int>(sum+10));
+
+     for(int i=0;i<=n;i++)
+     dp[i][sum]=1;
+     int last=arr[n-1];
+     dp[n-1][last]=1;
+
     
-    if(target==0)
-    return true;
-    
-    if(idx<=0)
-    return arr[0]==target;
-    if(dp[idx][target]!=-1)
-    return dp[idx][target];
-    
-    
-    bool notTake=Solve(idx-1,target,arr,dp);
-    bool take=false;
-    if(target>=arr[idx])
-    take=Solve(idx-1,target-arr[idx],arr,dp);
-    
-    return  dp[idx][target]=notTake||take;
+
+    for(int idx=n-1;idx>=0;idx--)
+    {
+        for(int curr=sum-1;curr>=0;curr--)
+        {
+            bool notTake=dp[idx+1][curr];
+            bool take=false;
+            if(curr+arr[idx]<=sum)
+            take=dp[idx+1][curr+arr[idx]];
+            dp[idx][curr]=take|notTake;
+        }
+    }
+
+    return dp[0][0];
+
+
 }
-
-
-bool tabulate(vector<int>arr, int sum)
-{
-     int n=arr.size();
-     vector<vector<int>>dp(n+1,vector<int>(sum+1,0));
-     for(int i=0;i<n;i++)
-     dp[i][0]=1;
-     
-     dp[0][arr[0]]=1;
-     
-     for(int idx=1;idx<n;idx++)
-     {
-         for(int k=1;k<=sum;k++)
-         {
-             int notTake=dp[idx-1][k];
-             
-             int Take=0;
-             if(k>=arr[idx])
-             Take=dp[idx-1][k-arr[idx]];
-             dp[idx][k]=notTake| Take;
-             
-         }
-     }
-      
-      
-      return dp[n-1][sum];
-      
-}
-
 
     bool isSubsetSum(vector<int>arr, int sum){
+        // code here 
         int n=arr.size();
-        vector<vector<int>>dp(n+1,vector<int>(sum+1,-1));
-        // bool ans=Solve(n-1,sum,arr,dp);
-        bool ans=tabulate(arr,sum);
+        int ans=Tabulate(n,sum,arr);
         return ans;
     }
 };
