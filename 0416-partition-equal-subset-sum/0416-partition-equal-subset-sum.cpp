@@ -21,6 +21,35 @@ class Solution
             return dp[idx][currSum] = take || notTake;
         }
 
+    bool Tabulate(vector<int> &nums, int targetSum)
+    {
+        int n = nums.size();
+        vector<vector < int>> dp(n + 1, vector<int> (targetSum + 1, 0));
+
+        for (int i = 0; i <= n; i++)
+        {
+
+            dp[i][targetSum] = 1;
+        }
+
+        // dp[n - 1][nums[n - 1]] = 1;
+
+        for (int idx = n - 1; idx >= 0; idx--)
+        {
+            for (int currSum = targetSum; currSum >= 0; currSum--)
+            {
+                bool notTake = dp[idx + 1][currSum];
+                bool take = false;
+                if (nums[idx] + currSum <= targetSum)
+                    take = dp[idx + 1][nums[idx] + currSum];
+
+                dp[idx][currSum] = take || notTake;
+            }
+        }
+
+        return dp[0][0];
+    }
+
     bool canPartition(vector<int> &nums)
     {
         int n = nums.size();
@@ -33,7 +62,9 @@ class Solution
         int targetSum = sum / 2;
 
         vector<vector < int>> dp(n + 1, vector<int> (targetSum + 1, -1));
-        bool ans = Solve(0, 0, targetSum, nums, dp);
+       	// bool ans = Solve(0, 0, targetSum, nums, dp);
+
+        bool ans = Tabulate(nums, targetSum);
 
         return ans;
     }
