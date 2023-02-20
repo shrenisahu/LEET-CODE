@@ -24,30 +24,27 @@ class Solution
     bool Tabulate(vector<int> &nums, int targetSum)
     {
         int n = nums.size();
-        vector<vector < int>> dp(n + 1, vector<int> (targetSum + 1, 0));
+       	// vector<vector < int>> dp(n + 1, vector<int> (targetSum + 1, 0));
+        vector<int> dp(targetSum + 1, 0);
 
-        for (int i = 0; i <= n; i++)
-        {
-
-            dp[i][targetSum] = 1;
-        }
-
-        // dp[n - 1][nums[n - 1]] = 1;
+        dp[targetSum] = 1;
 
         for (int idx = n - 1; idx >= 0; idx--)
         {
+            vector<int> temp(targetSum + 1, 0);
             for (int currSum = targetSum; currSum >= 0; currSum--)
             {
-                bool notTake = dp[idx + 1][currSum];
+                bool notTake = dp[currSum];
                 bool take = false;
                 if (nums[idx] + currSum <= targetSum)
-                    take = dp[idx + 1][nums[idx] + currSum];
+                    take = dp[nums[idx] + currSum];
 
-                dp[idx][currSum] = take || notTake;
+                temp[currSum] = take || notTake;
             }
+            dp = temp;
         }
 
-        return dp[0][0];
+        return dp[0];
     }
 
     bool canPartition(vector<int> &nums)
