@@ -27,11 +27,32 @@ class Solution
        
        return dp[idx][currWt]= max(take,notTake);
    }
-   
+   int Tabulate(int W, int wt[], int val[], int n)
+   {
+               vector<vector<int>>dp(n+1,vector<int>(W+1,-0));
+       for(int idx= n-1;idx>=0;idx--)
+       {
+           for(int currWt=0;currWt<=W;currWt++)
+           {
+               
+               int notTake=dp[idx+1][currWt];
+               int take=-1000;
+               if(currWt>=wt[idx])
+               take=val[idx]+dp[idx+1][currWt-wt[idx]];
+               
+               dp[idx][currWt]=max(take,notTake);
+               
+               
+           }
+       }
+       
+       return dp[0][W];
+   }
     int knapSack(int W, int wt[], int val[], int n) 
     { 
         vector<vector<int>>dp(n+1,vector<int>(W+1,-1));
-      int ans=Solve(0,W,wt,val,n,dp);
+        int ans=Tabulate(W,wt,val,n);
+    //   int ans=Solve(0,W,wt,val,n,dp);
       return ans;
     }
 };
