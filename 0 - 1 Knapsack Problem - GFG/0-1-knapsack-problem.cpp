@@ -48,10 +48,36 @@ class Solution
        
        return dp[0][W];
    }
+   
+   
+   
+   int spaceOptimization(int W, int wt[], int val[], int n)
+   {
+              vector<int>dp(W+1,0);
+       for(int idx= n-1;idx>=0;idx--)
+       {
+            vector<int>temp(W+1,0);
+           for(int currWt=0;currWt<=W;currWt++)
+           {
+               
+               int notTake=dp[currWt];
+               int take=-1000;
+               if(currWt>=wt[idx])
+               take=val[idx]+dp[currWt-wt[idx]];
+               
+               temp[currWt]=max(take,notTake);
+               
+               
+           }
+           dp=temp;
+       }
+       
+       return dp[W];
+   }
     int knapSack(int W, int wt[], int val[], int n) 
     { 
         vector<vector<int>>dp(n+1,vector<int>(W+1,-1));
-        int ans=Tabulate(W,wt,val,n);
+        int ans=spaceOptimization(W,wt,val,n);
     //   int ans=Solve(0,W,wt,val,n,dp);
       return ans;
     }
