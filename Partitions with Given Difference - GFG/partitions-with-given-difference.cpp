@@ -3,42 +3,62 @@
 using namespace std;
 
 // } Driver Code Ends
-
-
 class Solution {
-  public:
-  
-    
-    int mod = 1e9 + 7;
+  public:	
+	int mod=1e9+7;
+  int spaceOptimization( vector<int>& arr, int n, int sum)
+	{
+	   
+	   vector<int>dp(sum+1,0);
+	     
+	     dp[0]=1;
+	     for(int idx=n-1;idx>=0;idx--)
+	     {
+	         vector<int>temp(sum+1,0);
+	         for(int currSum=0;currSum<=sum;currSum++)
+	         {
+	             int take=0;
+	             if(currSum>=arr[idx])
+	             take=dp[currSum-arr[idx]];
+	             int notTake=dp[currSum];
+	             
+	             
+	             temp[currSum]=(take+notTake)%mod;
+	         }
+	         dp=temp;
+	     }
+	     
+	     return dp[sum];
+	    
+	}
+ 
+
+   
     int countPartitions(int n, int d, vector<int>& arr) {
-        // Code here
-        
-        int totalSum = accumulate(arr.begin(), arr.end(), 0);
-        if ((totalSum + d) % 2 != 0) return 0; // THIS IS IMPORTANT
-        int s = (d + totalSum)/2;
-        
-        vector<int> dp(s + 1, 0);
-        dp[0] = 1;
-        
-        for(int i = n-1; i >= 0; i--){
-            vector<int> tdp(s+1, 0);
-            
-            for(int isum = 0; isum <= s; isum++){
-                int take = 0, nottake = 0;
-                
-                if(arr[i] <= isum) take = dp[isum - arr[i]];
-                nottake = dp[isum];
-                
-                tdp[isum] = (take + nottake) % mod;
-            }
-            
-            dp = tdp;
-        }
-        
-        return dp[s];
-        
+       
+       int totalSum=0;
+       for(auto &i:arr)
+       totalSum+=i;
+       
+   
+   if((totalSum-d)%2==1 )
+    return 0;
+   
+   
+       
+    
+       int target=(totalSum+d);
+       target/=2;
+       
+       
+   
+       int ans=spaceOptimization(arr,n,target);
+       return ans;
+       
     }
 };
+
+
 
 //{ Driver Code Starts.
 int main() {
