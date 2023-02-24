@@ -58,16 +58,14 @@
 //     }
 // };
 
-
 class Solution {
 public:
     int findTargetSumWays(vector<int>& nums, int target) {
-        unordered_map<string,int>mpp;
-        return TargetSum(nums, target,0,mpp);
+        return TargetSum(nums, target,0);
     }
     
     
-    int TargetSum(vector<int>& nums, int target,int currIndex,unordered_map<string,int>&mpp)
+    int TargetSum(vector<int>& nums, int target,int currIndex)
     {
         if(currIndex==nums.size()&& target==0)
             return 1;
@@ -75,15 +73,12 @@ public:
         if(currIndex==nums.size()&& target!=0)
             return 0;
         
-        string currKey=to_string(currIndex)+'-'+to_string(target);
         
-        if(mpp.find(currKey)!=mpp.end())
-            return mpp[currKey];
+        int added=TargetSum(nums,target-nums[currIndex],currIndex+1);
+         int sub=TargetSum(nums,target+nums[currIndex],currIndex+1);
         
-        int added=TargetSum(nums,target-nums[currIndex],currIndex+1,mpp);
-         int sub=TargetSum(nums,target+nums[currIndex],currIndex+1,mpp);
-        mpp[currKey]=added+sub;
-        return   mpp[currKey];
+        return added+sub;
         
     }
 };
+
