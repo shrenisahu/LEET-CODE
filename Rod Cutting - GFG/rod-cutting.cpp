@@ -35,25 +35,29 @@ class Solution{
   int Tabulate(int n, vector<int>&nums)
   {
       
-          vector<vector<int>>dp(n+1,vector<int>(n+1,0));
+        //   vector<vector<int>>dp(n+1,vector<int>(n+1,0));
           
+          vector<int>dp(n+1,0);
           
-          for(int N=1;N<=n;N++)
-          {
+               
               for(int idx=n-1;idx>=0;idx--)
               {
+                   vector<int>temp(n+1);
+                    for(int N=1;N<=n;N++)
+                {
                   int cut=0;
                   if(N-idx-1 >=0)
-                  cut=nums[idx]+dp[N-(idx+1)][idx];
+                  cut=nums[idx]+temp[N-(idx+1)];
                   
-                    int notCut=dp[N][idx+1];
+                    int notCut=dp[N];
                   
-                  dp[N][idx]=max(cut,notCut);
+                  temp[N]=max(cut,notCut);
                   
               }
+              dp=temp;
           }
           
-          return dp[n][0];
+          return dp[n];
       
   }
   
