@@ -32,7 +32,30 @@ class Solution{
       return dp[N][idx] =max(cut,notCut);
       
   }
-  
+  int Tabulate(int n, vector<int>&nums)
+  {
+      
+          vector<vector<int>>dp(n+1,vector<int>(n+1,0));
+          
+          
+          for(int N=1;N<=n;N++)
+          {
+              for(int idx=n-1;idx>=0;idx--)
+              {
+                  int cut=0;
+                  if(N-idx-1 >=0)
+                  cut=nums[idx]+dp[N-(idx+1)][idx];
+                  
+                    int notCut=dp[N][idx+1];
+                  
+                  dp[N][idx]=max(cut,notCut);
+                  
+              }
+          }
+          
+          return dp[n][0];
+      
+  }
   
     int cutRod(int price[], int n) {
         vector<int>nums;
@@ -45,8 +68,8 @@ class Solution{
         
         
        
-      int ans=Solve(n,0,nums,n,dp);
-      
+    //   int ans=Solve(n,0,nums,n,dp);
+      int ans=Tabulate(n,nums);
       return ans;
    
     }
