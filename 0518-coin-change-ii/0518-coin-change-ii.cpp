@@ -55,8 +55,8 @@ class Solution
         for (int idx = n - 1; idx >= 0; idx--)
         {
              vector<int>temp(amount + 1);
-            temp[0]=1;
-            for (int sum = 1; sum <= amount; sum++)
+            // temp[0]=1;
+            for (int sum = 0; sum <= amount; sum++)
 
             {
                 int take = 0;
