@@ -22,25 +22,27 @@ class Solution
     int Tabulate(vector<int> &nums, int currTarget)
     {
         int n = nums.size();
-        vector<vector < int>> dp(n + 2, vector<int> (currTarget + 1, 0));
-
-        for (int idx = 0; idx <= n; idx++)
-            dp[idx][0] = 1;
+      
+        vector < int>dp(currTarget+ 2, 0);
+      
+        dp[0] = 1;
 
         for (int idx = n - 1; idx >= 0; idx--)
         {
+            vector < int> temp(currTarget + 1);
             for (int sum = 0; sum <= currTarget; sum++)
             {
-                int notTake=dp[idx+1][sum];
-                int take=0;
-                if(sum>=nums[idx])
-                    take=dp[idx+1][sum-nums[idx]];
+                int notTake = dp[sum];
+                int take = 0;
+                if (sum >= nums[idx])
+                    take = dp[sum - nums[idx]];
 
-                dp[idx][sum] = take + notTake;
+                temp[sum] = take + notTake;
             }
+            dp = temp;
         }
 
-        return dp[0][currTarget];
+        return dp[currTarget];
     }
 
     int findTargetSumWays(vector<int> &nums, int target)
