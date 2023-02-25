@@ -45,6 +45,33 @@ class Solution
 
         return dp[0][amount];
     }
+     int spaceOpt(int amount, vector<int> &coins)
+    {
+        int n = coins.size();
+       
+        vector<int>dp(amount + 1, 0);
+        
+            dp[0] = 1;
+        for (int idx = n - 1; idx >= 0; idx--)
+        {
+             vector<int>temp(amount + 1);
+            temp[0]=1;
+            for (int sum = 1; sum <= amount; sum++)
+
+            {
+                int take = 0;
+                if (sum >= coins[idx])
+                    take =temp[sum - coins[idx]];
+                int notTake = dp[sum];
+
+                temp[sum] = take + notTake;
+            }
+            
+            dp=temp;
+        }
+
+        return dp[amount];
+    }
 
     int change(int amount, vector<int> &coins)
     {
@@ -52,7 +79,8 @@ class Solution
         int n = coins.size();
         vector<vector < int>> dp(n + 1, vector<int> (amount + 1, -1));
         // int ans = Solve(0, amount, coins, dp);
-        int ans=Tabulate(amount,coins);
+          // int ans=Tabulate(amount,coins);
+        int ans=spaceOpt(amount,coins);
         return ans;
     }
 };
