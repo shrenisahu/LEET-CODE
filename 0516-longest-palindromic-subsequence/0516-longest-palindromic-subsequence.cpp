@@ -22,29 +22,31 @@ class Solution
     int Tabulate(string &s)
     {
         int n = s.size();
-        vector<vector < int>> dp(n + 1, vector<int> (n + 1, 0));
+        // vector<vector < int>> dp(n + 1, vector<int> (n + 1, 0));
         string t = s;
         reverse(t.begin(), t.end());
-
+        vector<int>dp(n+1,0);
         for (int i = n - 1; i >= 0; i--)
         {
+            vector<int>temp(n+1,0);
             for (int j = n - 1; j >= 0; j--)
             {
                 if (s[i] == t[j])
                 {
-                    dp[i][j] = 1 + dp[i + 1][j + 1];
+                    temp[j] = 1 + dp[j + 1];
                 }
                 else
                 {
-                    int left = dp[i + 1][j];
-                    int right = dp[i][j + 1];
+                    int left = dp[j];
+                    int right = temp[j + 1];
 
-                    dp[i][j] = max(left, right);
+                    temp[j] = max(left, right);
                 }
             }
+            dp=temp;
         }
 
-        return dp[0][0];
+        return dp[0];
     }
 
     int longestPalindromeSubseq(string s)
