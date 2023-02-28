@@ -50,6 +50,38 @@ class Solution
     }
     
     
+      int spaceOpt(string word1, string word2)
+    {
+        int n1 = word1.size();
+        int n2 = word2.size();
+        // vector<vector < int>> dp(n1 + 1, vector<int> (n2 + 1, 0));
+        
+        vector<int>dp(n2+1,0);
+        for(int i=n1-1;i>=0;i--)
+        {
+             vector<int>temp(n2+1,0);
+            for(int j=n2-1;j>=0;j--)
+            {
+                if(word1[i]==word2[j])
+                {
+                    temp[j]=1+dp[j+1];
+                }
+                else
+                {
+                    int right=dp[j];
+                    int left=temp[j+1];
+                    
+                   temp[j]=max(left,right);
+                    
+                }
+            }
+            dp=temp;
+        }
+        
+        
+        return dp[0];
+      }
+    
     
 
     int minDistance(string word1, string word2)
@@ -60,8 +92,8 @@ class Solution
         vector<vector < int>> dp(n1 + 1, vector<int> (n2 + 1, -1));
 
         // int ans = LCS(0, 0, word1, word2, dp);
-        int ans=Tabulate(word1,word2);
-
+        // int ans=Tabulate(word1,word2);
+           int ans=spaceOpt(word1,word2);
         int FinalAns = n1 + n2 - (2 *ans);
         return FinalAns;
     }
