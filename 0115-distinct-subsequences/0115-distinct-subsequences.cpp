@@ -51,6 +51,39 @@ class Solution
         
         
     }
+    
+     int spaceOpt(string s, string t)
+    {
+        int n1 = s.size();
+        int n2 = t.size();
+       
+        vector < double>prev(n2+1,0);
+      
+         prev[0]=1;
+        
+        for(int i=1;i<=n1;i++)
+        {
+          
+           vector < double>curr(n2+1,0);
+            curr[0]=1;
+            for(int j=1;j<=n2;j++)
+            {
+                if(s[i-1]==t[j-1])
+                {
+                    curr[j]=prev[j-1]+prev[j];
+                }
+                else
+                {
+                    curr[j]=prev[j];
+                    
+                }
+            }
+            prev=curr;
+        }
+        return (int)prev[n2];
+        
+        
+     }
 
     int numDistinct(string s, string t)
     {
@@ -58,7 +91,7 @@ class Solution
         int n2 = t.size();
         vector<vector < int>> dp(n1 + 1, vector<int> (n2 + 1, -1));
         // int ans = Solve(n1, n2, s, t, dp);
-        int ans= Tabulate(s,t);
+        int ans= spaceOpt(s,t);
         return ans;
     }
 };
