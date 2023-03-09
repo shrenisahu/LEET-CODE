@@ -82,15 +82,7 @@ class Solution
         }
         return dp[m][n];
     }
-bool isAllStars(string & S1, int i) {
 
- 
-  for (int j = 1; j <= i; j++) {
-    if (S1[j - 1] != '*')
-      return false;
-  }
-  return true;
-}
     bool spaceOpt(string s, string p)
     {
         int m = s.size();
@@ -117,7 +109,7 @@ bool isAllStars(string & S1, int i) {
         for (int i = 1; i <= m; i++)
         {
 
-            
+            temp[0]=0;
 
 
             for (int j = 1; j <= n; j++)
