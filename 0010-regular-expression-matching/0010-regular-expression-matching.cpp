@@ -5,7 +5,7 @@ class Solution
         {
             if (pattern[j] != '*')
             {
-                cout << "here";
+                
                 return false;
             }
             bool isCharContinous = false;
@@ -31,14 +31,14 @@ class Solution
     {
 
         if (i == 0 && j == 0)
-            return true;
+            return dp[i][j] = true;
 
         if (j == 0 && i > 0)
-            return false;
+            return dp[i][j] = false;
 
         if (i == 0 && j > 0)
         {
-            return checkForStars(pattern, j - 1);
+            return dp[i][j] = checkForStars(pattern, j - 1);
         }
 
         if (dp[i][j] != -1)
@@ -62,29 +62,61 @@ class Solution
             return dp[i][j] = false;
     }
 
-//     bool Tabulate(string str, string pattern)
-//     {
-//         int m = str.size();
-//         int n = pattern.size();
-//         vector<vector < int>> dp(m + 1, vector<int> (n + 1, 0));
-//         dp[0][0]=1;
-//         for(int i=1;i<=m;i++)
-//         {
-//             dp[i][0]=0;
-//         }
-//         for(int j=1;j<=n;j++)
-//         {
-//             dp[]
-            
-//         }
-//     }
+    bool Tabulate(string str, string pattern)
+    {
+        int m = str.size();
+        int n = pattern.size();
+        vector<vector < int>> dp(m + 1, vector<int> (n + 1, 0));
+        dp[0][0] = 1;
+        for (int i = 1; i <= m; i++)
+        {
+            dp[i][0] = 0;
+        }
+        for (int j = 1; j <= n; j++)
+        {
+            dp[0][j] = checkForStars(pattern, j - 1);
+        }
+
+        for (int i = 1; i <= m; i++)
+        {
+            for (int j = 1; j <= n; j++)
+            {
+
+                if (str[i - 1] == pattern[j - 1] || pattern[j - 1] == '.')
+                    dp[i][j] = dp[i - 1][j - 1];
+                else if (pattern[j - 1] == '*') {
+                    
+                    bool zeroOcc=dp[i][j-2];
+                    bool moreOcc=false;
+                    if(pattern[j - 2] == str[i - 1] || pattern[j - 2] == '.')
+                    {
+                        moreOcc=dp[i-1][j];
+                    }
+                    dp[i][j]=zeroOcc|| moreOcc;
+                    
+                }
+                else dp[i][j] = false;
+            }
+        }
+        
+        return dp[m][n];
+    }
 
     bool isMatch(string str, string pattern)
     {
         int m = str.size();
         int n = pattern.size();
         vector<vector < int>> dp(m + 1, vector<int> (n + 1, -1));
-        bool ans = isValid(m, n, str, pattern, dp);
+        // bool ans = isValid(m, n, str, pattern, dp);
+        bool ans=Tabulate(str,pattern);
+        // for (int i = 0; i <= m; i++)
+        // {
+        //     for (int j = 0; j <= n; j++)
+        //     {
+        //         cout << dp[i][j] << "  ";
+        //     }
+        //     cout << endl;
+        // }
 
         return ans;
     }
