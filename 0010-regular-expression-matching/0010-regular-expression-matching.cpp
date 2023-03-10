@@ -5,7 +5,7 @@ class Solution
         {
             if (pattern[j] != '*')
             {
-                
+
                 return false;
             }
             bool isCharContinous = false;
@@ -84,22 +84,72 @@ class Solution
 
                 if (str[i - 1] == pattern[j - 1] || pattern[j - 1] == '.')
                     dp[i][j] = dp[i - 1][j - 1];
-                else if (pattern[j - 1] == '*') {
-                    
-                    bool zeroOcc=dp[i][j-2];
-                    bool moreOcc=false;
-                    if(pattern[j - 2] == str[i - 1] || pattern[j - 2] == '.')
+                else if (pattern[j - 1] == '*')
+                {
+
+                    bool zeroOcc = dp[i][j - 2];
+                    bool moreOcc = false;
+                    if (pattern[j - 2] == str[i - 1] || pattern[j - 2] == '.')
                     {
-                        moreOcc=dp[i-1][j];
+                        moreOcc = dp[i - 1][j];
                     }
-                    dp[i][j]=zeroOcc|| moreOcc;
-                    
+                    dp[i][j] = zeroOcc || moreOcc;
                 }
                 else dp[i][j] = false;
             }
         }
-        
+        for (int i = 0; i <= m; i++)
+        {
+            for (int j = 0; j <= n; j++)
+            {
+                cout << dp[i][j] << "  ";
+            }
+            cout << endl;
+        }
+
         return dp[m][n];
+    }
+       bool spaceOpt(string str, string pattern)
+    {
+        int m = str.size();
+        int n = pattern.size();
+        // vector<vector < int>> dp(m + 1, vector<int> (n + 1, 0));
+           vector < int> dp(n + 1, 0),temp(n+1,0);
+        dp[0] = 1;
+        // for (int i = 1; i <= m; i++)
+        // {
+        //     dp[i][0] = 0;
+        // }
+        for (int j = 1; j <= n; j++)
+        {
+            dp[j] = checkForStars(pattern, j - 1);
+        }
+
+        for (int i = 1; i <= m; i++)
+        {
+            temp[0]=0;
+            for (int j = 1; j <= n; j++)
+            {
+
+                if (str[i - 1] == pattern[j - 1] || pattern[j - 1] == '.')
+                    temp[j] = dp[j - 1];
+                else if (pattern[j - 1] == '*')
+                {
+
+                    bool zeroOcc = temp[j - 2];
+                    bool moreOcc = false;
+                    if (pattern[j - 2] == str[i - 1] || pattern[j - 2] == '.')
+                    {
+                        moreOcc = dp[j];
+                    }
+                    temp[j] = zeroOcc || moreOcc;
+                }
+                else temp[j] = false;
+            }
+            dp=temp;
+        }
+      
+        return dp[n];
     }
 
     bool isMatch(string str, string pattern)
@@ -107,16 +157,8 @@ class Solution
         int m = str.size();
         int n = pattern.size();
         vector<vector < int>> dp(m + 1, vector<int> (n + 1, -1));
-        // bool ans = isValid(m, n, str, pattern, dp);
-        bool ans=Tabulate(str,pattern);
-        // for (int i = 0; i <= m; i++)
-        // {
-        //     for (int j = 0; j <= n; j++)
-        //     {
-        //         cout << dp[i][j] << "  ";
-        //     }
-        //     cout << endl;
-        // }
+       	// bool ans = isValid(m, n, str, pattern, dp);
+        bool ans = spaceOpt(str, pattern);
 
         return ans;
     }
