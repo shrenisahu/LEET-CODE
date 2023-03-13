@@ -8,39 +8,55 @@
  *ListNode(int x, ListNode *next) : val(x), next(next) {}
  *};
  */
-class Solution
+typedef pair<int, ListNode*> pi;
+class Compare
 {
     public:
+        bool operator()(ListNode *r, ListNode *l)
+        {
+
+            return r->val > l->val;
+        }
+};
+
+class Solution
+{
+
+    public:
+
         ListNode* mergeKLists(vector<ListNode*> &lists)
         {
 
-            priority_queue<int, vector < int>, greater < int>> que;
-            for (ListNode *eachList: lists)
+            priority_queue<pi, vector < pi>, greater < pi>> que;
+
+            for (auto eachList: lists)
             {
-
-                while (eachList != NULL)
+                if (eachList != NULL)
                 {
-                    que.push(eachList->val);
-
-                    eachList = eachList->next;
+                    que.push({ eachList->val,
+                        eachList->next });
                 }
             }
-
-        if(que.size()==0)
-            return NULL;
-            ListNode *ptr = new ListNode(que.top());
-            ListNode *head=ptr;
-            que.pop();
-            while (!que.empty())
+            
+            ListNode* head=new ListNode(-1);
+            ListNode *ptr=head;
+            
+            while(!que.empty())
             {
-                int elem = que.top();
+                auto currPair=que.top();
                 que.pop();
-                ListNode *currPtr = new ListNode(elem);
-                ptr->next = currPtr;
-                ptr = ptr->next;
+                int elem=currPair.first;
+                ListNode *currNode=new ListNode(elem);
+                ptr->next=currNode;
+                ptr=ptr->next;
+                ListNode *List1=currPair.second;
+                if(List1!=NULL)
+                {
+                    que.push({List1->val,List1->next});
+                }
+                
             }
-
-            return head;
+            // return NULL;
+            return head->next;
         }
 };
-//  tu ja sakta hai	//
