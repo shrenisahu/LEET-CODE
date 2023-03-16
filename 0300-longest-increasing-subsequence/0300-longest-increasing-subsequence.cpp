@@ -52,9 +52,8 @@ class Solution
     int method2(vector<int> &nums)
    {
         int n = nums.size();
-        if(n==1)
-            return 1;
-        int maxTillNow=0;
+       
+        int maxTillNow=1;
       
         vector<int> dp(n + 1, 1);
         
