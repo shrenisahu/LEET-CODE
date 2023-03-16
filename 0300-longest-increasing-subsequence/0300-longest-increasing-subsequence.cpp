@@ -47,12 +47,37 @@ class Solution
 
         return dp[0];
     }
+    
+    
+    int method2(vector<int> &nums)
+   {
+        int n = nums.size();
+        if(n==1)
+            return 1;
+        int maxTillNow=0;
+      
+        vector<int> dp(n + 1, 1);
+        
+        for (int idx = 1; idx <n; idx++)
+        {
+            for (int prev_idx = 0; prev_idx <idx; prev_idx++)
+            {
+                if(nums[idx]>nums[prev_idx])
+                dp[idx]=max(dp[idx],1+dp[prev_idx]);
+            }
+            
+            maxTillNow=max(maxTillNow,dp[idx]);
+        }
+
+        return maxTillNow;
+    }
     int lengthOfLIS(vector<int> &nums)
     {
         int n = nums.size();
         vector<vector < int>> dp(n + 1, vector<int> (n + 1, -1));
        	// int ans = SolveLIS(0, -1, nums, dp);
-        int ans = Tabulate(nums);
+        // int ans = Tabulate(nums);
+         int ans = method2(nums);
         return ans;
     }
 };
