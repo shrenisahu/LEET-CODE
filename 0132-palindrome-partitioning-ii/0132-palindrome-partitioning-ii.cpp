@@ -19,7 +19,7 @@ class Solution
     int Solve(int i, int j, string &s, vector<int> &dp)
     {
        
-        if(i==j)
+        if(i==s.size())
             return 0;
         if (dp[i] != -1)
             return dp[i];
