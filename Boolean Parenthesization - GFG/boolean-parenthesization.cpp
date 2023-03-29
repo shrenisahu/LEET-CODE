@@ -12,101 +12,101 @@ public:
 
 int mod=1003;
 
-//   int Solve(int i,int j,int isTrue,string &S,  vector<vector<vector<int>>>&dp)
-//   {
+  int Solve(int i,int j,int isTrue,string &S,  vector<vector<vector<int>>>&dp)
+  {
        
-//       //Tc:O(N* N *N)*2;
-//       if(i>j)
-//       return 0;
+      //Tc:O(N* N *N)*2;
+      if(i>j)
+      return 0;
        
        
-//       if(i==j)
-//       {
-//           if(isTrue==1) // means we want the exp to yield true
-//           return S[i]=='T';// if the single elem is Treturn 1 else retru 0
-//           else  // means we want the exp to yield false
-//           return S[i]=='F';  // if the single elem is F return 1 else retru 0
-//       }
-//       if(dp[i][j][isTrue]!=-1)
-//       return dp[i][j][isTrue];
-//       int waysTrue=0;
-//       int waysFalse=0
+      if(i==j)
+      {
+          if(isTrue==1) // means we want the exp to yield true
+          return S[i]=='T';// if the single elem is Treturn 1 else retru 0
+          else  // means we want the exp to yield false
+          return S[i]=='F';  // if the single elem is F return 1 else retru 0
+      }
+      if(dp[i][j][isTrue]!=-1)
+      return dp[i][j][isTrue];
+      int ways=0;
+    
        
-//       for(int k=i+1;k<=j;k=k+2) 
-//       {
-//           int leftTrue=Solve(i,k-1,1,S,dp);
-//           int leftFalse=Solve(i,k-1,0,S,dp);
-//           int rightTrue=Solve(k+1,j,1,S,dp);
-//           int rightFalse=Solve(k+1,j,0,S,dp);
+      for(int k=i+1;k<=j;k=k+2) 
+      {
+          int leftTrue=Solve(i,k-1,1,S,dp);
+          int leftFalse=Solve(i,k-1,0,S,dp);
+          int rightTrue=Solve(k+1,j,1,S,dp);
+          int rightFalse=Solve(k+1,j,0,S,dp);
            
            
-//           if(S[k]=='&')
-//           {
-//               if(isTrue==1) // isTrue ==1 means,we want the expression to yield true
-//               {
-//                   ways+=(leftTrue*rightTrue);
-//               }
-//                 // no of ways the two expression can be evaluated to true is oparand is "&"
+          if(S[k]=='&')
+          {
+              if(isTrue==1) // isTrue ==1 means,we want the expression to yield true
+              {
+                  ways+=(leftTrue*rightTrue);
+              }
+                // no of ways the two expression can be evaluated to true is oparand is "&"
                    
                
-//               else  
-//               {
-//                   ways+=(leftTrue*rightFalse)+(rightTrue*leftFalse)+(leftFalse*rightFalse);
-//                     // no of ways the two expression can be evaluated to false is oparand is "&"
+              else  
+              {
+                  ways+=(leftTrue*rightFalse)+(rightTrue*leftFalse)+(leftFalse*rightFalse);
+                    // no of ways the two expression can be evaluated to false is oparand is "&"
                    
-//               }
+              }
                
-//           }
-//           else if(S[k]=='|')
-//           {
-//               if(isTrue==1) // 
-//               {
-//                   ways+=(leftTrue*rightFalse)+(rightTrue*leftFalse)+(leftTrue*rightTrue);
-//                   // no of ways the two expression can be evaluated to true is oparand is "|"
+          }
+          else if(S[k]=='|')
+          {
+              if(isTrue==1) // 
+              {
+                  ways+=(leftTrue*rightFalse)+(rightTrue*leftFalse)+(leftTrue*rightTrue);
+                  // no of ways the two expression can be evaluated to true is oparand is "|"
                    
-//               }
-//               else
-//               {
-//                   ways+=(leftFalse*rightFalse);
-//                     // no of ways the two expression can be evaluated to false is oparand is "|"
+              }
+              else
+              {
+                  ways+=(leftFalse*rightFalse);
+                    // no of ways the two expression can be evaluated to false is oparand is "|"
                    
-//               }
+              }
                
                
                
-//           }
-//           else if(S[k]=='^')
-//           { 
-//               if(isTrue==1) // 
-//               {
-//                   ways+=(leftTrue*rightFalse)+(rightTrue*leftFalse);
+          }
+          else if(S[k]=='^')
+          { 
+              if(isTrue==1) // 
+              {
+                  ways+=(leftTrue*rightFalse)+(rightTrue*leftFalse);
                   
                    
-//               }
-//               else
-//               {
-//                   ways+=(leftTrue*rightTrue)+(leftFalse*rightFalse);
+              }
+              else
+              {
+                  ways+=(leftTrue*rightTrue)+(leftFalse*rightFalse);
                    
                    
-//               }
+              }
                
-//           }
+          }
            
-//           ways=ways%mod;
+          ways=ways%mod;
            
            
-//       }
+      }
        
        
-//       return dp[i][j][isTrue]= ways;
-//   }
+      return dp[i][j][isTrue]= ways;
+  }
    
    
    int Tabulate(int N, string S)
    {
        
-    vector<vector<vector<int>>>dp(N+2,vector<vector<int>>(N+2,vector<int>(2,0)));
-    for(int i=0;i<=N;i++)
+    vector<vector<vector<int>>>dp(N+1,vector<vector<int>>(N+1,vector<int>(2,0)));
+    for(int i=0;i<=N-1;i++)
     {
       
             
