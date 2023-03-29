@@ -16,12 +16,12 @@ class Solution
             return true;
         }
 
-    int Solve(int i, int j, string &s, vector<vector < int>> &dp)
+    int Solve(int i, int j, string &s, vector<int> &dp)
     {
         if (isPalindrome(i, j, s))
             return 0;
-        if (dp[i][j] != -1)
-            return dp[i][j];
+        if (dp[i] != -1)
+            return dp[i];
 
         int ways = 10000;
         for (int k = i; k <= j - 1; k++)
@@ -34,7 +34,7 @@ class Solution
                 ways = min(ways, currAns);
             }
         }
-        return dp[i][j] =ways;
+        return dp[i] = ways;
     }
 
     int Tabulate(string s)
@@ -72,7 +72,8 @@ class Solution
     int minCut(string s)
     {
         int n = s.size();
-        vector<vector < int>> dp(n, vector<int> (n, -1));
+       	// vector<vector < int>> dp(n, vector<int> (n, -1));
+        vector<int> dp(n + 1, -1);
         int ans = Solve(0, n - 1, s, dp);
        	// int ans = Tabulate(s);
         return ans;
