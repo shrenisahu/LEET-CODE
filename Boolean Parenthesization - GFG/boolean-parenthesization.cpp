@@ -126,9 +126,9 @@ int mod=1003;
     
   
     
-    for(int i=N;i>=0;i--)
+    for(int i=N-1;i>=0;i--)
     {
-        for(int j=1;j<=N-1;j++)
+        for(int j=0;j<=N-1;j++)
         {
             if(i>j )
             continue;
