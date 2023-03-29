@@ -37,40 +37,39 @@ class Solution
         return dp[i] = ways;
     }
 
-//     int Tabulate(string s)
-//     {
-//         int N = s.size();
-//         vector<int> dp(N + 1, 10000);
-//         for (int i = 0; i < N; i++)
-//         {
-//             for (int j = 0; j < N; j++)
-//             {
-//                 if (isPalindrome(i, j, s))
-//                     dp[i] = 0;
-//             }
-//         }
+    int Tabulate(string s)
+    {
+        int N = s.size();
+        vector<int> dp(N + 1, 10000);
+        for (int i = 0; i < N; i++)
+        {
+            for (int j = 0; j < N; j++)
+            {
+                if (isPalindrome(i, j, s))
+                    dp[i] = 0;
+            }
+        }
 
-//         for (int i = N - 1; i >= 0; i--)
-//         {
-//             for (int j = i; j <= N - 1; j++)
-//             {
+        for (int i = N - 1; i >= 0; i--)
+        {
+           
 
                 
-//                 for (int k = i; k <= j - 1; k++)
-//                 {
-//                     if (isPalindrome(i, k,s))
+                for (int k = i; k <N-1; k++)
+                {
+                    if (isPalindrome(i, k,s))
                         
-//                     {
-//                          int currAns = 1 + dp[k] + dp[k + 1][j];
+                    {
+                         int currAns = 1 + dp[k+1];
 
-//                     dp[i]= min(dp[i][j], currAns);
-//                     }
-//                 }
-//             }
-//         }
+                    dp[i]= min(dp[i], currAns);
+                    }
+                }
+            
+        }
 
-//         return dp[0];
-//     }
+        return dp[0];
+    }
 
     int minCut(string s)
     {
