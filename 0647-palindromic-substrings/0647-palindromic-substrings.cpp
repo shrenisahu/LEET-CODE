@@ -19,20 +19,16 @@ class Solution
 
                 for (int j = n - 1; j >= 0; j--)
                 {
-                    
-                    if(i>j)
+
+                    if (i >= j)
                         continue;
-                    if (j - i + 1 == 1)
-                    {
-                        dp[i][j] = 1;
-                    }
-                    else if (j - i + 1 == 2)
+
+                    if (j - i + 1 == 2)
                     {
                         if (s[i] == s[j])
                             dp[i][j] = 1;
                     }
-                    
-                    else if (j - i + 1 > 2)
+                    else
 
                     {
                         if (s[i] == s[j] && dp[i + 1][j - 1] == 1)
@@ -49,12 +45,10 @@ class Solution
             {
                 for (int j = 0; j < n; j++)
                 {
-                    
 
                     if (dp[i][j] == 1)
                         count++;
                 }
-               
             }
 
             return count;
