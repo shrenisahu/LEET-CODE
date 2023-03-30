@@ -8,7 +8,7 @@ class Solution
             int n = s.size();
             vector<vector < int>> dp(n + 1, vector<int> (n + 1, 0));
 
-            int count = 0;
+            int count = n;
             for (int i = 0; i < n; i++)
             {
                 dp[i][i] = 1;
@@ -38,13 +38,6 @@ class Solution
                             dp[i][j] = 1;
                         }
                     }
-                }
-            }
-
-            for (int i = 0; i < n; i++)
-            {
-                for (int j = 0; j < n; j++)
-                {
 
                     if (dp[i][j] == 1)
                         count++;
