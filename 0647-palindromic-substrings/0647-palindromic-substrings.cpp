@@ -19,6 +19,9 @@ class Solution
 
                 for (int j = n - 1; j >= 0; j--)
                 {
+                    
+                    if(i>j)
+                        continue;
                     if (j - i + 1 == 1)
                     {
                         dp[i][j] = 1;
@@ -46,12 +49,12 @@ class Solution
             {
                 for (int j = 0; j < n; j++)
                 {
-                    // cout << dp[i][j] << " ";
+                    
 
                     if (dp[i][j] == 1)
                         count++;
                 }
-                // cout << endl;
+               
             }
 
             return count;
