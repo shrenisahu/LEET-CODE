@@ -54,7 +54,7 @@ class Solution
                
                 int width=(rightMin[i]-leftMin[i]+1);
                 int area = heights[i]*width;
-                 cout<<area<<" ";
+                 // cout<<area<<" ";
                 maxArea = max(maxArea, area);
             }
 
