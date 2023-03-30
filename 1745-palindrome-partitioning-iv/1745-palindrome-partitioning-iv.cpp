@@ -17,7 +17,7 @@ class Solution
     int Solve(int start, string &s, int count, vector<vector < int>> &dp)
     {
 
-        if (start > s.size()-1)
+        if (start == s.size())
             return false;
         if (dp[start][count] != -1)
             return dp[start][count];
