@@ -2,36 +2,58 @@ class Solution
 {
     public:
 
-        bool isPalindrome(string s, int start, int end)
-
-    {
-        while (start <= end)
-        {
-            if (s[start] != s[end])
-
-                return false;
-            end--;
-            start++;
-        }
-        return true;
-    }
-    int countSubstrings(string s)
-    {
-
-        int n = s.size();
-        int count = 0;
-
-        for (int i = 0; i < n; i++)
+        int countSubstrings(string s)
         {
 
-            for (int j = i; j < n; j++)
+            int n = s.size();
+            vector<vector < int>> dp(n + 1, vector<int> (n + 1, 0));
+
+            int count = 0;
+            for (int i = 0; i < n; i++)
+            {
+                dp[i][i] = 1;
+            }
+
+            for (int i = n - 1; i >= 0; i--)
             {
 
-                bool ans = isPalindrome(s, i, j);
-                if (ans) count++;
-            }
-        }
+                for (int j = n - 1; j >= 0; j--)
+                {
+                    if (j - i + 1 == 1)
+                    {
+                        dp[i][j] = 1;
+                    }
+                    else if (j - i + 1 == 2)
+                    {
+                        if (s[i] == s[j])
+                            dp[i][j] = 1;
+                    }
+                    
+                    else if (j - i + 1 > 2)
 
-        return count;
-    }
+                    {
+                        if (s[i] == s[j] && dp[i + 1][j - 1] == 1)
+
+                        {
+
+                            dp[i][j] = 1;
+                        }
+                    }
+                }
+            }
+
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    // cout << dp[i][j] << " ";
+
+                    if (dp[i][j] == 1)
+                        count++;
+                }
+                // cout << endl;
+            }
+
+            return count;
+        }
 };
