@@ -19,34 +19,35 @@ class Solution
 
     int Tabulate(vector<vector < int>> &matrix)
     {
-        int count=0;
+        int count = 0;
         int n = matrix.size();
         int m = matrix[0].size();
-        vector<vector < int>> dp(n + 2, vector<int> (m + 1, 0));
+
+        vector<int> dp(m + 1, 0);
 
         for (int cr = 1; cr <= n; cr++)
         {
+            vector<int> temp(m + 1, 0);
             for (int cc = 1; cc <= m; cc++)
             {
                 if (matrix[cr - 1][cc - 1] == 1)
                 {
-                    dp[cr][cc] = 1 + min({ dp[cr - 1][cc],
-                        dp[cr][cc - 1],
-                        dp[cr - 1][cc - 1] });
-                    
-                    count+=dp[cr][cc];
+                    temp[cc] = 1 + min({ dp[cc],
+                        dp[cc - 1],
+                        temp[cc - 1] });
+
+                    count += temp[cc];
                 }
             }
-        }
 
-       
+            dp = temp;
+        }
 
         return count;
     }
     int countSquares(vector<vector < int>> &matrix)
     {
-       	
-       	
+
         int ans = Tabulate(matrix);
         return ans;
     }
