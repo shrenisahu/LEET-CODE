@@ -28,16 +28,17 @@ class Solution {
     bool BFS(int vertex,vector<int> adj[],vector<bool>&visited,int V)
     {
         
-        queue<pair<int,int>>que;
-        que.push({vertex,-1});
+        queue<int>que;
+        que.push(vertex);
         vector<int>parent(V,-1);
         
         while(!que.empty())
         {
-            auto currPair=que.front();
-            que.pop();
-            int node=currPair.first;
-            int par=currPair.second;
+            
+           
+            int node=que.front();
+             que.pop();
+            
             if(visited[node]==true)
             continue;
             visited[node]=true;
@@ -46,7 +47,7 @@ class Solution {
             {
                 if(visited[eachNeigh]==false)
                 {
-                que.push({eachNeigh,node});
+                que.push(eachNeigh);
                 parent[eachNeigh]=node;
                 }
                 else
