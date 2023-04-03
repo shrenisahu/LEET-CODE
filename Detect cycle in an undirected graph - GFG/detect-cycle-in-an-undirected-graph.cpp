@@ -14,7 +14,8 @@ class Solution {
             if(visited[vertex]==false)
             {
                 
-              if(  BFS(vertex,adj,visited))
+                
+              if(  BFS(vertex,adj,visited,V))
                 return true;
             }
         }
@@ -24,11 +25,12 @@ class Solution {
     }
     
     
-    bool BFS(int vertex,vector<int> adj[],vector<bool>&visited)
+    bool BFS(int vertex,vector<int> adj[],vector<bool>&visited,int V)
     {
         
         queue<pair<int,int>>que;
         que.push({vertex,-1});
+        vector<int>parent(V,-1);
         
         while(!que.empty())
         {
@@ -43,10 +45,13 @@ class Solution {
             for(auto eachNeigh:adj[node])
             {
                 if(visited[eachNeigh]==false)
+                {
                 que.push({eachNeigh,node});
+                parent[eachNeigh]=node;
+                }
                 else
                 {
-                    if(eachNeigh!=par)
+                    if(eachNeigh!=parent[node])
                     return true;
                 }
             }
