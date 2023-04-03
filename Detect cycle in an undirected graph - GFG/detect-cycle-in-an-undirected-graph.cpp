@@ -5,57 +5,59 @@ using namespace std;
 // } Driver Code Ends
 class Solution {
   public:
-    // Function to detect cycle in an undirected graph.
+    
     bool isCycle(int V, vector<int> adj[]) {
-        // Code here
+        
         vector<bool>visited(V,false);
-        for(int currVertex=0;currVertex<V;currVertex++)
+        for(int vertex=0;vertex<V;vertex++)
         {
-            if(visited[currVertex]==false)
+            if(visited[vertex]==false)
             {
-               if( BFS(currVertex,-1,visited,adj))
-               return true;
+                
+              if(  BFS(vertex,adj,visited))
+                return true;
             }
         }
+        
         return false;
+        
     }
     
-    bool BFS(int currVertex,int currParent,vector<bool>&visited,vector<int> adj[])
+    
+    bool BFS(int vertex,vector<int> adj[],vector<bool>&visited)
     {
+        
         queue<pair<int,int>>que;
-        que.push({currVertex,-1});
+        que.push({vertex,-1});
         
         while(!que.empty())
         {
             auto currPair=que.front();
-            int currNode=currPair.first;
-            int Parent=currPair.second;
             que.pop();
-            if(visited[currNode])
+            int node=currPair.first;
+            int par=currPair.second;
+            if(visited[node]==true)
             continue;
+            visited[node]=true;
             
-            visited[currNode]=true;
-            vector<int>neigh=adj[currNode];
-            
-            for(auto eachNeigh:neigh)
+            for(auto eachNeigh:adj[node])
             {
                 if(visited[eachNeigh]==false)
+                que.push({eachNeigh,node});
+                else
                 {
-                    que.push({eachNeigh,currNode});
-                }
-                else 
-                {
-                    if(eachNeigh!=Parent)
+                    if(eachNeigh!=par)
                     return true;
                 }
             }
-        
+            
+          
         }
         
-        return false;
+          return false;
+        
         
     }
-    
 };
 
 //{ Driver Code Starts.
