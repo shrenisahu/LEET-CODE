@@ -26,11 +26,18 @@ class Solution
                  vector<long long> pre(m+1);
             for (int j=0;j<m;j++)
                 pre[j+1]=pre[j]+it.second[j];
+                // here we are making m+1 size array so that when idx=0 doing arr[idx-1] doest goes out of bound
                 // 0 0 2 5
                 
                 for(int idx=0;idx<m;idx++)
                 {
-                    ans[arr[idx]]=(arr[idx]*idx -pre[idx])+((pre.back()-pre[idx+1])-arr[idx]*(m-idx-1));
+                    
+                    
+                    long long  suffixSumTillIdx=pre.back()-pre[idx+1];
+                      long long  prefixSumBeforeIdx=pre[idx];
+                      long long  numberOfsmallerElem=idx;
+                      long long  numberOfGreaterElem=m-idx-1;
+                    ans[arr[idx]]=(arr[idx]*numberOfsmallerElem -prefixSumBeforeIdx)+(suffixSumTillIdx-arr[idx]*(numberOfGreaterElem));
                     
                     // (that particular indx elem *no of elements smaller than it before it)-prefix sum till before that index
                     
