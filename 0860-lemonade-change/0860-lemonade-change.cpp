@@ -18,7 +18,7 @@ class Solution
                 else if (bills[i] == 10)
                 {
 
-                    if ( five== 0)
+                    if (five == 0)
                         return false;
                     ten++;
                     five--;
@@ -26,23 +26,19 @@ class Solution
                 else if (bills[i] == 20)
                 {
 
-                    if (five == 0 && ten == 0)
-                        return false;
-                    if (ten == 0 && five <= 2)
-                        return false;
-                    if (five == 0)
-                        return false;
-                    twenty++;
-
                     if (ten >= 1 && five >= 1)
                     {
+                        twenty++;
                         ten--;
                         five--;
                     }
                     else if (five >= 3)
                     {
+                        twenty++;
+
                         five -= 3;
                     }
+                    else return false;
                 }
             }
 
