@@ -4,50 +4,20 @@ class Solution
         bool canPlaceFlowers(vector<int> &flowerbed, int n)
         {
 
-            int count = 0;
+            flowerbed.insert(flowerbed.begin(), 0);
+            flowerbed.push_back(0);
             int m = flowerbed.size();
+            int count = 0;
+            for (int i = 1; i < m - 1; i++)
 
-            if (m == 1 && flowerbed[0] == 0)
-                return true;
-
-            for (int i = 0; i < m; i++)
             {
-               	// cout<<"here";
-                if (flowerbed[i] == 1)
+
+                if (flowerbed[i - 1] == 0 && flowerbed[i] == 0 && flowerbed[i + 1] == 0)
                 {
-                    cout << i << ",";
+                    count++;
                     i++;
-
-                    continue;
                 }
-                else if (flowerbed[i] == 0)
-
-                {
-                    
-
-                    if (i == 0 && flowerbed[i + 1] == 0)
-                    {
-
-                        count++;
-                        i++;
-                    }
-                    else if (i == m - 1 && flowerbed[i - 1] != 1)
-                    {
-                        count++;
-                        i++;
-                    }
-                    else if  ( i>0 && i<m &&flowerbed[i - 1] != 1 && flowerbed[i + 1] != 1)
-                    {
-                        count++;
-                        i++;
-                    }
-                   
-                }
-
-                if (count == n)
-                    return true;
             }
-
             if (count >= n)
                 return true;
 
