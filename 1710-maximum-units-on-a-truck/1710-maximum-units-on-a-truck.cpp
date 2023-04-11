@@ -1,32 +1,37 @@
-class Solution {
-public:
-    int maximumUnits(vector<vector<int>>& boxTypes, int truckSize) {
-        vector<int>nums(1001);
-        for(auto eachBox:boxTypes)
+class Solution
+{
+    public:
+
+        static bool comp(vector<int> &a, vector<int> &b)
         {
-            int boxes=eachBox[0];
-            int units=eachBox[1];
-            
-            nums[eachBox[1]]+=eachBox[0];
-             
+
+            if (b[1] < a[1])
+                return true;
+
+            return false;
         }
-        int ans=0;
-      for(int i=1000;i>=0;i--)
-      {
-          int boxValue=nums[i];
-          if(truckSize>=boxValue)
-          {
-              ans=ans+(boxValue*i);
-              truckSize-=boxValue;
-          }
-          else 
-          {
-              ans=ans+(truckSize*i);
-              truckSize=0;
-              
-          }
-      }
-        
+    int maximumUnits(vector<vector < int>> &boxTypes, int truckSize)
+    {
+
+        sort(boxTypes.begin(), boxTypes.end(), comp);
+        int ans = 0;
+        for (auto i: boxTypes)
+        {
+            int boxType = i[0];
+            int units = i[1];
+
+            if (truckSize >= boxType)
+            {
+                truckSize -= boxType;
+                ans += (boxType *units);
+            }
+            else
+            {
+                ans += (truckSize *units);
+                break;
+            }
+        }
+
         return ans;
     }
 };
