@@ -13,33 +13,14 @@ class Solution
 
                 if (s[i] == 'O')
                 {
-                    // cout << "here";
+                   	// cout << "here";
                     i++;
                     continue;
                 }
                 else
                 {
-                    if (i < n)
-                    {
-                        int first = s[i];
-                        if (first == 'X')
-                            x_count++;
-                    }
-                    if (i + 1 < n)
-                    {
-                        int second = s[i + 1];
-                        if (second == 'X')
-                            x_count++;
-                    }
-                    if (i + 2 < n)
-                    {
-                        int third = s[i + 2];
-                        if (third == 'X')
-                            x_count++;
-                    }
 
-                    if (x_count > 0)
-                        moves++;
+                    moves++;
                     i += 3;
                 }
             }
