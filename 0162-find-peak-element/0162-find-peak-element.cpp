@@ -4,14 +4,18 @@ class Solution
         int findPeakElement(vector<int> &nums)
         {
             int n = nums.size();
+            if(n==1)
+                return 0;
 
             nums.insert(nums.begin(), INT_MIN);
 
             nums.push_back(INT_MIN);
             int start = 1;
             int end = n ;
+            
+            
 
-            while (start < end)
+            while (start <= end)
             {
                 int mid = (start + end) / 2;
                 
