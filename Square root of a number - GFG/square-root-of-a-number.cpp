@@ -11,11 +11,10 @@ class Solution{
   public:
     long long int floorSqrt(long long int x) 
     {
-        if(x==1)
-        return 1;
-       long long int start=0;
-       long long  int end=(x/2)+1;
-       long long int ans=0;
+      
+       long long int start=1;
+       long long  int end=(x/2);
+       long long int ans=1;
        
        while(start<=end)
        {
