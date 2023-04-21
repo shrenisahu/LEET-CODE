@@ -5,7 +5,6 @@ class Solution
         bool isPossible(vector<int> &bloomDay, int m, int k, int days)
         {
             int n = bloomDay.size();
-            vector<int> arr(n, 0);
 
             int currFlow = 0;
             int currBoq = 0;
@@ -15,15 +14,15 @@ class Solution
                 {
                     currFlow++;
                 }
-                else if (bloomDay[i] > days)
+                else
                 {
                     currFlow = 0;
                 }
 
                 if (currFlow == k)
                 {
-                     currBoq++;
-                    currFlow=0;
+                    currBoq++;
+                    currFlow = 0;
                 }
 
                 if (currBoq == m)
@@ -37,9 +36,7 @@ class Solution
 
         int start = INT_MAX;
         int end = INT_MIN;
-        int n=bloomDay.size();
-        
-       
+        int n = bloomDay.size();
 
         for (auto i: bloomDay)
         {
@@ -53,7 +50,7 @@ class Solution
         {
 
             int mid = start + (end - start) / 2;
-            cout<<mid<<" ,";
+            cout << mid << " ,";
 
             if (isPossible(bloomDay, m, k, mid))
             {
@@ -66,10 +63,9 @@ class Solution
                 start = mid + 1;
             }
         }
-        
-        // bool ans2=isPossible(bloomDay, m, k, 12);
-        // cout<<" ans"<<ans2<<endl;
-        if(ans==0)
+
+     
+        if (ans == 0)
             return -1;
         return ans;
     }
