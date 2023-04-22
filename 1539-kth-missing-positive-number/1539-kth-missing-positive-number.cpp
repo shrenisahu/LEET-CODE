@@ -1,39 +1,42 @@
-class Solution
-{
-    public:
-        int findKthPositive(vector<int> &arr, int k)
+class Solution {
+public:
+    int findKthPositive(vector<int>& arr, int k) {
+        
+        int n=arr.size();
+        int start=0;
+        int end=n-1;
+        int ans=-1;
+        while(start<=end)
         {
-
-            int minElem = arr.front();
-            int maxElem = arr.back();
             
-            unordered_set<int>stt;
+            int mid=start+(end-start)/2;
+           
             
-            for(auto it:arr)
-                stt.insert(it);
-            int ans=0;
-            int countK=0;
+            int elem=arr[mid];
+            int missCount=elem-(mid+1);
             
-            for(int i=1;i<=maxElem;i++)
+            if(missCount>=k)
+                end=mid-1;
+            
+            else
             {
                 
-                if(stt.find(i)==stt.end())
-                {
-
-                    countK++;
-                  
-                    if(countK==k)
-                    {
-                        return i;
-                    }
-                }
-                
+                ans=mid;
+                start=mid+1;
             }
-            
-            int diff=k-countK;
-            ans=maxElem+diff;
-            
-            
-            return ans;
         }
+        // start--;
+        // ans=start;
+        cout<<ans<<endl;
+        
+       if(ans==-1)
+           return k;
+        
+        int elem=arr[ans];
+        int idx=ans;
+        int missCount=k-(elem-(idx+1));
+         // cout<<elem<<" , "<<idx<<missCount<<","<<k<<endl;
+        return elem+missCount;
+        
+    }
 };
